@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "Confirm Email";
+}
+
+<h2>Confirm Email</h2>
+
+<form asp-action="ConfirmEmail" method="post">
+    <input type="hidden" name="email" value="@ViewBag.Email" />
+    <div>
+        <label>Confirmation Code</label>
+        <input type="text" name="confirmationCode" required />
+    </div>
+    <button type="submit">Confirm</button>
+</form>

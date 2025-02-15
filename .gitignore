@@ -361,3 +361,9 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Игнорировать конфигурационные файлы
+appsettings.json
+Dockerfile
+docker-compose.yml
+docker-compose.override.yml
