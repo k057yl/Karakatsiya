@@ -1,4 +1,5 @@
-﻿using Karakatsiya.Models.DTOs;
+﻿using Karakatsiya.Localizations;
+using Karakatsiya.Models.DTOs;
 using Karakatsiya.Models.Entities;
 using Karakatsiya.Services;
 using Microsoft.AspNetCore.Identity;
@@ -8,13 +9,14 @@ using System.Text.RegularExpressions;
 
 namespace Karakatsiya.Controllers
 {
-    public class AccountController : BaseController<AccountController>
+    public class AccountController : BaseController
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly EmailService _emailService;
         private readonly ConfirmationCodeGenerator _codeGenerator;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly HtmlValidator _htmlValidator;
+        private readonly SharedLocalizationService _localization;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
@@ -22,13 +24,14 @@ namespace Karakatsiya.Controllers
             EmailService emailService,
             ConfirmationCodeGenerator codeGenerator,
             HtmlValidator htmlValidator,
-            IStringLocalizer<AccountController> localizer) : base(localizer)
+            SharedLocalizationService localizer) : base()
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailService = emailService;
             _codeGenerator = codeGenerator;
             _htmlValidator = htmlValidator;
+            _localization = localizer;
         }
 
         public IActionResult Register()
@@ -41,7 +44,7 @@ namespace Karakatsiya.Controllers
         {
             if (!Regex.IsMatch(model.Email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
             {
-                ModelState.AddModelError(nameof(model.Email), "Неверный формат Email.");
+                ModelState.AddModelError(nameof(model.Email), _localization.WarningMessages["InvalidEmailFormat"]);
                 return View(model);
             }
 
@@ -61,8 +64,8 @@ namespace Karakatsiya.Controllers
                     user.ConfirmationCode = confirmationCode;
                     await _userManager.UpdateAsync(user);
 
-                    var subject = "Код подтверждения регистрации";
-                    var body = $"Ваш код подтверждения: {confirmationCode}";
+                    var subject = _localization.Messages["RegistrationConfirmationCode"]; 
+                    var body = $"{_localization.Messages["YourVerificationCode"]} {confirmationCode}";
                     await _emailService.SendEmailAsync(model.Email, subject, body);
 
                     TempData["Message"] = "Письмо с кодом подтверждения отправлено на ваш Email.";

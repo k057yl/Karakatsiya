@@ -3,9 +3,9 @@ using Microsoft.Extensions.Localization;
 
 namespace Karakatsiya.Controllers
 {
-    public class HomeController : BaseController<HomeController>
+    public class HomeController : BaseController
     {
-        public HomeController(IStringLocalizer<HomeController> localizer) : base(localizer)
+        public HomeController(IStringLocalizer<HomeController> localizer) : base()
         {
         }
 

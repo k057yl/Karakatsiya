@@ -1,18 +1,10 @@
 ﻿using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Localization;
 
 namespace Karakatsiya.Controllers
 {
-    public class BaseController<T> : Controller where T : Controller
+    public class BaseController : Controller
     {
-        protected readonly IStringLocalizer<T> _localizer;
-
-        public BaseController(IStringLocalizer<T> localizer)
-        {
-            _localizer = localizer;
-        }
-
         [HttpPost]
         public IActionResult SetLanguage(string culture, string returnUrl)
         {

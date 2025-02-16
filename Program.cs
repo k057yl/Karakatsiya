@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Karakatsiya.Services;
 using Karakatsiya.Models.Entities;
 using Karakatsiya.Data;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using System.Globalization;
+using Karakatsiya;
 
 var builder = WebApplication.CreateBuilder(args);
 
