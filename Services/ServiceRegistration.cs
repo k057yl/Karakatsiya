@@ -1,4 +1,6 @@
-﻿namespace Karakatsiya.Services
+﻿using Karakatsiya.Localizations;
+
+namespace Karakatsiya.Services
 {
     public static class ServiceRegistration
     {
@@ -6,6 +8,8 @@
         {
             services.AddScoped<EmailService>();
             services.AddScoped<ConfirmationCodeGenerator>();
+            services.AddScoped<HtmlValidator>();
+            services.AddScoped<SharedLocalizationService>();
         }
     }
 }

@@ -3,26 +3,32 @@ using Karakatsiya.Models.Entities;
 using Karakatsiya.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
+using System.Text.RegularExpressions;
 
 namespace Karakatsiya.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : BaseController<AccountController>
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly EmailService _emailService;
         private readonly ConfirmationCodeGenerator _codeGenerator;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly HtmlValidator _htmlValidator;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             EmailService emailService,
-            ConfirmationCodeGenerator codeGenerator)
+            ConfirmationCodeGenerator codeGenerator,
+            HtmlValidator htmlValidator,
+            IStringLocalizer<AccountController> localizer) : base(localizer)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailService = emailService;
             _codeGenerator = codeGenerator;
+            _htmlValidator = htmlValidator;
         }
 
         public IActionResult Register()
@@ -33,6 +39,12 @@ namespace Karakatsiya.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterDto model)
         {
+            if (!Regex.IsMatch(model.Email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+            {
+                ModelState.AddModelError(nameof(model.Email), "Неверный формат Email.");
+                return View(model);
+            }
+
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser
@@ -53,16 +65,16 @@ namespace Karakatsiya.Controllers
                     var body = $"Ваш код подтверждения: {confirmationCode}";
                     await _emailService.SendEmailAsync(model.Email, subject, body);
 
+                    TempData["Message"] = "Письмо с кодом подтверждения отправлено на ваш Email.";
                     return RedirectToAction("ConfirmEmail", new { email = model.Email });
                 }
-                else
+
+                foreach (var error in result.Errors)
                 {
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError(string.Empty, error.Description);
-                    }
+                    ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
+
             return View(model);
         }
 
