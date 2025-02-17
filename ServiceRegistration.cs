@@ -1,4 +1,5 @@
-﻿using Karakatsiya.Localizations;
+﻿using Karakatsiya.Interfaces;
+using Karakatsiya.Localizations;
 using Karakatsiya.Services;
 
 public static class ServiceRegistration
@@ -9,5 +10,7 @@ public static class ServiceRegistration
         services.AddScoped<ConfirmationCodeGenerator>();
         services.AddScoped<HtmlValidator>();
         services.AddScoped<SharedLocalizationService>();
+        services.AddScoped<IItemService, ItemService>();
+        services.AddScoped<ISaleService, SaleService>();
     }
 }

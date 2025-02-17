@@ -4,7 +4,6 @@ using Karakatsiya.Models.Entities;
 using Karakatsiya.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Localization;
 using System.Text.RegularExpressions;
 
 namespace Karakatsiya.Controllers
