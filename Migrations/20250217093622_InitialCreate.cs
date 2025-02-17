@@ -31,8 +31,6 @@ namespace Karakatsiya.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
-                    Discriminator = table.Column<string>(type: "character varying(21)", maxLength: 21, nullable: false),
-                    ConfirmationCode = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -169,11 +167,11 @@ namespace Karakatsiya.Migrations
                     Name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     CreationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     ExpirationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    ImagePath = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
-                    Description = table.Column<string>(type: "text", nullable: true),
+                    ImagePath = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false),
                     Price = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
                     Category = table.Column<int>(type: "integer", nullable: false),
-                    Currency = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: true),
+                    Currency = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
                     IsSold = table.Column<bool>(type: "boolean", nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
@@ -194,15 +192,15 @@ namespace Karakatsiya.Migrations
                 {
                     SaleId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    ItemId = table.Column<int>(type: "integer", nullable: true),
-                    Name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
-                    Description = table.Column<string>(type: "text", nullable: true),
+                    ItemId = table.Column<int>(type: "integer", nullable: false),
+                    Name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false),
                     SaleDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     SalePrice = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
-                    Currency = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: true),
+                    Currency = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
                     Profit = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
                     ItemIsDeleted = table.Column<bool>(type: "boolean", nullable: false),
-                    ItemImagePath = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true)
+                    ItemImagePath = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false)
                 },
                 constraints: table =>
                 {

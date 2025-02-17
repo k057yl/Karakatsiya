@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Karakatsiya.Models.Entities;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace Karakatsiya.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
@@ -14,10 +15,6 @@ namespace Karakatsiya.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<ApplicationUser>()
-                .Property(u => u.ConfirmationCode)
-                .HasMaxLength(100);
 
             modelBuilder.Entity<Sale>()
                 .HasOne(s => s.Item)

@@ -9,12 +9,12 @@ namespace Karakatsiya.Models.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int SaleId { get; set; }
 
-        public int? ItemId { get; set; }
+        public int ItemId { get; set; }
 
         [MaxLength(200)]
-        public string? Name { get; set; }
+        public string Name { get; set; }
 
-        public string? Description { get; set; }
+        public string Description { get; set; }
 
         private DateTime _saleDate;
 
@@ -33,21 +33,21 @@ namespace Karakatsiya.Models.Entities
         public decimal SalePrice { get; set; }
 
         [MaxLength(10)]
-        public string? Currency { get; set; }
+        public string Currency { get; set; }
 
         [Required]
         [Column(TypeName = "decimal(18,2)")]
         public decimal Profit { get; set; }
 
         [ForeignKey("ItemId")]
-        public Item? Item { get; set; }
+        public Item Item { get; set; }
 
         [NotMapped]
-        public string? ItemName => Item != null ? Item.Name : Name;
+        public string ItemName => Item != null ? Item.Name : Name;
 
         public bool ItemIsDeleted { get; set; }
 
         [MaxLength(500)]
-        public string? ItemImagePath { get; set; }
+        public string ItemImagePath { get; set; }
     }
 }

@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Karakatsiya.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250217065633_InitialCreate")]
+    [Migration("20250217093622_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -40,16 +40,19 @@ namespace Karakatsiya.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Currency")
+                        .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("character varying(10)");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("ExpirationDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("ImagePath")
+                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
@@ -88,16 +91,19 @@ namespace Karakatsiya.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("SaleId"));
 
                     b.Property<string>("Currency")
+                        .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("character varying(10)");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("ItemId")
+                    b.Property<int>("ItemId")
                         .HasColumnType("integer");
 
                     b.Property<string>("ItemImagePath")
+                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
@@ -105,6 +111,7 @@ namespace Karakatsiya.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
@@ -187,11 +194,6 @@ namespace Karakatsiya.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("text");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasMaxLength(21)
-                        .HasColumnType("character varying(21)");
-
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
@@ -242,10 +244,6 @@ namespace Karakatsiya.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasDiscriminator().HasValue("IdentityUser");
-
-                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -329,17 +327,6 @@ namespace Karakatsiya.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Karakatsiya.Models.Entities.ApplicationUser", b =>
-                {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
-
-                    b.Property<string>("ConfirmationCode")
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.HasDiscriminator().HasValue("ApplicationUser");
-                });
-
             modelBuilder.Entity("Karakatsiya.Models.Entities.Item", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
@@ -356,7 +343,8 @@ namespace Karakatsiya.Migrations
                     b.HasOne("Karakatsiya.Models.Entities.Item", "Item")
                         .WithMany("Sales")
                         .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .IsRequired();
 
                     b.Navigation("Item");
                 });

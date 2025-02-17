@@ -1,6 +1,5 @@
 ﻿using Karakatsiya.Interfaces;
 using Karakatsiya.Models.DTOs;
-using Karakatsiya.Models.Entities;
 using Karakatsiya.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -12,12 +11,12 @@ namespace Karakatsiya.Controllers
     public class ItemController : BaseController
     {
         private readonly IItemService _itemService;
-        private readonly UserManager<ApplicationUser> _userManager;//IdentityUser
+        private readonly UserManager<IdentityUser> _userManager;//IdentityUser
         private readonly HtmlValidator _htmlValidator;
 
         public ItemController(
             IItemService itemService,
-            UserManager<ApplicationUser> userManager,
+            UserManager<IdentityUser> userManager,
             HtmlValidator htmlValidator)
             : base()
         {
@@ -35,7 +34,7 @@ namespace Karakatsiya.Controllers
 
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View(model ?? new CreateItemDto());
             }
 
             var user = await _userManager.GetUserAsync(User);

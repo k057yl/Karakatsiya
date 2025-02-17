@@ -10,16 +10,16 @@ namespace Karakatsiya.Controllers
 {
     public class AccountController : BaseController
     {
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<IdentityUser> _userManager;
         private readonly EmailService _emailService;
         private readonly ConfirmationCodeGenerator _codeGenerator;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
         private readonly HtmlValidator _htmlValidator;
         private readonly SharedLocalizationService _localization;
 
         public AccountController(
-            UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
+            UserManager<IdentityUser> userManager,
+            SignInManager<IdentityUser> signInManager,
             EmailService emailService,
             ConfirmationCodeGenerator codeGenerator,
             HtmlValidator htmlValidator,
@@ -49,7 +49,7 @@ namespace Karakatsiya.Controllers
 
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser
+                var user = new IdentityUser
                 {
                     UserName = model.Email,
                     Email = model.Email
@@ -60,10 +60,9 @@ namespace Karakatsiya.Controllers
                 if (result.Succeeded)
                 {
                     var confirmationCode = _codeGenerator.GenerateCode();
-                    user.ConfirmationCode = confirmationCode;
-                    await _userManager.UpdateAsync(user);
+                    TempData["ConfirmationCode"] = confirmationCode;
 
-                    var subject = _localization.Messages["RegistrationConfirmationCode"]; 
+                    var subject = _localization.Messages["RegistrationConfirmationCode"];
                     var body = $"{_localization.Messages["YourVerificationCode"]} {confirmationCode}";
                     await _emailService.SendEmailAsync(model.Email, subject, body);
 
@@ -123,10 +122,11 @@ namespace Karakatsiya.Controllers
                 return View();
             }
 
-            if (user.ConfirmationCode == confirmationCode)
+            var storedCode = TempData["ConfirmationCode"]?.ToString();
+
+            if (storedCode == confirmationCode)
             {
                 user.EmailConfirmed = true;
-                user.ConfirmationCode = null;
                 await _userManager.UpdateAsync(user);
 
                 return RedirectToAction("Login");

@@ -12,19 +12,21 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Настройка Identity
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+// Настройка Identity с использованием пользовательского класса ApplicationUser
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
     options.SignIn.RequireConfirmedEmail = true;
 })
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
+// Настройка локализации
 builder.Services.AddLocalization(options => options.ResourcesPath = "Localizations");
 builder.Services.AddControllersWithViews()
     .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
     .AddDataAnnotationsLocalization();
 
+// Настройка поддержки нескольких языков
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
     var supportedCultures = new[] { new CultureInfo("en-US"), new CultureInfo("uk-UA") };
@@ -34,14 +36,16 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
     options.RequestCultureProviders.Insert(0, new CookieRequestCultureProvider());
 });
 
+// Добавление сервисов для работы с сессиями и кэшированием
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(20);
-    options.Cookie.HttpOnly = true;
-    options.Cookie.IsEssential = true;
+    options.IdleTimeout = TimeSpan.FromMinutes(20); // Устанавливаем время жизни сессии
+    options.Cookie.HttpOnly = true; // Ожидание работы с куками
+    options.Cookie.IsEssential = true; // Куки обязательны для работы
 });
 
+// Подключение кастомных сервисов
 builder.Services.AddApplicationServices();
 
 // Добавление MVC и Razor Pages
@@ -50,27 +54,30 @@ builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
+// Применение локализации и сессий
 app.UseRequestLocalization();
 app.UseSession();
 
-// Конфигурация pipeline
+// Конфигурация pipeline для обработки ошибок и других задач
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    app.UseHsts();
+    app.UseHsts(); // Принудительное использование HTTPS
 }
 
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-app.UseRouting();
+app.UseHttpsRedirection(); // Перенаправление на HTTPS
+app.UseStaticFiles(); // Обслуживание статических файлов
+app.UseRouting(); // Маршрутизация запросов
 
+// Настройка аутентификации и авторизации
 app.UseAuthentication();
 app.UseAuthorization();
 
+// Маршруты
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}"); // Роутинг для контроллеров
 
-app.MapRazorPages();
+app.MapRazorPages(); // Маршруты для Razor Pages
 
 app.Run();
