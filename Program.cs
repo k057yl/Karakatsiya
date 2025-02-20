@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Karakatsiya.Models.Entities;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using System.Globalization;
@@ -40,9 +39,9 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(20); // Устанавливаем время жизни сессии
-    options.Cookie.HttpOnly = true; // Ожидание работы с куками
-    options.Cookie.IsEssential = true; // Куки обязательны для работы
+    options.IdleTimeout = TimeSpan.FromMinutes(20);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
 });
 
 // Подключение кастомных сервисов
@@ -62,12 +61,12 @@ app.UseSession();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    app.UseHsts(); // Принудительное использование HTTPS
+    app.UseHsts();
 }
 
-app.UseHttpsRedirection(); // Перенаправление на HTTPS
-app.UseStaticFiles(); // Обслуживание статических файлов
-app.UseRouting(); // Маршрутизация запросов
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseRouting();
 
 // Настройка аутентификации и авторизации
 app.UseAuthentication();
@@ -76,8 +75,8 @@ app.UseAuthorization();
 // Маршруты
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}"); // Роутинг для контроллеров
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.MapRazorPages(); // Маршруты для Razor Pages
+app.MapRazorPages();
 
 app.Run();

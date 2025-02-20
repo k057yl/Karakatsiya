@@ -117,7 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DescriptionCannotBeEmpty" xml:space="preserve">
+    <value>Опис не може бути порожнім</value>
+  </data>
   <data name="InvalidEmailFormat" xml:space="preserve">
     <value>Невірний формат Email</value>
+  </data>
+  <data name="NameCannotBeEmpty" xml:space="preserve">
+    <value>Назва не може бути пустою</value>
+  </data>
+  <data name="PriceCannotBeZero" xml:space="preserve">
+    <value>Ціна має бути більше нуля</value>
   </data>
 </root>

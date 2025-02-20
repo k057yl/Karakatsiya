@@ -1,5 +1,7 @@
 ﻿@using Karakatsiya.Controllers
 @model Karakatsiya.Models.DTOs.CreateItemDto
+@inject Karakatsiya.Localizations.SharedLocalizationService localizer
+@inject Karakatsiya.Services.CategoryLocalizationService categoryLocalizationService
 
 @{
     ViewData["Title"] = "Создать новый товар";
@@ -7,43 +9,85 @@
 
 <h2>@ViewData["Title"]</h2>
 
-<form asp-action="CreateItem" method="post" enctype="multipart/form-data">
-    @if (ViewData.ModelState.IsValid)
-    {
-        <div class="alert alert-success">
-            Товар успешно создан!
-        </div>
-    }
+<div class="create-item-container">
+    <div class="form-container">
+        <form asp-action="CreateItem" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label asp-for="ImageFile" class="control-label">@localizer.Buttons["SelectFile"]</label>
+                <div class="container-image-form">
+                    <div class="custom-file">
+                        <input asp-for="ImageFile" id="fileUpload" class="custom-file-input" type="file" />
+                        <label class="custom-file-label" for="fileUpload">@localizer.Buttons["SelectFile"]</label>
+                    </div>
+                </div>
+                <!-- Thumbnail container with delete button -->
+                <div id="thumbnailContainer" style="position: relative; display: inline-block; margin-top: 10px;">
+                    <img id="thumbnail" src="#" alt="Preview" style="display:none; width:100px; height:100px; border: 1px solid #ced4da;" />
+                    <button type="button" id="removeButton" style="display: none; position: absolute; top: -5px; right: -5px; background-color: red; color: white; border: none; border-radius: 50%; width: 20px; height: 20px; cursor: pointer; text-align: center; line-height: 18px; font-size: 16px;">&Chi;</button>
+                </div>
+                <span asp-validation-for="ImageFile" class="text-danger"></span>
+            </div>
 
-    <div class="form-group">
-        <label for="Name">Название</label>
-        <input type="text" class="form-control" id="Name" name="Name" value="@Model.Name" required />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label">@localizer.Buttons["Name"]</label>
+                <input asp-for="Name" class="form-control" placeholder="@localizer.Buttons["Field.Name"]" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Description" class="control-label">@localizer.Buttons["Description"]</label>
+                <textarea id="DescriptionField" name="Description" class="form-control description-field" rows="3" placeholder="@localizer.Buttons["Field.Description"]"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Currency" class="control-label">@localizer.Buttons["Currency"]</label>
+                <select asp-for="Currency" class="form-control">
+                    <option value="USD">@localizer.Buttons["USD"]</option>
+                    <option value="EUR">@localizer.Buttons["EUR"]</option>
+                    <option value="UAH">@localizer.Buttons["UAH"]</option>
+                </select>
+                <span asp-validation-for="Currency" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Price" class="control-label">@localizer.Buttons["Price"]</label>
+                <input asp-for="Price" class="form-control" placeholder="@localizer.Buttons["Field.Price"]" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Category" class="control-label">@localizer.Buttons["Category"]</label>
+                <select asp-for="Category" class="form-control" aria-placeholder="@localizer.Buttons["Field.Category"]">
+                    <option value="">@localizer.Categories["SelectCategory"]</option>
+                    @foreach (var category in categoryLocalizationService.GetLocalizedCategories())
+                    {
+                        <option value="@category.Key">@category.Value</option>
+                    }
+                </select>
+                <span asp-validation-for="Category" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="ShowExpirationDateCheckbox" />
+                    @localizer.Buttons["ShowExperationDate"]
+                </label>
+                <div id="expirationDateContainer" style="display:none;">
+                    <label asp-for="ExpirationDate" class="control-label">@localizer.Buttons["ExpirationDate"]</label>
+                    <input asp-for="ExpirationDate" class="form-control" />
+                    <span asp-validation-for="ExpirationDate" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="@localizer.Buttons["Save"]" class="btn btn-primary" />
+            </div>
+        </form>
     </div>
+</div>
 
-    <div class="form-group">
-        <label for="Description">Описание</label>
-        <textarea class="form-control" id="Description" name="Description" rows="5">@Model.Description</textarea>
-    </div>
-
-    <div class="form-group">
-        <label for="Price">Цена</label>
-        <input type="number" class="form-control" id="Price" name="Price" value="@Model.Price" required />
-    </div>
-
-    <div class="form-group">
-        <label for="Currency">Валюта</label>
-        <input type="text" class="form-control" id="Currency" name="Currency" value="@Model.Currency" required />
-    </div>
-
-    <div class="form-group">
-        <label for="ExpirationDate">Дата истечения</label>
-        <input type="date" class="form-control" id="ExpirationDate" name="ExpirationDate" value="@Model.ExpirationDate?.ToString("yyyy-MM-dd")" />
-    </div>
-
-    <div class="form-group">
-        <label for="Category">Категория</label>
-        <input type="text" class="form-control" id="Category" name="Category" value="@Model.Category" />
-    </div>
-
-    <button type="submit" class="btn btn-primary">Создать товар</button>
-</form>
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    <script src="~/js/site.js"></script>
+}

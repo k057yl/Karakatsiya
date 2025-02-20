@@ -22,10 +22,11 @@ namespace Karakatsiya.Localizations
         public IStringLocalizer Buttons => GetLocalizer<ButtonsLocalizer>();
         public IStringLocalizer Messages => GetLocalizer<MessagesLocalizer>();
         public IStringLocalizer WarningMessages => GetLocalizer<WarningMessagesLocalizer>();
+        public IStringLocalizer Categories => GetLocalizer<CategoriesLocalizer>();
+        public IStringLocalizer Tables => GetLocalizer<TablesLocalizer>();
         /*
-        public IStringLocalizer Tables => GetLocalizer<TableResources>();
+        
         public IStringLocalizer Pages => GetLocalizer<PageResources>();
-        public IStringLocalizer Categories => GetLocalizer<CategoriesResources>();
         */
     }
 }

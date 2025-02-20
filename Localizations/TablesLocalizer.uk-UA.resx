@@ -117,22 +117,37 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="EUR" xml:space="preserve">
-    <value>Євро</value>
+  <data name="Actions" xml:space="preserve">
+    <value>Дії</value>
   </data>
-  <data name="Home" xml:space="preserve">
-    <value>Головна</value>
+  <data name="Category" xml:space="preserve">
+    <value>Категорія</value>
   </data>
-  <data name="Language" xml:space="preserve">
-    <value>Мова</value>
+  <data name="CreateDate" xml:space="preserve">
+    <value>Дата створення</value>
   </data>
-  <data name="Registration" xml:space="preserve">
-    <value>Реєстрація</value>
+  <data name="Description" xml:space="preserve">
+    <value>Опис</value>
   </data>
-  <data name="UAH" xml:space="preserve">
-    <value>Гривня</value>
+  <data name="ExpirationDate" xml:space="preserve">
+    <value>Термін придатності</value>
   </data>
-  <data name="USD" xml:space="preserve">
-    <value>Долар</value>
+  <data name="Image" xml:space="preserve">
+    <value>Зображення</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Ім'я</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Ціна</value>
+  </data>
+  <data name="Profit" xml:space="preserve">
+    <value>Прибуток</value>
+  </data>
+  <data name="SaleDate" xml:space="preserve">
+    <value>Дата продажу</value>
+  </data>
+  <data name="SalePrice" xml:space="preserve">
+    <value>Ціна продажi</value>
   </data>
 </root>

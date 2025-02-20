@@ -117,7 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DescriptionCannotBeEmpty" xml:space="preserve">
+    <value>The description cannot be empty</value>
+  </data>
   <data name="InvalidEmailFormat" xml:space="preserve">
     <value>Invalid email format</value>
+  </data>
+  <data name="NameCannotBeEmpty" xml:space="preserve">
+    <value>The name cannot be empty</value>
+  </data>
+  <data name="PriceCannotBeZero" xml:space="preserve">
+    <value>The price must be greater than zero</value>
   </data>
 </root>

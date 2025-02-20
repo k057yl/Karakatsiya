@@ -1,0 +1,119 @@
+﻿@model List<Karakatsiya.Models.Entities.Item>
+
+@inject Karakatsiya.Localizations.SharedLocalizationService sharedLocalizer
+
+@{
+    ViewData["Title"] = "My Items";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="item-container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@sharedLocalizer.Tables["Image"]</th>
+                <th>@sharedLocalizer.Tables["Name"]</th>
+                <th>@sharedLocalizer.Tables["Description"]</th>
+                <th>@sharedLocalizer.Tables["CreateDate"]</th>
+                <th>@sharedLocalizer.Tables["ExpirationDate"]</th>
+                <th>@sharedLocalizer.Tables["Price"]</th>
+                <th>@sharedLocalizer.Tables["Category"]</th>
+                <th>@sharedLocalizer.Tables["Actions"]</th>
+                <th>@sharedLocalizer.Tables["Actions"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                var daysToExpiration = item.ExpirationDate.HasValue
+                ? (item.ExpirationDate.Value - DateTime.Now).TotalDays
+                : double.MaxValue;
+
+                var isExpiringSoon = !item.IsSold && daysToExpiration <= 7;
+                var isExpired = !item.IsSold && item.ExpirationDate.HasValue && item.ExpirationDate.Value < DateTime.Now;
+
+                <tr class="@(isExpired ? "expired" : isExpiringSoon ? "expiring-soon" : "")">
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.ImagePath))
+                        {
+                            <a href="@Url.Action("Details", "Item", new { id = item.ItemId })">
+                                <img src="@item.ImagePath" alt="Image" style="max-width: 100px; max-height: 100px;" />
+                            </a>
+                        }
+                        else
+                        {
+                            <span>@sharedLocalizer.Messages["NoImage"]</span>
+                        }
+                    </td>
+                    <td>@item.Name</td>
+                    <td>@item.Description</td>
+                    <td>@item.CreationDate.ToShortDateString() ?? sharedLocalizer.Messages["NoDate"]</td>
+                    <td>
+                        @if (item.ExpirationDate == null || item.ExpirationDate == new DateTime(2099, 12, 31))
+                        {
+                            @sharedLocalizer.Messages["NoExperationDate"]
+                        }
+                        else
+                        {
+                            @item.ExpirationDate?.ToShortDateString()
+                        }
+                    </td>
+                    <td>@item.Price @item.Currency</td>
+                    <td>@item.Category</td>
+                    <td>
+                        @if (!item.IsSold)
+                        {
+                            <a asp-action="Edit" asp-controller="Item" asp-route-id="@item.ItemId" class="btn btn-secondary me-2">
+                                @sharedLocalizer.Buttons["Edit"]
+                            </a>
+                        }
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-itemid="@item.ItemId">
+                            @sharedLocalizer.Buttons["Delete"]
+                        </button>
+                    </td>
+                    <td>
+                        @if (item.IsSold)
+                        {
+                            <span>@sharedLocalizer.Buttons["Sold"]</span>
+                        }
+                        else
+                        {
+                            <form asp-action="SellItem" asp-controller="Sale" method="post">
+                                <input type="hidden" name="itemId" value="@item.ItemId" />
+                                <input type="number" name="salePrice" placeholder=@sharedLocalizer.Buttons["SoldPrice"] required />
+                                <button type="submit" class="btn btn-success">@sharedLocalizer.Buttons["Sell"]</button>
+                            </form>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- Bootstrap Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">@sharedLocalizer.Messages["DeleteTitle"]</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @sharedLocalizer.Messages["DeletionConfirmation"]
+            </div>
+            <div class="modal-footer">
+                <form id="deleteForm" method="post" action="">
+                    <button type="submit" class="btn btn-danger">@sharedLocalizer.Buttons["Yes"]</button>
+                </form>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@sharedLocalizer.Buttons["No"]</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    <script src="~/js/site.js"></script>
+}

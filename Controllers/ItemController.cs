@@ -1,9 +1,12 @@
 ﻿using Karakatsiya.Interfaces;
+using Karakatsiya.Localizations;
 using Karakatsiya.Models.DTOs;
 using Karakatsiya.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+
 
 namespace Karakatsiya.Controllers
 {
@@ -11,41 +14,46 @@ namespace Karakatsiya.Controllers
     public class ItemController : BaseController
     {
         private readonly IItemService _itemService;
-        private readonly UserManager<IdentityUser> _userManager;//IdentityUser
+        private readonly UserManager<IdentityUser> _userManager;
         private readonly HtmlValidator _htmlValidator;
+        private readonly SharedLocalizationService _localization;
 
         public ItemController(
             IItemService itemService,
             UserManager<IdentityUser> userManager,
-            HtmlValidator htmlValidator)
+            HtmlValidator htmlValidator,
+            SharedLocalizationService localization)
             : base()
         {
             _itemService = itemService;
             _htmlValidator = htmlValidator;
             _userManager = userManager;
+            _localization = localization;
         }
 
         [HttpGet]
-        public IActionResult CreateItem() => View();
+        public IActionResult CreateItem()
+        {
+            return View(new CreateItemDto());
+        }
 
         [HttpPost]
         public async Task<IActionResult> CreateItem(CreateItemDto model)
         {
 
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || !ValidateHtmlFields(model))
             {
-                return View(model ?? new CreateItemDto());
+                return View(model);
             }
 
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                ModelState.AddModelError("", "Пользователь не найден.");
                 return View(model);
             }
 
             var item = await _itemService.CreateItemAsync(model, user.Id);
-            return RedirectToAction("UserItemsList");
+            return RedirectToAction("UserItems");
         }
 
         [HttpGet]
@@ -70,7 +78,7 @@ namespace Karakatsiya.Controllers
                 return NotFound();
             }
 
-            return RedirectToAction("UserItemsList");
+            return RedirectToAction("UserItems");
         }
 
         public async Task<IActionResult> Details(int id)
@@ -85,38 +93,9 @@ namespace Karakatsiya.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int id, EditItemDto model)
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                return RedirectToAction("Login", "Account");
-            }
-
-            var item = await _itemService.GetItemDetailsAsync(id);
-            if (item == null || item.UserId != user.Id)
-            {
-                return NotFound();
-            }
-
-            var model = new CreateItemDto
-            {
-                Name = item.Name,
-                Description = item.Description,
-                ExpirationDate = item.ExpirationDate,
-                Category = item.Category,
-                Price = item.Price,
-                Currency = item.Currency,
-                ExistingImagePath = item.ImagePath
-            };
-
-            return View(model);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Edit(int id, EditItemDto model, string captcha)
-        {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || !ValidateHtmlFields(model))
             {
                 return View(model);
             }
@@ -133,7 +112,111 @@ namespace Karakatsiya.Controllers
                 return NotFound();
             }
 
-            return RedirectToAction("UserItemsList");
+            return RedirectToAction("UserItems");
+        }
+
+        private bool ValidateHtmlFields(CreateItemDto model)
+        {
+            var isValid = true;
+
+            if (string.IsNullOrWhiteSpace(model.Name))
+            {
+                ModelState.AddModelError(nameof(model.Name), @_localization.WarningMessages["NameCannotBeEmpty"]);
+                isValid = false;
+            }
+            else
+            {
+                var nameValidationResult = _htmlValidator.ValidateHtml(model.Name);
+                if (!nameValidationResult.IsValid)
+                {
+                    ModelState.AddModelError(nameof(model.Name), nameValidationResult.ErrorMessage);
+                    isValid = false;
+                }
+            }
+
+            if (string.IsNullOrWhiteSpace(model.Description))
+            {
+                ModelState.AddModelError(nameof(model.Description), @_localization.WarningMessages["DescriptionCannotBeEmpty"]);
+                isValid = false;
+            }
+            else
+            {
+                var descriptionValidationResult = _htmlValidator.ValidateHtml(model.Description);
+                if (!descriptionValidationResult.IsValid)
+                {
+                    ModelState.AddModelError(nameof(model.Description), descriptionValidationResult.ErrorMessage);
+                    isValid = false;
+                }
+            }
+
+            if (model.Price <= 0)
+            {
+                ModelState.AddModelError(nameof(model.Price), @_localization.WarningMessages["PriceCannotBeZero"]);
+                isValid = false;
+            }
+            else
+            {
+                var priceValidationResult = _htmlValidator.ValidateHtml(model.Price.ToString());
+                if (!priceValidationResult.IsValid)
+                {
+                    ModelState.AddModelError(nameof(model.Price), priceValidationResult.ErrorMessage);
+                    isValid = false;
+                }
+            }
+
+            return isValid;
+        }
+
+        private bool ValidateHtmlFields(EditItemDto model)
+        {
+            var isValid = true;
+
+            if (string.IsNullOrWhiteSpace(model.Name))
+            {
+                ModelState.AddModelError(nameof(model.Name), "Название не может быть пустым.");
+                isValid = false;
+            }
+            else
+            {
+                var nameValidationResult = _htmlValidator.ValidateHtml(model.Name);
+                if (!nameValidationResult.IsValid)
+                {
+                    ModelState.AddModelError(nameof(model.Name), nameValidationResult.ErrorMessage);
+                    isValid = false;
+                }
+            }
+
+            if (string.IsNullOrWhiteSpace(model.Description))
+            {
+                ModelState.AddModelError(nameof(model.Description), "Описание не может быть пустым.");
+                isValid = false;
+            }
+            else
+            {
+                var descriptionValidationResult = _htmlValidator.ValidateHtml(model.Description);
+                if (!descriptionValidationResult.IsValid)
+                {
+                    ModelState.AddModelError(nameof(model.Description), descriptionValidationResult.ErrorMessage);
+                    isValid = false;
+                }
+            }
+
+            if (model.Price <= 0)
+            {
+                ModelState.AddModelError(nameof(model.Price), "Цена должна быть больше нуля.");
+                isValid = false;
+            }
+            else
+            {
+                var priceValidationResult = _htmlValidator.ValidateHtml(model.Price.ToString());
+                if (!priceValidationResult.IsValid)
+                {
+                    ModelState.AddModelError(nameof(model.Price), priceValidationResult.ErrorMessage);
+                    isValid = false;
+                }
+            }
+
+            return isValid;
         }
     }
 }

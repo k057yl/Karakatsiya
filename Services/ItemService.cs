@@ -3,6 +3,7 @@ using Karakatsiya.Interfaces;
 using Karakatsiya.Models.DTOs;
 using Karakatsiya.Models.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.IO;
 
 namespace Karakatsiya.Services
 {
@@ -12,15 +13,16 @@ namespace Karakatsiya.Services
 
         public ItemService(ApplicationDbContext context)
         {
-            _context = context;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         public async Task<Item> CreateItemAsync(CreateItemDto model, string userId)
         {
+            if (model == null) throw new ArgumentNullException(nameof(model));
+
             string? imagePath = null;
 
-            // Обработка изображения
-            if (model.ImageFile != null && model.ImageFile.Length > 0)
+            if (model.ImageFile?.Length > 0)
             {
                 var fileName = Path.GetFileName(model.ImageFile.FileName);
                 var uploads = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
@@ -38,22 +40,21 @@ namespace Karakatsiya.Services
                 imagePath = $"/images/{fileName}";
             }
 
-            // Устанавливаем все даты в UTC
             var utcExpirationDate = model.ExpirationDate.HasValue
                 ? DateTime.SpecifyKind(model.ExpirationDate.Value, DateTimeKind.Utc)
                 : DateTime.SpecifyKind(new DateTime(2099, 12, 31), DateTimeKind.Utc);
 
             var item = new Item
             {
-                Name = model.Name,
+                Name = model.Name ?? throw new ArgumentNullException(nameof(model.Name)),
                 CreationDate = DateTime.UtcNow,
                 ExpirationDate = utcExpirationDate,
-                ImagePath = imagePath,
-                Description = model.Description,
+                ImagePath = imagePath ?? string.Empty,
+                Description = model.Description ?? throw new ArgumentNullException(nameof(model.Description)),
                 Category = model.Category,
                 Price = model.Price,
-                Currency = model.Currency,
-                UserId = userId,
+                Currency = model.Currency ?? string.Empty,
+                UserId = userId ?? throw new ArgumentNullException(nameof(userId)),
             };
 
             _context.Items.Add(item);
@@ -64,23 +65,25 @@ namespace Karakatsiya.Services
 
         public async Task<Item> EditItemAsync(int id, EditItemDto model, string userId)
         {
+            if (model == null) throw new ArgumentNullException(nameof(model));
+            if (userId == null) throw new ArgumentNullException(nameof(userId));
+
             var item = await _context.Items.FirstOrDefaultAsync(i => i.ItemId == id && i.UserId == userId);
             if (item == null)
             {
                 return null;
             }
 
-            item.Name = model.Name;
-            item.Description = model.Description;
+            item.Name = model.Name ?? item.Name;
+            item.Description = model.Description ?? item.Description;
             item.ExpirationDate = model.ExpirationDate.HasValue
                 ? DateTime.SpecifyKind(model.ExpirationDate.Value, DateTimeKind.Utc)
                 : (DateTime?)null;
             item.Category = model.Category;
-            item.Price = model.Price;
-            item.Currency = model.Currency;
+            item.Price = model.Price != 0 ? model.Price : item.Price;
+            item.Currency = model.Currency ?? item.Currency;
 
-            // Обработка изображения
-            if (model.ImageFile != null && model.ImageFile.Length > 0)
+            if (model.ImageFile?.Length > 0)
             {
                 if (!string.IsNullOrEmpty(item.ImagePath))
                 {
@@ -115,6 +118,8 @@ namespace Karakatsiya.Services
 
         public async Task<bool> DeleteItemAsync(int id, string userId)
         {
+            if (string.IsNullOrEmpty(userId)) throw new ArgumentNullException(nameof(userId));
+
             var item = await _context.Items.FindAsync(id);
             if (item == null || item.UserId != userId)
             {
@@ -133,6 +138,8 @@ namespace Karakatsiya.Services
 
         public async Task<List<Item>> GetUserItemsAsync(string userId)
         {
+            if (string.IsNullOrEmpty(userId)) throw new ArgumentNullException(nameof(userId));
+
             return await _context.Items.Where(i => i.UserId == userId).ToListAsync();
         }
     }

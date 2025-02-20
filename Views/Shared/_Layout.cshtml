@@ -37,29 +37,47 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Item" asp-action="UserItems">UserItems</a>
                         </li>
-                        <!--LanguageButton-->
-                        <div class="language-selector">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                @_localizer.Buttons["Language"]
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <li>
-                                    <form action="@Url.Action("SetLanguage", "Home")" method="post" class="d-inline">
-                                        <input type="hidden" name="culture" value="en-US" />
-                                        <input type="hidden" name="returnUrl" value="@Context.Request.Path" />
-                                        <button type="submit" class="dropdown-item">English</button>
-                                    </form>
-                                </li>
-                                <li>
-                                    <form action="@Url.Action("SetLanguage", "Home")" method="post" class="d-inline">
-                                        <input type="hidden" name="culture" value="uk-UA" />
-                                        <input type="hidden" name="returnUrl" value="@Context.Request.Path" />
-                                        <button type="submit" class="dropdown-item">Українська</button>
-                                    </form>
-                                </li>
-                            </ul>
-                        </div>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Sale" asp-action="Sales">@_localizer.Buttons["MainMenuSales"]</a>
+                        </li>
+                        <!-- Language Button -->
+                        <li class="nav-item">
+                            <div class="language-selector">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                    @_localizer.Buttons["Language"]
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <li>
+                                        <form action="@Url.Action("SetLanguage", "Home")" method="post" class="d-inline">
+                                            <input type="hidden" name="culture" value="en-US" />
+                                            <input type="hidden" name="returnUrl" value="@Context.Request.Path" />
+                                            <button type="submit" class="dropdown-item">English</button>
+                                        </form>
+                                    </li>
+                                    <li>
+                                        <form action="@Url.Action("SetLanguage", "Home")" method="post" class="d-inline">
+                                            <input type="hidden" name="culture" value="uk-UA" />
+                                            <input type="hidden" name="returnUrl" value="@Context.Request.Path" />
+                                            <button type="submit" class="dropdown-item">Українська</button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
                     </ul>
+                    <div class="d-flex align-items-center">
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <span class="me-3">@_localizer.Messages["Hello"], @User.Identity.Name!</span>
+                            <form method="post" asp-area="" asp-controller="Account" asp-action="Logout">
+                                <button type="submit" class="btn btn-outline-dark">@_localizer.Buttons["Logout"]</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <a asp-area="" asp-controller="Account" asp-action="Login" class="btn btn-outline-dark">@_localizer.Buttons["Login"]</a>
+                        }
+                    </div>
                 </div>
             </div>
         </nav>

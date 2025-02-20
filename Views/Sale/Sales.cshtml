@@ -1,0 +1,96 @@
+﻿@model IEnumerable<Karakatsiya.Models.Entities.Sale>
+@inject Karakatsiya.Localizations.SharedLocalizationService sharedLocalizer
+
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+        @sharedLocalizer.Buttons["Filter"]
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="filterDropdown">
+        <li>
+            <form method="get">
+                <div class="row p-3">
+                    <div class="col-md-6">
+                        <label for="startDate">@sharedLocalizer.Buttons["Filter.StartDate"]</label>
+                        <input type="date" id="startDate" name="startDate" class="form-control" value="@ViewData["StartDate"]" />
+                    </div>
+                    <div class="col-md-6">
+                        <label for="endDate">@sharedLocalizer.Buttons["Filter.EndDate"]</label>
+                        <input type="date" id="endDate" name="endDate" class="form-control" value="@ViewData["EndDate"]" />
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between p-3">
+                    <button type="submit" class="btn btn-primary">@sharedLocalizer.Buttons["Filter"]</button>
+                    <a href="@Url.Action("Sales")" class="btn btn-outline-secondary">@sharedLocalizer.Buttons["Filter.ResetFilter"]</a>
+                </div>
+            </form>
+        </li>
+    </ul>
+</div>
+
+<div class="sales-container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@sharedLocalizer.Tables["Image"]</th>
+                <th>@sharedLocalizer.Tables["Name"]</th>
+                <th>@sharedLocalizer.Tables["SaleDate"]</th>
+                <th>@sharedLocalizer.Tables["SoldPrice"]</th>
+                <th>@sharedLocalizer.Tables["Profit"]</th>
+                <th>@sharedLocalizer.Tables["Actions"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var sale in Model)
+            {
+                <tr>
+                    <td class="center-content">
+                        @if (!string.IsNullOrEmpty(sale.ItemImagePath))
+                        {
+                            <div class="photo-container">
+                                <img src="@sale.ItemImagePath" alt="Image" class="item-photo" />
+                                <span class="creation-date">@sale.ItemCreationDate?.ToShortDateString()</span>
+                            </div>
+                        }
+                        else
+                        {
+                            <span>@sharedLocalizer.Messages["NoImage"]</span>
+                        }
+                    </td>
+                    <td>@sale.ItemName</td>
+                    <td>@sale.SaleDate.ToShortDateString()</td>
+                    <td>@sale.SalePrice @sale.Currency</td>
+                    <td>@sale.Profit @sale.Currency</td>
+                    <td>
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-saleid="@sale.SaleId">
+                            @sharedLocalizer.Buttons["Delete"]
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- Bootstrap Modal -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteLabel">@sharedLocalizer.Messages["DeleteTitle"]</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @sharedLocalizer.Messages["DeletionConfirmation"]
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="confirmDeleteButton">@sharedLocalizer.Buttons["Yes"]</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@sharedLocalizer.Buttons["No"]</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    <script src="~/js/site.js"></script>
+}

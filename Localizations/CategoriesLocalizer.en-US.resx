@@ -117,22 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="EUR" xml:space="preserve">
-    <value>Євро</value>
+  <data name="Books" xml:space="preserve">
+    <value>Books</value>
   </data>
-  <data name="Home" xml:space="preserve">
-    <value>Головна</value>
+  <data name="Clothing" xml:space="preserve">
+    <value>Clothing</value>
   </data>
-  <data name="Language" xml:space="preserve">
-    <value>Мова</value>
+  <data name="Cosmetics" xml:space="preserve">
+    <value>Cosmetics</value>
   </data>
-  <data name="Registration" xml:space="preserve">
-    <value>Реєстрація</value>
+  <data name="Electronics" xml:space="preserve">
+    <value>Electronics</value>
   </data>
-  <data name="UAH" xml:space="preserve">
-    <value>Гривня</value>
+  <data name="Groceries" xml:space="preserve">
+    <value>Groceries</value>
   </data>
-  <data name="USD" xml:space="preserve">
-    <value>Долар</value>
+  <data name="Other" xml:space="preserve">
+    <value>Other</value>
+  </data>
+  <data name="SelectCategory" xml:space="preserve">
+    <value>SelectCategory</value>
   </data>
 </root>
