@@ -13,6 +13,7 @@ public static class ServiceRegistration
         services.AddScoped<SharedLocalizationService>();
         services.AddScoped<IItemService, ItemService>();
         services.AddScoped<ISaleService, SaleService>();
-        services.AddScoped<CategoryLocalizationService>();      
+        services.AddScoped<CategoryLocalizationService>();
+        services.AddScoped<CurrencyLocalizationService>();
     }
 }

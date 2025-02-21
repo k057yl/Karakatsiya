@@ -118,60 +118,15 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Category" xml:space="preserve">
-    <value>Category</value>
-  </data>
-  <data name="Currency" xml:space="preserve">
-    <value>Currency</value>
+    <value>Оберіть категорію</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>Description</value>
-  </data>
-  <data name="Main.Home" xml:space="preserve">
-    <value>Home</value>
-  </data>
-  <data name="Main.Language" xml:space="preserve">
-    <value>Language</value>
+    <value>Введіть опис</value>
   </data>
   <data name="Name" xml:space="preserve">
-    <value>Name</value>
+    <value>Введіть назву</value>
   </data>
   <data name="Price" xml:space="preserve">
-    <value>Price</value>
-  </data>
-  <data name="Main.Registration" xml:space="preserve">
-    <value>Registration</value>
-  </data>
-  <data name="Save" xml:space="preserve">
-    <value>Save</value>
-  </data>
-  <data name="SelectFile" xml:space="preserve">
-    <value>Select file</value>
-  </data>
-  <data name="ShowExperationDate" xml:space="preserve">
-    <value>Show experation date</value>
-  </data>
-  <data name="ExpirationDate" xml:space="preserve">
-    <value>Expiration date</value>
-  </data>
-  <data name="SelectCategory" xml:space="preserve">
-    <value>Select category</value>
-  </data>
-  <data name="SelectCurrency" xml:space="preserve">
-    <value>Select currency</value>
-  </data>
-  <data name="Main.UserItems" xml:space="preserve">
-    <value>User items</value>
-  </data>
-  <data name="Main.Logout" xml:space="preserve">
-    <value>Logout</value>
-  </data>
-  <data name="Main.Login" xml:space="preserve">
-    <value>Login</value>
-  </data>
-  <data name="Main.Create" xml:space="preserve">
-    <value>Create</value>
-  </data>
-  <data name="Main.MenuSales" xml:space="preserve">
-    <value>Sale menu</value>
+    <value>Введіть ціну</value>
   </data>
 </root>

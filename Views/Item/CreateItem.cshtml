@@ -2,12 +2,13 @@
 @model Karakatsiya.Models.DTOs.CreateItemDto
 @inject Karakatsiya.Localizations.SharedLocalizationService localizer
 @inject Karakatsiya.Services.CategoryLocalizationService categoryLocalizationService
+@inject Karakatsiya.Services.CurrencyLocalizationService currencyLocalizationService
 
 @{
     ViewData["Title"] = "Создать новый товар";
 }
 
-<h2>@ViewData["Title"]</h2>
+<h2>@localizer.Pages["CreatePage.Greetings"]</h2>
 
 <div class="create-item-container">
     <div class="form-container">
@@ -30,22 +31,23 @@
 
             <div class="form-group">
                 <label asp-for="Name" class="control-label">@localizer.Buttons["Name"]</label>
-                <input asp-for="Name" class="form-control" placeholder="@localizer.Buttons["Field.Name"]" />
+                <input asp-for="Name" class="form-control" placeholder="@localizer.Fields["Name"]" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label asp-for="Description" class="control-label">@localizer.Buttons["Description"]</label>
-                <textarea id="DescriptionField" name="Description" class="form-control description-field" rows="3" placeholder="@localizer.Buttons["Field.Description"]"></textarea>
+                <textarea id="DescriptionField" name="Description" class="form-control description-field" rows="3" placeholder="@localizer.Fields["Description"]"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label asp-for="Currency" class="control-label">@localizer.Buttons["Currency"]</label>
-                <select asp-for="Currency" class="form-control">
-                    <option value="USD">@localizer.Buttons["USD"]</option>
-                    <option value="EUR">@localizer.Buttons["EUR"]</option>
-                    <option value="UAH">@localizer.Buttons["UAH"]</option>
+                <select asp-for="Currency" class="form-control" aria-placeholder="@localizer.Fields["Currency"]">
+                    @foreach (var currency in currencyLocalizationService.GetLocalizedCurrencies())
+                    {
+                        <option value="@currency.Key">@currency.Value</option>
+                    }
                 </select>
                 <span asp-validation-for="Currency" class="text-danger"></span>
             </div>
@@ -58,8 +60,7 @@
 
             <div class="form-group">
                 <label asp-for="Category" class="control-label">@localizer.Buttons["Category"]</label>
-                <select asp-for="Category" class="form-control" aria-placeholder="@localizer.Buttons["Field.Category"]">
-                    <option value="">@localizer.Categories["SelectCategory"]</option>
+                <select asp-for="Category" class="form-control" aria-placeholder="@localizer.Fields["Category"]">
                     @foreach (var category in categoryLocalizationService.GetLocalizedCategories())
                     {
                         <option value="@category.Key">@category.Value</option>

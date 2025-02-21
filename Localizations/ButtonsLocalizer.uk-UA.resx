@@ -117,22 +117,61 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="EUR" xml:space="preserve">
-    <value>Євро</value>
+  <data name="Category" xml:space="preserve">
+    <value>Категорія</value>
   </data>
-  <data name="Home" xml:space="preserve">
+  <data name="Currency" xml:space="preserve">
+    <value>Валюта</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Опис</value>
+  </data>
+  <data name="Main.Home" xml:space="preserve">
     <value>Головна</value>
   </data>
-  <data name="Language" xml:space="preserve">
+  <data name="Main.Language" xml:space="preserve">
     <value>Мова</value>
   </data>
-  <data name="Registration" xml:space="preserve">
+  <data name="Name" xml:space="preserve">
+    <value>Назва</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Ціна</value>
+  </data>
+  <data name="Main.Registration" xml:space="preserve">
     <value>Реєстрація</value>
   </data>
-  <data name="UAH" xml:space="preserve">
-    <value>Гривня</value>
+  <data name="Save" xml:space="preserve">
+    <value>Зберегти</value>
   </data>
-  <data name="USD" xml:space="preserve">
-    <value>Долар</value>
+  <data name="SelectFile" xml:space="preserve">
+    <value>Вибрати файл</value>
+  </data>
+  <data name="ShowExperationDate" xml:space="preserve">
+    <value>Встановити кінцевий термін придатності</value>
+  </data>
+  <data name="ExpirationDate" xml:space="preserve">
+    <value>Термін придатності</value>
+  </data>
+  <data name="SelectCategory" xml:space="preserve">
+    <value>Оберіть категорію</value>
+  </data>
+  <data name="SelectCurrency" xml:space="preserve">
+    <value>Оберіть валюту</value>
+  </data>
+  <data name="Main.UserItems" xml:space="preserve">
+    <value>Предмети</value>
+  </data>
+  <data name="Main.Logout" xml:space="preserve">
+    <value>Вийти</value>
+  </data>
+  <data name="Main.Login" xml:space="preserve">
+    <value>Увійти</value>
+  </data>
+  <data name="Main.Create" xml:space="preserve">
+    <value>Створити</value>
+  </data>
+  <data name="Main.MenuSales" xml:space="preserve">
+    <value>Продажі</value>
   </data>
 </root>

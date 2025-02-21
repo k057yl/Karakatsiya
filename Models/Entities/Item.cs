@@ -19,7 +19,7 @@ namespace Karakatsiya.Models.Entities
 
         [Required]
         [MaxLength(200)]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         private DateTime _creationDate;
 
@@ -41,9 +41,9 @@ namespace Karakatsiya.Models.Entities
         }
 
         [MaxLength(500)]
-        public string ImagePath { get; set; }
+        public string? ImagePath { get; set; }
 
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         [Required]
         [Column(TypeName = "decimal(18,2)")]
@@ -53,7 +53,7 @@ namespace Karakatsiya.Models.Entities
         public Category Category { get; set; }
 
         [MaxLength(10)]
-        public string Currency { get; set; }
+        public string? Currency { get; set; }
 
         [Required]
         public bool IsSold { get; set; }

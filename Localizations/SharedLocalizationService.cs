@@ -24,9 +24,8 @@ namespace Karakatsiya.Localizations
         public IStringLocalizer WarningMessages => GetLocalizer<WarningMessagesLocalizer>();
         public IStringLocalizer Categories => GetLocalizer<CategoriesLocalizer>();
         public IStringLocalizer Tables => GetLocalizer<TablesLocalizer>();
-        /*
-        
-        public IStringLocalizer Pages => GetLocalizer<PageResources>();
-        */
+        public IStringLocalizer Fields => GetLocalizer<FieldLocalizer>();
+        public IStringLocalizer Currencies => GetLocalizer<CurrensiesLocalizer>();
+        public IStringLocalizer Pages => GetLocalizer<PagesTextLocalizer>();
     }
 }

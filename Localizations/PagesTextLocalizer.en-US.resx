@@ -117,61 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Category" xml:space="preserve">
-    <value>Category</value>
+  <data name="CreatePage.Greetings" xml:space="preserve">
+    <value>Here you can create your item</value>
   </data>
-  <data name="Currency" xml:space="preserve">
-    <value>Currency</value>
+  <data name="EditPage.Greetings" xml:space="preserve">
+    <value>Here you can edit your item</value>
   </data>
-  <data name="Description" xml:space="preserve">
-    <value>Description</value>
+  <data name="HomePage.Greetings" xml:space="preserve">
+    <value>We are pleased to welcome you to the platform that offers convenient and effective solutions for managing your items. Here, you can create items, track their status, and monitor expiration dates without worrying about missing anything.
+
+Our website is designed with the aim of simplifying your life. We understand how important it is to stay informed about every detail related to your items, which is why we offer notifications when an item’s expiration date is approaching. This allows you to stay one step ahead and prevent potential issues.
+
+Moreover, if your items are ready for sale, our website provides an easy and convenient way to sell them — without unnecessary steps and complex procedures. Whether you’re selling items with limited shelf life or just want to part with them, our platform makes the process as easy and comfortable as possible.
+
+We are committed to providing you with all the tools you need to successfully and conveniently manage your items, and we ensure that every step will be accompanied by simplicity and clarity. Start using our website today and discover new opportunities!</value>
   </data>
-  <data name="Main.Home" xml:space="preserve">
-    <value>Home</value>
+  <data name="HomePage.Title" xml:space="preserve">
+    <value>Welcome to our website!</value>
   </data>
-  <data name="Main.Language" xml:space="preserve">
-    <value>Language</value>
-  </data>
-  <data name="Name" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="Price" xml:space="preserve">
-    <value>Price</value>
-  </data>
-  <data name="Main.Registration" xml:space="preserve">
-    <value>Registration</value>
-  </data>
-  <data name="Save" xml:space="preserve">
-    <value>Save</value>
-  </data>
-  <data name="SelectFile" xml:space="preserve">
-    <value>Select file</value>
-  </data>
-  <data name="ShowExperationDate" xml:space="preserve">
-    <value>Show experation date</value>
-  </data>
-  <data name="ExpirationDate" xml:space="preserve">
-    <value>Expiration date</value>
-  </data>
-  <data name="SelectCategory" xml:space="preserve">
-    <value>Select category</value>
-  </data>
-  <data name="SelectCurrency" xml:space="preserve">
-    <value>Select currency</value>
-  </data>
-  <data name="Main.UserItems" xml:space="preserve">
-    <value>User items</value>
-  </data>
-  <data name="Main.Logout" xml:space="preserve">
-    <value>Logout</value>
-  </data>
-  <data name="Main.Login" xml:space="preserve">
-    <value>Login</value>
-  </data>
-  <data name="Main.Create" xml:space="preserve">
-    <value>Create</value>
-  </data>
-  <data name="Main.MenuSales" xml:space="preserve">
-    <value>Sale menu</value>
+  <data name="SalesPage.SalesHistory" xml:space="preserve">
+    <value>SalesHistory</value>
   </data>
 </root>

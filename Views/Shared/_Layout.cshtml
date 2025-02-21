@@ -23,28 +23,25 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">@_localizer.Buttons["Home"]</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">@_localizer.Buttons["Main.Home"]</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">@_localizer.Buttons["Main.Registration"]</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">@_localizer.Buttons["Registration"]</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Item" asp-action="CreateItem">@_localizer.Buttons["Main.Create"]</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Item" asp-action="CreateItem">Create</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Item" asp-action="UserItems">@_localizer.Buttons["Main.UserItems"]</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Item" asp-action="UserItems">UserItems</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Sale" asp-action="Sales">@_localizer.Buttons["MainMenuSales"]</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Sale" asp-action="Sales">@_localizer.Buttons["Main.MenuSales"]</a>
                         </li>
                         <!-- Language Button -->
                         <li class="nav-item">
                             <div class="language-selector">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                    @_localizer.Buttons["Language"]
+                                    @_localizer.Buttons["Main.Language"]
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <li>
@@ -70,12 +67,12 @@
                         {
                             <span class="me-3">@_localizer.Messages["Hello"], @User.Identity.Name!</span>
                             <form method="post" asp-area="" asp-controller="Account" asp-action="Logout">
-                                <button type="submit" class="btn btn-outline-dark">@_localizer.Buttons["Logout"]</button>
+                                <button type="submit" class="btn btn-outline-dark">@_localizer.Buttons["Main.Logout"]</button>
                             </form>
                         }
                         else
                         {
-                            <a asp-area="" asp-controller="Account" asp-action="Login" class="btn btn-outline-dark">@_localizer.Buttons["Login"]</a>
+                            <a asp-area="" asp-controller="Account" asp-action="Login" class="btn btn-outline-dark">@_localizer.Buttons["Main.Login"]</a>
                         }
                     </div>
                 </div>

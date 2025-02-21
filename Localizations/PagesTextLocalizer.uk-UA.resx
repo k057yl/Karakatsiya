@@ -117,61 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Category" xml:space="preserve">
-    <value>Category</value>
+  <data name="CreatePage.Greetings" xml:space="preserve">
+    <value>Тут ви можете створити свій предмет</value>
   </data>
-  <data name="Currency" xml:space="preserve">
-    <value>Currency</value>
+  <data name="EditPage.Greetings" xml:space="preserve">
+    <value>Тут ви можете редагувати свій предмет</value>
   </data>
-  <data name="Description" xml:space="preserve">
-    <value>Description</value>
+  <data name="HomePage.Greetings" xml:space="preserve">
+    <value>Ми раді вітати вас на платформі, яка пропонує зручні та ефективні рішення для управління вашими товарами. Тут ви можете створювати предмети, відстежувати їх стан і стежити за термінами придатності, не переживаючи, що щось може бути упущено.
+
+Наш сайт створений з думкою про те, щоб спростити ваше життя. Ми розуміємо, як важливо бути в курсі всіх деталей, пов'язаних з вашими товарами, і саме тому надаємо можливість отримувати сповіщення, коли термін придатності товару наближається до кінця. Це дозволяє вам завжди бути на крок попереду та запобігти можливим незручностям.
+
+Крім того, якщо ваші товари готові до продажу, наш сайт пропонує вам простий і зручний спосіб реалізації — без зайвих кроків і складних процедур. Незалежно від того, продаєте ви товари з обмеженим терміном придатності чи просто хочете з ними попрощатися, наша платформа зробить цей процес максимально легким і комфортним.
+
+Ми прагнемо надати вам всі необхідні інструменти для успішного та зручного управління вашими товарами, а також гарантуємо, що кожен крок буде супроводжуватися простотою та ясністю. Почніть використовувати наш сайт і відкрийте для себе нові можливості вже сьогодні!</value>
   </data>
-  <data name="Main.Home" xml:space="preserve">
-    <value>Home</value>
+  <data name="HomePage.Title" xml:space="preserve">
+    <value>Ласкаво просимо на наш сайт!</value>
   </data>
-  <data name="Main.Language" xml:space="preserve">
-    <value>Language</value>
-  </data>
-  <data name="Name" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="Price" xml:space="preserve">
-    <value>Price</value>
-  </data>
-  <data name="Main.Registration" xml:space="preserve">
-    <value>Registration</value>
-  </data>
-  <data name="Save" xml:space="preserve">
-    <value>Save</value>
-  </data>
-  <data name="SelectFile" xml:space="preserve">
-    <value>Select file</value>
-  </data>
-  <data name="ShowExperationDate" xml:space="preserve">
-    <value>Show experation date</value>
-  </data>
-  <data name="ExpirationDate" xml:space="preserve">
-    <value>Expiration date</value>
-  </data>
-  <data name="SelectCategory" xml:space="preserve">
-    <value>Select category</value>
-  </data>
-  <data name="SelectCurrency" xml:space="preserve">
-    <value>Select currency</value>
-  </data>
-  <data name="Main.UserItems" xml:space="preserve">
-    <value>User items</value>
-  </data>
-  <data name="Main.Logout" xml:space="preserve">
-    <value>Logout</value>
-  </data>
-  <data name="Main.Login" xml:space="preserve">
-    <value>Login</value>
-  </data>
-  <data name="Main.Create" xml:space="preserve">
-    <value>Create</value>
-  </data>
-  <data name="Main.MenuSales" xml:space="preserve">
-    <value>Sale menu</value>
+  <data name="SalesPage.SalesHistory" xml:space="preserve">
+    <value>Історія продажів</value>
   </data>
 </root>
