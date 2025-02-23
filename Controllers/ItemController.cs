@@ -5,7 +5,6 @@ using Karakatsiya.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 
 namespace Karakatsiya.Controllers
@@ -40,7 +39,6 @@ namespace Karakatsiya.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateItem(CreateItemDto model)
         {
-
             if (!ModelState.IsValid || !ValidateHtmlFields(model))
             {
                 return View(model);
@@ -52,7 +50,42 @@ namespace Karakatsiya.Controllers
                 return View(model);
             }
 
-            var item = await _itemService.CreateItemAsync(model, user.Id);
+            var imagePaths = new List<string>();
+            string mainImage = model.MainImage;
+
+            if (model.ImageFiles != null && model.ImageFiles.Any())
+            {
+                var uploads = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
+                Directory.CreateDirectory(uploads);
+
+                foreach (var file in model.ImageFiles)
+                {
+                    if (file.Length > 0)
+                    {
+                        var fileName = Path.GetFileName(file.FileName);
+                        var filePath = Path.Combine(uploads, fileName);
+
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await file.CopyToAsync(stream);
+                        }
+
+                        var relativePath = $"/images/{fileName}";
+                        imagePaths.Add(relativePath);
+
+                        if (mainImage == null)
+                        {
+                            mainImage = relativePath;
+                        }
+                    }
+                }
+            }
+
+            mainImage ??= imagePaths.FirstOrDefault();
+
+            model.MainImage = mainImage;
+
+            await _itemService.CreateItemAsync(model, user.Id);
             return RedirectToAction("UserItems");
         }
 
@@ -92,7 +125,7 @@ namespace Karakatsiya.Controllers
             return View(item);
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> Edit(int id, EditItemDto model)
         {
             if (!ModelState.IsValid || !ValidateHtmlFields(model))

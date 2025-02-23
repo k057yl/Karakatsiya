@@ -3,7 +3,6 @@ using Karakatsiya.Interfaces;
 using Karakatsiya.Models.DTOs;
 using Karakatsiya.Models.Entities;
 using Microsoft.EntityFrameworkCore;
-using System.IO;
 
 namespace Karakatsiya.Services
 {
@@ -19,42 +18,48 @@ namespace Karakatsiya.Services
         public async Task<Item> CreateItemAsync(CreateItemDto model, string userId)
         {
             if (model == null) throw new ArgumentNullException(nameof(model));
+            if (model.ImageFiles == null || model.ImageFiles.Count == 0)
+                throw new ArgumentException("Необходимо загрузить хотя бы одно изображение.");
 
-            string? imagePath = null;
-
-            if (model.ImageFile?.Length > 0)
+            var uploads = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
+            if (!Directory.Exists(uploads))
             {
-                var fileName = Path.GetFileName(model.ImageFile.FileName);
-                var uploads = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
-                if (!Directory.Exists(uploads))
-                {
-                    Directory.CreateDirectory(uploads);
-                }
+                Directory.CreateDirectory(uploads);
+            }
+
+            var imagePaths = new List<string>();
+            foreach (var file in model.ImageFiles.Take(5))
+            {
+                var fileName = Path.GetFileName(file.FileName);
                 var filePath = Path.Combine(uploads, fileName);
 
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
-                    await model.ImageFile.CopyToAsync(stream);
+                    await file.CopyToAsync(stream);
                 }
 
-                imagePath = $"/images/{fileName}";
+                var relativePath = $"/images/{fileName}";
+                imagePaths.Add(relativePath);
             }
 
-            var utcExpirationDate = model.ExpirationDate.HasValue
-                ? DateTime.SpecifyKind(model.ExpirationDate.Value, DateTimeKind.Utc)
-                : DateTime.SpecifyKind(new DateTime(2099, 12, 31), DateTimeKind.Utc);
+            string mainImage = model.MainImage;
+            if (string.IsNullOrEmpty(mainImage))
+            {
+                mainImage = imagePaths.FirstOrDefault();
+            }
 
             var item = new Item
             {
-                Name = model.Name ?? throw new ArgumentNullException(nameof(model.Name)),
+                Name = model.Name,
                 CreationDate = DateTime.UtcNow,
-                ExpirationDate = utcExpirationDate,
-                ImagePath = imagePath ?? string.Empty,
-                Description = model.Description ?? throw new ArgumentNullException(nameof(model.Description)),
+                ExpirationDate = model.ExpirationDate,
+                ImagePaths = imagePaths,
+                MainImage = mainImage,
+                Description = model.Description,
                 Category = model.Category,
                 Price = model.Price,
-                Currency = model.Currency ?? string.Empty,
-                UserId = userId ?? throw new ArgumentNullException(nameof(userId)),
+                Currency = model.Currency,
+                UserId = userId
             };
 
             _context.Items.Add(item);
@@ -69,45 +74,37 @@ namespace Karakatsiya.Services
             if (userId == null) throw new ArgumentNullException(nameof(userId));
 
             var item = await _context.Items.FirstOrDefaultAsync(i => i.ItemId == id && i.UserId == userId);
-            if (item == null)
-            {
-                return null;
-            }
+            if (item == null) return null;
 
-            item.Name = model.Name ?? item.Name;
-            item.Description = model.Description ?? item.Description;
+            item.Name = model.Name;
+            item.Description = model.Description;
             item.ExpirationDate = model.ExpirationDate.HasValue
                 ? DateTime.SpecifyKind(model.ExpirationDate.Value, DateTimeKind.Utc)
-                : (DateTime?)null;
+                : item.ExpirationDate;
             item.Category = model.Category;
-            item.Price = model.Price != 0 ? model.Price : item.Price;
-            item.Currency = model.Currency ?? item.Currency;
+            item.Price = model.Price;
+            item.Currency = model.Currency;
 
-            if (model.ImageFile?.Length > 0)
+            if (model.ImageFiles != null && model.ImageFiles.Count > 0)
             {
-                if (!string.IsNullOrEmpty(item.ImagePath))
-                {
-                    var oldImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", item.ImagePath.TrimStart('/'));
-                    if (File.Exists(oldImagePath))
-                    {
-                        File.Delete(oldImagePath);
-                    }
-                }
-
-                var fileName = Path.GetFileName(model.ImageFile.FileName);
                 var uploads = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
                 if (!Directory.Exists(uploads))
                 {
                     Directory.CreateDirectory(uploads);
                 }
-                var filePath = Path.Combine(uploads, fileName);
 
-                using (var stream = new FileStream(filePath, FileMode.Create))
+                foreach (var file in model.ImageFiles)
                 {
-                    await model.ImageFile.CopyToAsync(stream);
-                }
+                    var fileName = Path.GetFileName(file.FileName);
+                    var filePath = Path.Combine(uploads, fileName);
 
-                item.ImagePath = $"/images/{fileName}";
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+
+                    item.ImagePaths.Add($"/images/{fileName}");
+                }
             }
 
             _context.Items.Update(item);
@@ -126,6 +123,12 @@ namespace Karakatsiya.Services
                 return false;
             }
 
+            var entityInDb = await _context.Items.AsNoTracking().FirstOrDefaultAsync(i => i.ItemId == id);
+            if (entityInDb == null)
+            {
+                return false;
+            }
+
             _context.Items.Remove(item);
             await _context.SaveChangesAsync();
             return true;
@@ -133,7 +136,9 @@ namespace Karakatsiya.Services
 
         public async Task<Item> GetItemDetailsAsync(int id)
         {
-            return await _context.Items.FirstOrDefaultAsync(i => i.ItemId == id);
+            return await _context.Items
+                .Include(i => i.User)
+                .FirstOrDefaultAsync(i => i.ItemId == id);
         }
 
         public async Task<List<Item>> GetUserItemsAsync(string userId)

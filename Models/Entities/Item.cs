@@ -40,8 +40,9 @@ namespace Karakatsiya.Models.Entities
                 : (DateTime?)null;
         }
 
-        [MaxLength(500)]
-        public string? ImagePath { get; set; }
+        public string? MainImage { get; set; }
+        public List<string> ImagePaths { get; set; } = new List<string>();
+
 
         public string? Description { get; set; }
 

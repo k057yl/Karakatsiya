@@ -35,10 +35,13 @@
 
                 <tr class="@(isExpired ? "expired" : isExpiringSoon ? "expiring-soon" : "")">
                     <td>
-                        @if (!string.IsNullOrEmpty(item.ImagePath))
+                        @if (item.ImagePaths.Any())
                         {
+                            var mainImage = item.MainImage ?? item.ImagePaths.FirstOrDefault();
+
                             <a href="@Url.Action("Details", "Item", new { id = item.ItemId })">
-                                <img src="@item.ImagePath" alt="Image" style="max-width: 100px; max-height: 100px;" />
+                                <!--<img id="mainImageDisplay" src="" alt="Main Image" style="max-width: 100px; max-height: 100px;">-->
+                                <img src="@mainImage" alt="Image" style="max-width: 100px; max-height: 100px;" />
                             </a>
                         }
                         else

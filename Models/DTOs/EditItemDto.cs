@@ -12,7 +12,7 @@ namespace Karakatsiya.Models.DTOs
 
         public DateTime? ExpirationDate { get; set; }
 
-        public IFormFile? ImageFile { get; set; }
+        public List<IFormFile>? ImageFiles { get; set; }
 
         [Required]
         public string? Description { get; set; }

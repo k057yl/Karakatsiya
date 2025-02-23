@@ -22,8 +22,6 @@ namespace Karakatsiya.Services
                 return null;
             }
 
-            string imagePath = item.ImagePath ?? "/images/Logo_v1.png";
-
             var sale = new Sale
             {
                 ItemId = item.ItemId,
@@ -34,7 +32,7 @@ namespace Karakatsiya.Services
                 Profit = salePrice - item.Price,
                 Currency = item.Currency,
                 ItemIsDeleted = item.IsDeleted,
-                ItemImagePath = imagePath
+                ItemImagePath = item.MainImage
             };
 
             _context.Sales.Add(sale);
@@ -70,7 +68,15 @@ namespace Karakatsiya.Services
             }
 
             _context.Sales.Remove(sale);
-            await _context.SaveChangesAsync();
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return false;
+            }
 
             return true;
         }

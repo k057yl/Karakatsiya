@@ -1,0 +1,60 @@
+﻿@model Karakatsiya.Models.Entities.Item
+
+@{
+    ViewData["Title"] = "Item Details";
+}
+
+<h1>@Model.Name</h1>
+
+<div>
+    <strong>Price:</strong> @Model.Price @Model.Currency
+</div>
+<div>
+    <strong>Created:</strong> @Model.CreationDate.ToString("yyyy-MM-dd HH:mm")
+</div>
+<div>
+    <strong>Expiration Date:</strong> @Model.ExpirationDate?.ToString("yyyy-MM-dd HH:mm") ?? "Not set"
+</div>
+
+<div>
+    <strong>Description:</strong>
+    <p>@Model.Description</p>
+</div>
+
+<div>
+    <h3>Main Image</h3>
+    @if (!string.IsNullOrEmpty(Model.MainImage))
+    {
+        <img src="@Model.MainImage" alt="@Model.Name" width="200" height="200" />
+    }
+    else
+    {
+        <span>No main image available.</span>
+    }
+</div>
+
+<div>
+    <h3>Other Images</h3>
+    <div class="image-gallery">
+        @foreach (var imagePath in Model.ImagePaths)
+        {
+            <img src="@imagePath" alt="Image" width="100" height="100" />
+        }
+    </div>
+</div>
+
+<div>
+    <strong>Category:</strong> @Model.Category
+</div>
+
+<div>
+    <strong>Sold:</strong> @(Model.IsSold ? "Yes" : "No")
+</div>
+
+<div>
+    <strong>Deleted:</strong> @(Model.IsDeleted ? "Yes" : "No")
+</div>
+
+<div>
+    <strong>Owner:</strong> @Model.User.UserName
+</div>

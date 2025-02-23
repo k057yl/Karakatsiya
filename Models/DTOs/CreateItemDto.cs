@@ -22,7 +22,10 @@ namespace Karakatsiya.Models.DTOs
                 : null;
         }
 
-        public IFormFile? ImageFile { get; set; }
+        public List<IFormFile> ImageFiles { get; set; } = new List<IFormFile>();
+        public List<string> ImagePaths { get; set; } = new List<string>();
+        public string? MainImage { get; set; }
+
 
         [Required]
         public string? Description { get; set; }

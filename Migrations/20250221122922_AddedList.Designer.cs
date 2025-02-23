@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Karakatsiya.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Karakatsiya.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250221122922_AddedList")]
+    partial class AddedList
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,12 +60,6 @@ namespace Karakatsiya.Migrations
                     b.Property<bool>("IsSold")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("MainImage")
-                        .HasColumnType("text");
-
-                    b.Property<string>("MainImageName")
-                        .HasColumnType("text");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -70,6 +67,9 @@ namespace Karakatsiya.Migrations
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("SelectedImagePath")
+                        .HasColumnType("text");
 
                     b.Property<string>("UserId")
                         .IsRequired()
