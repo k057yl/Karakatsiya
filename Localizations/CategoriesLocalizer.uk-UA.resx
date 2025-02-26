@@ -126,6 +126,9 @@
   <data name="Cosmetics" xml:space="preserve">
     <value>Косметика</value>
   </data>
+  <data name="Default" xml:space="preserve">
+    <value>За замовчуванням</value>
+  </data>
   <data name="Electronics" xml:space="preserve">
     <value>Електроніка</value>
   </data>

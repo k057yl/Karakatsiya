@@ -42,6 +42,8 @@ namespace Karakatsiya.Services
                 imagePaths.Add(relativePath);
             }
 
+            DateTime? expirationDate = model.ExpirationDate ?? new DateTime(2099, 12, 31);
+
             string mainImage = model.MainImage;
             if (string.IsNullOrEmpty(mainImage))
             {
@@ -52,7 +54,7 @@ namespace Karakatsiya.Services
             {
                 Name = model.Name,
                 CreationDate = DateTime.UtcNow,
-                ExpirationDate = model.ExpirationDate,
+                ExpirationDate = expirationDate,
                 ImagePaths = imagePaths,
                 MainImage = mainImage,
                 Description = model.Description,

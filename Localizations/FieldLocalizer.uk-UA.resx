@@ -123,6 +123,9 @@
   <data name="Description" xml:space="preserve">
     <value>Введіть опис</value>
   </data>
+  <data name="ExpirationDate" xml:space="preserve">
+    <value>Введіть термін придатності</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>Введіть назву</value>
   </data>

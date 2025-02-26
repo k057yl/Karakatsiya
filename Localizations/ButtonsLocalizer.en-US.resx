@@ -174,4 +174,25 @@
   <data name="Main.MenuSales" xml:space="preserve">
     <value>Sale menu</value>
   </data>
+  <data name="Create.CreateItem" xml:space="preserve">
+    <value>Create item</value>
+  </data>
+  <data name="Create.UploadImage" xml:space="preserve">
+    <value>Upload image</value>
+  </data>
+  <data name="Create.Modal.DownloadImages" xml:space="preserve">
+    <value>Download images</value>
+  </data>
+  <data name="Create.Modal.Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Create.Modal.SaveImages" xml:space="preserve">
+    <value>Save images</value>
+  </data>
+  <data name="Create.Modal.SelectImages" xml:space="preserve">
+    <value>Select images</value>
+  </data>
+  <data name="Create.Modal.SetAsMain" xml:space="preserve">
+    <value>Set as main</value>
+  </data>
 </root>

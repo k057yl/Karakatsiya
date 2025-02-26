@@ -123,6 +123,9 @@
   <data name="Description" xml:space="preserve">
     <value>Enter description</value>
   </data>
+  <data name="ExpirationDate" xml:space="preserve">
+    <value>Enter expiration date</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>Enter name</value>
   </data>

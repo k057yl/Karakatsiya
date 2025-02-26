@@ -40,7 +40,6 @@
                             var mainImage = item.MainImage ?? item.ImagePaths.FirstOrDefault();
 
                             <a href="@Url.Action("Details", "Item", new { id = item.ItemId })">
-                                <!--<img id="mainImageDisplay" src="" alt="Main Image" style="max-width: 100px; max-height: 100px;">-->
                                 <img src="@mainImage" alt="Image" style="max-width: 100px; max-height: 100px;" />
                             </a>
                         }
@@ -51,11 +50,11 @@
                     </td>
                     <td>@item.Name</td>
                     <td>@item.Description</td>
-                    <td>@item.CreationDate.ToShortDateString() ?? sharedLocalizer.Messages["NoDate"]</td>
+                    <td>@item.CreationDate.ToShortDateString()</td>
                     <td>
                         @if (item.ExpirationDate == null || item.ExpirationDate == new DateTime(2099, 12, 31))
                         {
-                            @sharedLocalizer.Messages["NoExperationDate"]
+                            @sharedLocalizer.Messages["Table.Field.NoExperationDate"]
                         }
                         else
                         {

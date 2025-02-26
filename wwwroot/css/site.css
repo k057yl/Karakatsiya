@@ -37,3 +37,55 @@ body {
 .image-thumb:hover {
     border: 2px solid blue;
 }
+
+/* Стили для формы */
+.create-item-form__container {
+    width: 50%;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    border: 2px solid #000;
+    border-radius: 10px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: #6699ff;
+}
+
+/* Группы элементов формы */
+.create-item-form__group {
+    margin-bottom: 20px;
+}
+
+/* Метки формы */
+.create-item-form__label {
+    font-weight: bold;
+}
+
+/* Ввод текста */
+.create-item-form__input,
+.create-item-form__textarea,
+.create-item-form__select {
+    width: 100%;
+}
+
+/* Кнопки */
+.create-item-form__button,
+.create-item-form__submit {
+    width: 50%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/*GreetingText*/
+.greeting-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 24px;
+}

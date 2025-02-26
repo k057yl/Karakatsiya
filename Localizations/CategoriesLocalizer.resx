@@ -126,6 +126,9 @@
   <data name="Cosmetics" xml:space="preserve">
     <value>Cosmetics</value>
   </data>
+  <data name="Default" xml:space="preserve">
+    <value>Default</value>
+  </data>
   <data name="Electronics" xml:space="preserve">
     <value>Electronics</value>
   </data>

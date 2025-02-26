@@ -2,6 +2,7 @@
 {
     public enum Category
     {
+        Default,
         Clothing,
         Cosmetics,
         Electronics,
