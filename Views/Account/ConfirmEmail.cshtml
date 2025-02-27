@@ -1,4 +1,6 @@
-﻿@{
+﻿@inject Karakatsiya.Localizations.SharedLocalizationService localizer
+
+@{
     ViewData["Title"] = "Confirm Email";
 }
 
@@ -12,3 +14,30 @@
     </div>
     <button type="submit">Confirm</button>
 </form>
+
+<div id="timer-warning" class="text-danger"></div>
+
+<form method="post" action="/Account/ResendCode" id="resendForm">
+    <button type="submit" id="resendBtn" class="btn btn-secondary" disabled>
+        @localizer.Buttons["ResendCode"]
+    </button>
+</form>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let timerSeconds = 60;
+        const timerElement = document.getElementById("timer-warning");
+        const resendButton = document.getElementById("resendBtn");
+
+        const timerInterval = setInterval(function () {
+            timerElement.innerText = `До окончания сессии осталось: ${timerSeconds} секунд`;
+            timerSeconds--;
+
+            if (timerSeconds < 0) {
+                clearInterval(timerInterval);
+                timerElement.innerText = "Время истекло, но сайт продолжает работать.";
+                resendButton.disabled = false;
+            }
+        }, 1000);
+    });
+</script>

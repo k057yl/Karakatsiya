@@ -14,66 +14,89 @@ namespace Karakatsiya.Services
         private readonly ConfirmationCodeGenerator _codeGenerator;
         private readonly SharedLocalizationService _localization;
 
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
         public AccountService(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             EmailService emailService,
             ConfirmationCodeGenerator codeGenerator,
-            SharedLocalizationService localization)
+            SharedLocalizationService localization,
+            IHttpContextAccessor httpContextAccessor)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailService = emailService;
             _codeGenerator = codeGenerator;
             _localization = localization;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<IdentityUser> RegisterUserAsync(RegisterDto model)
         {
-            if (string.IsNullOrEmpty(model.Email) || !Regex.IsMatch(model.Email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
-            {
-                throw new ArgumentException(_localization.WarningMessages["InvalidEmailFormat"]);
-            }
-
             var user = new IdentityUser { UserName = model.Email, Email = model.Email };
-            if (string.IsNullOrEmpty(model.Password))
-            {
-                throw new ArgumentException("Password cannot be empty");
-            }
-
             var result = await _userManager.CreateAsync(user, model.Password);
 
             if (result.Succeeded)
             {
                 var confirmationCode = _codeGenerator.GenerateCode();
+                _httpContextAccessor.HttpContext.Session.SetString("ConfirmationCode", confirmationCode);
+                _httpContextAccessor.HttpContext.Session.SetString("CodeExpiration", DateTime.UtcNow.AddMinutes(10).ToString());
+
                 var subject = _localization.Messages["RegistrationConfirmationCode"];
                 var body = $"{_localization.Messages["YourVerificationCode"]} {confirmationCode}";
+
                 await _emailService.SendEmailAsync(model.Email, subject, body);
-                return user;
             }
 
-            throw new InvalidOperationException(string.Join(",", result.Errors.Select(e => e.Description)));
+            return user;
         }
 
-        public async Task<bool> ConfirmEmailAsync(string email, string confirmationCode)
+        public async Task<bool> ConfirmEmailAsync(string email, string code)
         {
-            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(confirmationCode))
+            var storedCode = _httpContextAccessor.HttpContext.Session.GetString("ConfirmationCode");
+            var expiration = _httpContextAccessor.HttpContext.Session.GetString("CodeExpiration");
+
+            if (storedCode == null || expiration == null)
             {
-                throw new ArgumentException("Email and confirmation code cannot be empty.");
+                throw new InvalidOperationException("Код не найден или срок действия истек.");
             }
 
-            var user = await _userManager.FindByEmailAsync(email);
-            if (user == null) throw new ArgumentException("Пользователь не найден.");
-
-            var storedCode = confirmationCode;
-            if (storedCode == confirmationCode)
+            if (DateTime.UtcNow > DateTime.Parse(expiration))
             {
+                throw new InvalidOperationException("Срок действия кода истек.");
+            }
+
+            if (storedCode == code)
+            {
+                var user = await _userManager.FindByEmailAsync(email);
                 user.EmailConfirmed = true;
                 await _userManager.UpdateAsync(user);
+                _httpContextAccessor.HttpContext.Session.Remove("ConfirmationCode");
+                _httpContextAccessor.HttpContext.Session.Remove("CodeExpiration");
                 return true;
             }
 
-            return false;
+            throw new ArgumentException("Неверный код.");
+        }
+
+        public async Task ResendConfirmationCodeAsync(string email)//***************
+        {
+            var lastSent = _httpContextAccessor.HttpContext.Session.GetString("LastSent");
+            if (lastSent != null && DateTime.UtcNow < DateTime.Parse(lastSent).AddMinutes(1))
+            {
+                throw new Exception(_localization.Messages["WaitOneMinute"]);
+            }
+
+            var confirmationCode = _codeGenerator.GenerateCode();
+            _httpContextAccessor.HttpContext.Session.SetString("ConfirmationCode", confirmationCode);
+            _httpContextAccessor.HttpContext.Session.SetString("CodeExpiration", DateTime.UtcNow.AddMinutes(10).ToString());
+            _httpContextAccessor.HttpContext.Session.SetString("LastSent", DateTime.UtcNow.ToString());
+
+            var subject = _localization.Messages["RegistrationConfirmationCode"];
+            var body = $"{_localization.Messages["YourVerificationCode"]} {confirmationCode}";
+
+            await _emailService.SendEmailAsync(email, subject, body);
         }
 
         public async Task<SignInResult> LoginUserAsync(LoginDto model)

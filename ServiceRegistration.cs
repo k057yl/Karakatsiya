@@ -4,7 +4,7 @@ using Karakatsiya.Services;
 
 public static class ServiceRegistration
 {
-    public static void AddApplicationServices(this IServiceCollection services)
+    public static void AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddScoped<IAccountService, AccountService>();
         services.AddScoped<EmailService>();
@@ -15,5 +15,19 @@ public static class ServiceRegistration
         services.AddScoped<ISaleService, SaleService>();
         services.AddScoped<CategoryLocalizationService>();
         services.AddScoped<CurrencyLocalizationService>();
+
+        services.AddHttpContextAccessor();
+
+        services.AddSession(options =>
+        {
+            options.IdleTimeout = TimeSpan.FromMinutes(10);
+            options.Cookie.HttpOnly = true;
+            options.Cookie.IsEssential = true;
+        });
     }
 }
+/*
+        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
+        services.AddSingleton<IConfiguration>(provider => provider.GetRequiredService<IConfiguration>());
+        */

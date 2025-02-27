@@ -1,5 +1,6 @@
 ﻿using Karakatsiya.Interfaces;
 using Karakatsiya.Models.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Karakatsiya.Controllers
@@ -80,6 +81,29 @@ namespace Karakatsiya.Controllers
         {
             await _accountService.LogoutUserAsync();
             return RedirectToAction("Login", "Account");
+        }
+
+        //[Authorize(Roles = "Gala")]//********
+        public IActionResult AdminPanel()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ResendCode()//************
+        {
+            try
+            {
+                await _accountService.ResendConfirmationCodeAsync(User.Identity.Name);
+                TempData["Message"] = "CodeSentAgain";
+                TempData["ResendTimer"] = 60;
+            }
+            catch (Exception ex)
+            {
+                TempData["Warning"] = ex.Message;
+                TempData["ResendTimer"] = 60;
+            }
+            return RedirectToAction("ConfirmEmail");
         }
     }
 }
