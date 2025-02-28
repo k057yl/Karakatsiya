@@ -4,22 +4,14 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using System.Globalization;
 using Karakatsiya.Data;
-using Karakatsiya.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
-/*
-builder.Services.AddDbContext<ApplicationDbContext>((serviceProvider, options) =>
-{
-    var user = serviceProvider.GetRequiredService<IHttpContextAccessor>().HttpContext?.User;
-    string role = user?.IsInRole("Gala") == true ? "Gala" : "RegularUser";
-    var connectionFactory = serviceProvider.GetRequiredService<IDbConnectionFactory>();
-    options.UseNpgsql(connectionFactory.GetConnectionString(role));
-});
-*/
+
+// Настройка контекста базы данных
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("GalaConnection")));
 
-
+// Настройка Identity
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
     options.SignIn.RequireConfirmedEmail = true;
@@ -27,6 +19,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
+// Настройка локализации
 builder.Services.AddLocalization(options => options.ResourcesPath = "Localizations");
 builder.Services.AddControllersWithViews()
     .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
@@ -41,24 +34,39 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
     options.RequestCultureProviders.Insert(0, new CookieRequestCultureProvider());
 });
 
+// Настройка кэша и сессий
 builder.Services.AddDistributedMemoryCache();
-/*
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(20);
+    options.IdleTimeout = TimeSpan.FromMinutes(10);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
-*/
-builder.Services.AddApplicationServices(builder.Configuration);
-//builder.Services.AddApplicationServices();
 
+// Регистрация сервисов приложения
+builder.Services.AddApplicationServices(builder.Configuration);
+
+// Добавление контроллеров и страниц Razor
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
-//-------------------------------
 var app = builder.Build();
 
+// Создание ролей при запуске приложения
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    string[] roleNames = { "Gala", "regularuser" };
+    foreach (var roleName in roleNames)
+    {
+        if (!await roleManager.RoleExistsAsync(roleName))
+        {
+            await roleManager.CreateAsync(new IdentityRole(roleName));
+        }
+    }
+}
+
+// Настройка локализации
 app.UseRequestLocalization();
 
 if (!app.Environment.IsDevelopment())

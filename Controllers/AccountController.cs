@@ -83,14 +83,14 @@ namespace Karakatsiya.Controllers
             return RedirectToAction("Login", "Account");
         }
 
-        //[Authorize(Roles = "Gala")]//********
+        [Authorize(Roles = "Gala")]
         public IActionResult AdminPanel()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> ResendCode()//************
+        public async Task<IActionResult> ResendCode()
         {
             try
             {

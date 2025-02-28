@@ -7,7 +7,7 @@ namespace Karakatsiya.Interfaces
     {
         Task<IdentityUser> RegisterUserAsync(RegisterDto model);
         Task<bool> ConfirmEmailAsync(string email, string confirmationCode);
-        Task ResendConfirmationCodeAsync(string email);//**************
+        Task ResendConfirmationCodeAsync(string email);
         Task<SignInResult> LoginUserAsync(LoginDto model);
         Task LogoutUserAsync();
     }

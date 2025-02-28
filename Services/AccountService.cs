@@ -2,7 +2,6 @@
 using Karakatsiya.Localizations;
 using Karakatsiya.Models.DTOs;
 using Microsoft.AspNetCore.Identity;
-using System.Text.RegularExpressions;
 
 namespace Karakatsiya.Services
 {
@@ -15,6 +14,7 @@ namespace Karakatsiya.Services
         private readonly SharedLocalizationService _localization;
 
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IConfiguration _configuration;
 
         public AccountService(
             UserManager<IdentityUser> userManager,
@@ -22,7 +22,8 @@ namespace Karakatsiya.Services
             EmailService emailService,
             ConfirmationCodeGenerator codeGenerator,
             SharedLocalizationService localization,
-            IHttpContextAccessor httpContextAccessor)
+            IHttpContextAccessor httpContextAccessor,
+            IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -30,6 +31,7 @@ namespace Karakatsiya.Services
             _codeGenerator = codeGenerator;
             _localization = localization;
             _httpContextAccessor = httpContextAccessor;
+            _configuration = configuration;
         }
 
         public async Task<IdentityUser> RegisterUserAsync(RegisterDto model)
@@ -47,6 +49,16 @@ namespace Karakatsiya.Services
                 var body = $"{_localization.Messages["YourVerificationCode"]} {confirmationCode}";
 
                 await _emailService.SendEmailAsync(model.Email, subject, body);
+
+                var adminEmails = _configuration.GetSection("AdminEmails").Get<string[]>();
+                if (adminEmails != null && adminEmails.Contains(model.Email))
+                {
+                    await _userManager.AddToRoleAsync(user, "Gala");
+                }
+                else
+                {
+                    await _userManager.AddToRoleAsync(user, "regularuser");
+                }
             }
 
             return user;
@@ -80,7 +92,7 @@ namespace Karakatsiya.Services
             throw new ArgumentException("Неверный код.");
         }
 
-        public async Task ResendConfirmationCodeAsync(string email)//***************
+        public async Task ResendConfirmationCodeAsync(string email)
         {
             var lastSent = _httpContextAccessor.HttpContext.Session.GetString("LastSent");
             if (lastSent != null && DateTime.UtcNow < DateTime.Parse(lastSent).AddMinutes(1))
