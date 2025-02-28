@@ -12,7 +12,6 @@ namespace Karakatsiya.Services
         private readonly EmailService _emailService;
         private readonly ConfirmationCodeGenerator _codeGenerator;
         private readonly SharedLocalizationService _localization;
-
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IConfiguration _configuration;
 

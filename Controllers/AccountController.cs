@@ -83,9 +83,14 @@ namespace Karakatsiya.Controllers
             return RedirectToAction("Login", "Account");
         }
 
-        [Authorize(Roles = "Gala")]
+        public IActionResult NotAccess() => View();
+
         public IActionResult AdminPanel()
         {
+            if (!User.IsInRole("Gala"))
+            {
+                return RedirectToAction("NotAccess", "Account");
+            }
             return View();
         }
 
