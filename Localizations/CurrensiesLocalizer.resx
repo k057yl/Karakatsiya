@@ -120,6 +120,9 @@
   <data name="EUR" xml:space="preserve">
     <value>EUR</value>
   </data>
+  <data name="ExchangeRates" xml:space="preserve">
+    <value>Exchange rates</value>
+  </data>
   <data name="UAH" xml:space="preserve">
     <value>UAH</value>
   </data>

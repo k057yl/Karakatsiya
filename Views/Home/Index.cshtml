@@ -1,31 +1,41 @@
 ﻿@inject Karakatsiya.Localizations.SharedLocalizationService sharedLocalizer
+@inject Karakatsiya.Data.ApplicationDbContext _context
 
 @{
+    var settings = _context.HomePageSettings.FirstOrDefault();
     ViewData["Title"] = sharedLocalizer.Messages["HomeTitle"];
 }
 
 <div class="container mt-4">
     <!-- Приветствие -->
     <section class="text-center mb-5">
-        <h1>@sharedLocalizer.Messages["Welcome"]</h1>
-        <p class="lead">@sharedLocalizer.Messages["WelcomeMessage"]</p>
+        <h1>@sharedLocalizer.Pages["HomePage.Title"]</h1>
+        <p class="lead">@sharedLocalizer.Pages["HomePage.Greetings"]</p>
     </section>
 
     <!-- Галерея -->
-    <section class="mb-5">
-        <h2>@sharedLocalizer.Messages["Gallery"]</h2>
-        <div class="row">
+    <div class="row">
+        @if (!string.IsNullOrEmpty(settings?.Image1))
+        {
             <div class="col-md-4">
-                <img src="~/images/sample1.jpg" class="img-fluid rounded shadow" alt="Image 1">
+                <img src="@settings.Image1" class="img-fluid rounded shadow" alt="Image 1">
             </div>
+        }
+
+        @if (!string.IsNullOrEmpty(settings?.Image2))
+        {
             <div class="col-md-4">
-                <img src="~/images/sample2.jpg" class="img-fluid rounded shadow" alt="Image 2">
+                <img src="@settings.Image2" class="img-fluid rounded shadow" alt="Image 2">
             </div>
+        }
+
+        @if (!string.IsNullOrEmpty(settings?.Image3))
+        {
             <div class="col-md-4">
-                <img src="~/images/sample3.jpg" class="img-fluid rounded shadow" alt="Image 3">
+                <img src="@settings.Image3" class="img-fluid rounded shadow" alt="Image 3">
             </div>
-        </div>
-    </section>
+        }
+    </div>
 
     <!-- Новости -->
     <section class="mb-5">

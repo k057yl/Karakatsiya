@@ -1,3 +1,4 @@
+using Karakatsiya.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
@@ -6,12 +7,18 @@ namespace Karakatsiya.Controllers
 {
     public class HomeController : BaseController
     {
-        public HomeController(IStringLocalizer<HomeController> localizer) : base()
+        private readonly CurrencyService _currencyService;
+
+        public HomeController(IStringLocalizer<HomeController> localizer, CurrencyService currencyService) : base()
         {
+            _currencyService = currencyService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var exchangeRates = await _currencyService.GetExchangeRatesAsync();
+            ViewData["ExchangeRates"] = exchangeRates;
+
             return View();
         }
 

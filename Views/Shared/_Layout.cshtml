@@ -12,81 +12,77 @@
     <link rel="stylesheet" href="~/Karakatsiya.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
+    <div class="d-flex">
+        <nav class="main-menu-panel">
+            <div class="main-menu-panel__header">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Karakatsiya</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">@_localizer.Buttons["Main.Home"]</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">@_localizer.Buttons["Main.Registration"]</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Item" asp-action="CreateItem">@_localizer.Buttons["Main.Create"]</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Item" asp-action="UserItems">@_localizer.Buttons["Main.UserItems"]</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Sale" asp-action="Sales">@_localizer.Buttons["Main.MenuSales"]</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="AdminPanel">AdminPanel</a>
-                        </li>
-
-                        <!-- Language Button -->
-                        <li class="nav-item">
-                            <div class="language-selector">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                    @_localizer.Buttons["Main.Language"]
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <li>
-                                        <form action="@Url.Action("SetLanguage", "Home")" method="post" class="d-inline">
-                                            <input type="hidden" name="culture" value="en-US" />
-                                            <input type="hidden" name="returnUrl" value="@Context.Request.Path" />
-                                            <button type="submit" class="dropdown-item">English</button>
-                                        </form>
-                                    </li>
-                                    <li>
-                                        <form action="@Url.Action("SetLanguage", "Home")" method="post" class="d-inline">
-                                            <input type="hidden" name="culture" value="uk-UA" />
-                                            <input type="hidden" name="returnUrl" value="@Context.Request.Path" />
-                                            <button type="submit" class="dropdown-item">Українська</button>
-                                        </form>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                    </ul>
-                    <div class="d-flex align-items-center">
-                        @if (User.Identity?.IsAuthenticated == true)
-                        {
-                            <span class="me-3">@_localizer.Messages["Hello"], @User.Identity.Name!</span>
-                            <form method="post" asp-area="" asp-controller="Account" asp-action="Logout">
-                                <button type="submit" class="btn btn-outline-dark">@_localizer.Buttons["Main.Logout"]</button>
-                            </form>
-                        }
-                        else
-                        {
-                            <a asp-area="" asp-controller="Account" asp-action="Login" class="btn btn-outline-dark">@_localizer.Buttons["Main.Login"]</a>
-                        }
+            </div>
+            <ul class="main-menu-panel__nav">
+                <li class="main-menu-panel__item">
+                    <a class="main-menu-panel__link" asp-area="" asp-controller="Home" asp-action="Index">@_localizer.Buttons["Main.Home"]</a>
+                </li>
+                <li class="main-menu-panel__item">
+                    <a class="main-menu-panel__link" asp-area="" asp-controller="Account" asp-action="Register">@_localizer.Buttons["Main.Registration"]</a>
+                </li>
+                <li class="main-menu-panel__item">
+                    <a class="main-menu-panel__link" asp-area="" asp-controller="Item" asp-action="CreateItem">@_localizer.Buttons["Main.Create"]</a>
+                </li>
+                <li class="main-menu-panel__item">
+                    <a class="main-menu-panel__link" asp-area="" asp-controller="Item" asp-action="UserItems">@_localizer.Buttons["Main.UserItems"]</a>
+                </li>
+                <li class="main-menu-panel__item">
+                    <a class="main-menu-panel__link" asp-area="" asp-controller="Sale" asp-action="Sales">@_localizer.Buttons["Main.MenuSales"]</a>
+                </li>
+                <li class="main-menu-panel__item">
+                    <a class="main-menu-panel__link" asp-area="" asp-controller="Account" asp-action="AdminPanel">AdminPanel</a>
+                </li>
+                <!-- Language Button -->
+                <li class="main-menu-panel__item">
+                    <div class="language-selector">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            @_localizer.Buttons["Main.Language"]
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li>
+                                <form action="@Url.Action("SetLanguage", "Home")" method="post" class="d-inline">
+                                    <input type="hidden" name="culture" value="en-US" />
+                                    <input type="hidden" name="returnUrl" value="@Context.Request.Path" />
+                                    <button type="submit" class="dropdown-item">English</button>
+                                </form>
+                            </li>
+                            <li>
+                                <form action="@Url.Action("SetLanguage", "Home")" method="post" class="d-inline">
+                                    <input type="hidden" name="culture" value="uk-UA" />
+                                    <input type="hidden" name="returnUrl" value="@Context.Request.Path" />
+                                    <button type="submit" class="dropdown-item">Українська</button>
+                                </form>
+                            </li>
+                        </ul>
                     </div>
-                </div>
+                </li>
+            </ul>
+            <div class="currency-container">
+                @await Component.InvokeAsync("CurrencyRates")
+            </div>
+            <div class="auth-block">
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <span class="me-3">@_localizer.Messages["Hello"], @User.Identity.Name</span>
+                    <form method="post" asp-area="" asp-controller="Account" asp-action="Logout">
+                        <button type="submit" class="btn btn-outline-dark">@_localizer.Buttons["Main.Logout"]</button>
+                    </form>
+                }
+                else
+                {
+                    <a asp-area="" asp-controller="Account" asp-action="Login" class="btn btn-outline-dark">@_localizer.Buttons["Main.Login"]</a>
+                }
             </div>
         </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+        <div class="container-fluid">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
     </div>
 
     <footer class="border-top footer text-muted">
@@ -98,7 +94,5 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
-
-
 </body>
 </html>

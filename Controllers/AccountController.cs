@@ -1,6 +1,5 @@
 ﻿using Karakatsiya.Interfaces;
 using Karakatsiya.Models.DTOs;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Karakatsiya.Controllers

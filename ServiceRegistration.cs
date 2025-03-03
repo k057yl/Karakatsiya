@@ -24,10 +24,10 @@ public static class ServiceRegistration
             options.Cookie.HttpOnly = true;
             options.Cookie.IsEssential = true;
         });
+
+        services.AddScoped<IHomePageSettingsService, HomePageSettingsService>();
+
+        services.AddHttpClient<CurrencyService>();
+        services.AddScoped<CurrencyService>();
     }
 }
-/*
-        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-        services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
-        services.AddSingleton<IConfiguration>(provider => provider.GetRequiredService<IConfiguration>());
-        */

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Karakatsiya.Models.Entities;
 using Microsoft.AspNetCore.Identity;
+using Karakatsiya.Models.PageSettings;
 
 namespace Karakatsiya.Data
 {
@@ -11,6 +12,7 @@ namespace Karakatsiya.Data
 
         public DbSet<Item> Items { get; set; }
         public DbSet<Sale> Sales { get; set; }
+        public DbSet<HomePageSettings> HomePageSettings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
