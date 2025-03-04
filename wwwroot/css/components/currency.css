@@ -1,0 +1,33 @@
+﻿.currency-container {
+    margin-left: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.currency-component {
+    background-color: #ccffff;
+    border: 1px solid #000;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+}
+
+.currency-component__label {
+    font-weight: bold;
+    margin: 12px;
+}
+
+.currency-component ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

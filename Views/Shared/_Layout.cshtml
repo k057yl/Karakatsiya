@@ -15,7 +15,9 @@
     <div class="d-flex">
         <nav class="main-menu-panel">
             <div class="main-menu-panel__header">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Karakatsiya</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    K<span class="letter">a</span>r<span class="letter">a</span>k<span class="letter">a</span>tsiy<span class="letter">a</span>
+                </a>
             </div>
             <ul class="main-menu-panel__nav">
                 <li class="main-menu-panel__item">
@@ -34,7 +36,10 @@
                     <a class="main-menu-panel__link" asp-area="" asp-controller="Sale" asp-action="Sales">@_localizer.Buttons["Main.MenuSales"]</a>
                 </li>
                 <li class="main-menu-panel__item">
-                    <a class="main-menu-panel__link" asp-area="" asp-controller="Account" asp-action="AdminPanel">AdminPanel</a>
+                    @if (User.IsInRole("Gala"))
+                    {
+                        <a class="main-menu-panel__link" asp-area="" asp-controller="Account" asp-action="AdminPanel">AdminPanel</a>
+                    }
                 </li>
                 <!-- Language Button -->
                 <li class="main-menu-panel__item">
@@ -67,7 +72,7 @@
             <div class="auth-block">
                 @if (User.Identity?.IsAuthenticated == true)
                 {
-                    <span class="me-3">@_localizer.Messages["Hello"], @User.Identity.Name</span>
+                    <span class="auth-block__title">@_localizer.Messages["Main.Hello"] @User.Identity.Name</span>
                     <form method="post" asp-area="" asp-controller="Account" asp-action="Logout">
                         <button type="submit" class="btn btn-outline-dark">@_localizer.Buttons["Main.Logout"]</button>
                     </form>

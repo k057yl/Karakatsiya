@@ -23,13 +23,15 @@ namespace Karakatsiya.Services
             responseUsd.EnsureSuccessStatusCode();
             string jsonResponseUsd = await responseUsd.Content.ReadAsStringAsync();
             JObject jsonUsd = JObject.Parse(jsonResponseUsd);
-            result["USD"] = (decimal)jsonUsd["conversion_rate"];
+            decimal usdRate = (decimal)jsonUsd["conversion_rate"];
+            result["USD"] = Math.Round(usdRate, 2);
 
             HttpResponseMessage responseEur = await _httpClient.GetAsync(urlEur);
             responseEur.EnsureSuccessStatusCode();
             string jsonResponseEur = await responseEur.Content.ReadAsStringAsync();
             JObject jsonEur = JObject.Parse(jsonResponseEur);
-            result["EUR"] = (decimal)jsonEur["conversion_rate"];
+            decimal eurRate = (decimal)jsonEur["conversion_rate"];
+            result["EUR"] = Math.Round(eurRate, 2);
 
             return result;
         }

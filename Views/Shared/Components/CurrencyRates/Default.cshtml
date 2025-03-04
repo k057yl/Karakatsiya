@@ -1,8 +1,10 @@
 ﻿@model Dictionary<string, decimal>
 @inject Karakatsiya.Localizations.SharedLocalizationService _localizer
 
-<div class="currency-rates">
-    <h4>@_localizer.Currencies["ExchangeRates"]</h4>
+<div class="currency-component">
+    <p class="currency-component__label">
+        @_localizer.Currencies["ExchangeRates"]
+    </p>
     <ul>
         @foreach (var rate in Model)
         {
