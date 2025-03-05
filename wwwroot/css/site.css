@@ -1,5 +1,8 @@
 @import url("components/menu.css");
 @import url("components/currency.css");
+@import url("components/logo.css");
+@import url("components/language.css");
+
 html {
   font-size: 14px;
 }
@@ -38,10 +41,6 @@ body {
 
 .image-thumb:hover {
     border: 2px solid blue;
-}
-
-.language-selector {
-    margin-top: 1rem;
 }
 
 .auth-block {
@@ -147,18 +146,4 @@ body {
     transform: scale(1.1);
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
     cursor: pointer;
-}
-
-@keyframes colorChange {
-    0% { color: #000; }
-    50% { color: #ff7f50; }
-    100% { color: #000; }
-}
-
-.navbar-brand .letter {
-    animation: colorChange 20s infinite ease-in-out;
-}
-
-.navbar-brand .letter:nth-child(odd) {
-    animation-delay: 10s;
 }

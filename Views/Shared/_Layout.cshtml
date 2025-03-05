@@ -19,6 +19,7 @@
                     K<span class="letter">a</span>r<span class="letter">a</span>k<span class="letter">a</span>tsiy<span class="letter">a</span>
                 </a>
             </div>
+            
             <ul class="main-menu-panel__nav">
                 <li class="main-menu-panel__item">
                     <a class="main-menu-panel__link" asp-area="" asp-controller="Home" asp-action="Index">@_localizer.Buttons["Main.Home"]</a>
@@ -92,7 +93,10 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2025 - Karakatsiya - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div class="footer-text">
+                &copy; 2025 - Karakatsiya - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+            <img src="/images/KarakatsiyaKeeperLogoV1.png" alt="Karakatsiya" class="logo-karakatsiya">
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -101,3 +105,4 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+@*<img src="/images/LogoSite.png" alt="Karakatsiya" class="logo-karakatsiya">*@
