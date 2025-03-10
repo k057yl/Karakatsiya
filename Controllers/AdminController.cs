@@ -8,34 +8,82 @@ namespace Karakatsiya.Controllers
     [Authorize(Roles = "Gala")]
     public class AdminController : BaseController
     {
-        private readonly IHomePageSettingsService _service;
+        private readonly IHomePageService _homePageService;
 
-        public AdminController(IHomePageSettingsService service)
+        public AdminController(IHomePageService homePageService)
         {
-            _service = service;
+            _homePageService = homePageService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> AdminPanel()
         {
-            var settings = await _service.GetSettingsAsync();
-            return View(settings);
+            var contactInfo = await _homePageService.GetContactInfoAsync() ?? new ContactInfo();
+            var newsList = await _homePageService.GetNewsAsync() ?? new List<NewsArticle>();
+
+            return View((contactInfo, newsList));
+        }
+
+        public async Task<IActionResult> EditContactInfo()
+        {
+            var contactInfo = await _homePageService.GetContactInfoAsync() ?? new ContactInfo();
+            return View(contactInfo);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Save(HomePageSettings model, IFormFile Image1File, IFormFile Image2File, IFormFile Image3File)
+        public async Task<IActionResult> EditContactInfo(ContactInfo model)
         {
-            var settings = await _service.GetSettingsAsync();
+            if (!ModelState.IsValid) return View(model);
 
-            _service.SaveContacts(model, settings);
-            _service.SaveNews(model, settings);
+            await _homePageService.UpdateContactInfoAsync(model);
+            return RedirectToAction(nameof(AdminPanel));
+        }
 
-            await _service.SaveImage(Image1File, "Image1", settings);
-            await _service.SaveImage(Image2File, "Image2", settings);
-            await _service.SaveImage(Image3File, "Image3", settings);
+        public IActionResult CreateNews() => View(new NewsArticle());
 
-            await _service.SaveChangesAsync();
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateNews(NewsArticle newsArticle, IFormFile image)
+        {
+            if (ModelState.IsValid)
+            {
+                await _homePageService.AddNewsAsync(newsArticle, image);
+                return RedirectToAction(nameof(AdminPanel));
+            }
+            return View(newsArticle);
+        }
 
-            return RedirectToAction("Index", "Home");
+        public async Task<IActionResult> EditNews(int id)
+        {
+            var news = await _homePageService.GetNewsByIdAsync(id);
+            if (news == null)
+            {
+                return NotFound();
+            }
+            return View(news);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditNews(int id, NewsArticle newsArticle, IFormFile image)
+        {
+            if (id != newsArticle.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                await _homePageService.UpdateNewsAsync(newsArticle, image);
+                return RedirectToAction(nameof(AdminPanel));
+            }
+
+            return View(newsArticle);
+        }
+
+        public async Task<IActionResult> DeleteNews(int id)
+        {
+            await _homePageService.DeleteNewsAsync(id);
+            return RedirectToAction(nameof(AdminPanel));
         }
     }
 }

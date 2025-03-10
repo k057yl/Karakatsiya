@@ -12,7 +12,8 @@ namespace Karakatsiya.Data
 
         public DbSet<Item> Items { get; set; }
         public DbSet<Sale> Sales { get; set; }
-        public DbSet<HomePageSettings> HomePageSettings { get; set; }
+        public DbSet<ContactInfo> ContactInfos { get; set; }
+        public DbSet<NewsArticle> NewsArticles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

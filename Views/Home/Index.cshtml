@@ -1,76 +1,45 @@
-﻿@inject Karakatsiya.Localizations.SharedLocalizationService sharedLocalizer
-@inject Karakatsiya.Data.ApplicationDbContext _context
+﻿@model (Karakatsiya.Models.PageSettings.ContactInfo?, IEnumerable<Karakatsiya.Models.PageSettings.NewsArticle>)
+@inject Karakatsiya.Localizations.SharedLocalizationService localizer
 
-@{
-    var settings = _context.HomePageSettings.FirstOrDefault();
-    ViewData["Title"] = sharedLocalizer.Messages["HomeTitle"];
-}
+<div>
+    <p>@localizer.Pages["HomePage.Greetings"]</p>
+</div>
 
-<div class="container mt-4">
-    <!-- Приветствие -->
-    <section class="text-center mb-5">
-        <h1>@sharedLocalizer.Pages["HomePage.Title"]</h1>
-        <p class="lead">@sharedLocalizer.Pages["HomePage.Greetings"]</p>
-    </section>
-
-    <!-- Галерея -->
-    <div class="custom-main-page-wrapper">
-        @if (!string.IsNullOrEmpty(settings?.Image1))
+<h2>Новости</h2>
+@if (Model.Item2 != null && Model.Item2.Any())
+{
+    <div class="row">
+        @foreach (var news in Model.Item2.Take(3))
         {
-            <div class="custom-main-page-container">
-                <img src="@settings.Image1" class="custom-main-page-image" alt="Image 1">
-            </div>
-        }
-
-        @if (!string.IsNullOrEmpty(settings?.Image2))
-        {
-            <div class="custom-main-page-container">
-                <img src="@settings.Image2" class="custom-main-page-image" alt="Image 2">
-            </div>
-        }
-
-        @if (!string.IsNullOrEmpty(settings?.Image3))
-        {
-            <div class="custom-main-page-container">
-                <img src="@settings.Image3" class="custom-main-page-image" alt="Image 3">
+            <div class="col-md-4">
+                <div class="card">
+                    @if (!string.IsNullOrEmpty(news.ImageUrl))
+                    {
+                        <img src="@news.ImageUrl" class="card-img-top">
+                    }
+                    <div class="card-body">
+                        <h5 class="card-title">@news.Title</h5>
+                        <p class="card-text">@news.Summary</p>
+                        <p class="text-muted">@news.CreationDate.ToShortDateString()</p>
+                    </div>
+                </div>
             </div>
         }
     </div>
+}
+else
+{
+    <p>Новостей пока нет.</p>
+}
 
-    <!-- Новости -->
-    <section class="mb-5">
-        <h2>@sharedLocalizer.Messages["News"]</h2>
-        <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action">
-                <h5 class="mb-1">@sharedLocalizer.Messages["NewsTitle1"]</h5>
-                <p class="mb-1">@sharedLocalizer.Messages["NewsSummary1"]</p>
-                <small>@sharedLocalizer.Messages["NewsDate1"]</small>
-            </a>
-            <a href="#" class="list-group-item list-group-item-action">
-                <h5 class="mb-1">@sharedLocalizer.Messages["NewsTitle2"]</h5>
-                <p class="mb-1">@sharedLocalizer.Messages["NewsSummary2"]</p>
-                <small>@sharedLocalizer.Messages["NewsDate2"]</small>
-            </a>
-        </div>
-    </section>
-
-    <!-- Контакты -->
-    <section class="mb-5">
-        <h2>@sharedLocalizer.Messages["Contact"]</h2>
-        <p>@sharedLocalizer.Messages["ContactText"]</p>
-        <ul class="list-unstyled">
-            @if (!string.IsNullOrEmpty(settings?.Address))
-            {
-                <li><strong>@sharedLocalizer.Messages["Address"]:</strong> @settings?.Address</li>
-            }
-            @if (!string.IsNullOrEmpty(settings?.Phone))
-            {
-                <li><strong>@sharedLocalizer.Messages["Phone"]:</strong> @settings?.Phone</li>
-            }
-            @if (!string.IsNullOrEmpty(settings?.Email))
-            {
-                <li><strong>@sharedLocalizer.Messages["Email"]:</strong> @settings?.Email</li>
-            }
-        </ul>
-    </section>
-</div>
+<h2>Контакты</h2>
+@if (Model.Item1 != null)
+{
+    <p><strong>Адрес:</strong> @Model.Item1.Address</p>
+    <p><strong>Телефон:</strong> @Model.Item1.Phone</p>
+    <p><strong>Email:</strong> @Model.Item1.Email</p>
+}
+else
+{
+    <p>Контактная информация отсутствует.</p>
+}

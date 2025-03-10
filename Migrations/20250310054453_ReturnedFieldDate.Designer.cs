@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Karakatsiya.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250302133839_AddHomePageSettings")]
-    partial class AddHomePageSettings
+    [Migration("20250310054453_ReturnedFieldDate")]
+    partial class ReturnedFieldDate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -128,7 +128,7 @@ namespace Karakatsiya.Migrations
                     b.ToTable("Sales");
                 });
 
-            modelBuilder.Entity("Karakatsiya.Models.PageSettings.HomePageSettings", b =>
+            modelBuilder.Entity("Karakatsiya.Models.PageSettings.ContactInfo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -142,45 +142,37 @@ namespace Karakatsiya.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("text");
 
-                    b.Property<string>("Image1")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Image2")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Image3")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("NewsDate1")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("NewsDate2")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("NewsSummary1")
-                        .HasColumnType("text");
-
-                    b.Property<string>("NewsSummary2")
-                        .HasColumnType("text");
-
-                    b.Property<string>("NewsTitle1")
-                        .HasColumnType("text");
-
-                    b.Property<string>("NewsTitle2")
-                        .HasColumnType("text");
-
                     b.Property<string>("Phone")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Welcome")
-                        .HasColumnType("text");
-
-                    b.Property<string>("WelcomeMessage")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.ToTable("HomePageSettings");
+                    b.ToTable("ContactInfos");
+                });
+
+            modelBuilder.Entity("Karakatsiya.Models.PageSettings.NewsArticle", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Summary")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("NewsArticles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

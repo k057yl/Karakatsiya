@@ -1,0 +1,38 @@
+﻿@model Karakatsiya.Models.PageSettings.NewsArticle
+
+@{
+    ViewData["Title"] = Model.Id == 0 ? "Добавить новость" : "Редактировать новость";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="@(Model.Id == 0 ? "CreateNews" : "EditNews")" method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="Id" />
+    <div class="mb-3">
+        <label asp-for="Title" class="form-label">Заголовок</label>
+        <input asp-for="Title" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Summary" class="form-label">Описание</label>
+        <textarea asp-for="Summary" class="form-control"></textarea>
+    </div>
+    <div class="mb-3">
+        <label asp-for="CreationDate" class="form-label">Дата</label>
+        <input asp-for="CreationDate" type="date" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label for="Image">Изображение</label>
+        <input type="file" class="form-control" id="Image" name="image" />
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+    {
+        <div class="mb-3">
+            <label>Текущее изображение:</label><br />
+            <img src="@Model.ImageUrl" alt="Текущее изображение" width="100" />
+        </div>
+    }
+
+    <button type="submit" class="btn btn-success">Сохранить</button>
+</form>

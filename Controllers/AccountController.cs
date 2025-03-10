@@ -84,15 +84,6 @@ namespace Karakatsiya.Controllers
 
         public IActionResult NotAccess() => View();
 
-        public IActionResult AdminPanel()
-        {
-            if (!User.IsInRole("Gala"))
-            {
-                return RedirectToAction("NotAccess", "Account");
-            }
-            return View();
-        }
-
         [HttpPost]
         public async Task<IActionResult> ResendCode()
         {

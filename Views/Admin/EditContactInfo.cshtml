@@ -1,0 +1,23 @@
+﻿@model Karakatsiya.Models.PageSettings.ContactInfo
+
+@{
+    ViewData["Title"] = "Редактировать контакты";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="EditContactInfo" method="post">
+    <div class="mb-3">
+        <label asp-for="Address" class="form-label">Адрес</label>
+        <input asp-for="Address" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label asp-for="Phone" class="form-label">Телефон</label>
+        <input asp-for="Phone" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label">Email</label>
+        <input asp-for="Email" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-success">Сохранить</button>
+</form>

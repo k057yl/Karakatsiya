@@ -39,7 +39,7 @@
                 <li class="main-menu-panel__item">
                     @if (User.IsInRole("Gala"))
                     {
-                        <a class="main-menu-panel__link" asp-area="" asp-controller="Account" asp-action="AdminPanel">AdminPanel</a>
+                        <a class="main-menu-panel__link" asp-area="" asp-controller="Admin" asp-action="AdminPanel">AdminPanel</a>
                     }
                 </li>
                 <!-- Language Button -->
@@ -96,7 +96,9 @@
             <div class="footer-text">
                 &copy; 2025 - Karakatsiya - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
             </div>
-            <img src="/images/KarakatsiyaKeeperLogoV1.png" alt="Karakatsiya" class="logo-karakatsiya">
+            <a href="@ProjectConstants.AboutMeUrl" target="_blank">
+                <img src="/images/KarakatsiyaKeeperLogoV1.png" alt="Karakatsiya" class="logo-karakatsiya">
+            </a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -105,4 +107,3 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
-@*<img src="/images/LogoSite.png" alt="Karakatsiya" class="logo-karakatsiya">*@

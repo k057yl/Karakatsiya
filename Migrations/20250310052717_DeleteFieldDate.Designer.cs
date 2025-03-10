@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Karakatsiya.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250308154806_AddNews")]
-    partial class AddNews
+    [Migration("20250310052717_DeleteFieldDate")]
+    partial class DeleteFieldDate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -128,7 +128,7 @@ namespace Karakatsiya.Migrations
                     b.ToTable("Sales");
                 });
 
-            modelBuilder.Entity("Karakatsiya.Models.PageSettings.HomePageSettings", b =>
+            modelBuilder.Entity("Karakatsiya.Models.PageSettings.ContactInfo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -147,10 +147,10 @@ namespace Karakatsiya.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("HomePageSettings");
+                    b.ToTable("ContactInfos");
                 });
 
-            modelBuilder.Entity("Karakatsiya.Models.PageSettings.News", b =>
+            modelBuilder.Entity("Karakatsiya.Models.PageSettings.NewsArticle", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -158,28 +158,18 @@ namespace Karakatsiya.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int?>("HomePageSettingsId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("ImagePath")
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("text");
 
                     b.Property<string>("Summary")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("HomePageSettingsId");
-
-                    b.ToTable("News");
+                    b.ToTable("NewsArticles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -399,13 +389,6 @@ namespace Karakatsiya.Migrations
                     b.Navigation("Item");
                 });
 
-            modelBuilder.Entity("Karakatsiya.Models.PageSettings.News", b =>
-                {
-                    b.HasOne("Karakatsiya.Models.PageSettings.HomePageSettings", null)
-                        .WithMany("NewsList")
-                        .HasForeignKey("HomePageSettingsId");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -460,11 +443,6 @@ namespace Karakatsiya.Migrations
             modelBuilder.Entity("Karakatsiya.Models.Entities.Item", b =>
                 {
                     b.Navigation("Sales");
-                });
-
-            modelBuilder.Entity("Karakatsiya.Models.PageSettings.HomePageSettings", b =>
-                {
-                    b.Navigation("NewsList");
                 });
 #pragma warning restore 612, 618
         }

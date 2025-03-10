@@ -25,7 +25,7 @@ public static class ServiceRegistration
             options.Cookie.IsEssential = true;
         });
 
-        services.AddScoped<IHomePageSettingsService, HomePageSettingsService>();
+        services.AddScoped<IHomePageService, HomePageService>();
 
         services.AddHttpClient<CurrencyService>();
         services.AddScoped<CurrencyService>();
