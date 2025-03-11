@@ -52,11 +52,11 @@ namespace Karakatsiya.Services
                 var adminEmails = _configuration.GetSection("AdminEmails").Get<string[]>();
                 if (adminEmails != null && adminEmails.Contains(model.Email))
                 {
-                    await _userManager.AddToRoleAsync(user, "Gala");
+                    await _userManager.AddToRoleAsync(user, ProjectConstants.ROLE_ADMIN);
                 }
                 else
                 {
-                    await _userManager.AddToRoleAsync(user, "regularuser");
+                    await _userManager.AddToRoleAsync(user, ProjectConstants.ROLE_USER);
                 }
             }
 

@@ -1,5 +1,4 @@
 using Karakatsiya.Services;
-using Karakatsiya.Models.PageSettings;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;

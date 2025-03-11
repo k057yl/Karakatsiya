@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Karakatsiya.Controllers
 {
-    [Authorize(Roles = "Gala")]
+    [Authorize(Roles = ProjectConstants.ROLE_ADMIN)]
     public class AdminController : BaseController
     {
         private readonly IHomePageService _homePageService;

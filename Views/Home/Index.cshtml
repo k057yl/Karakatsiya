@@ -1,26 +1,30 @@
 ﻿@model (Karakatsiya.Models.PageSettings.ContactInfo?, IEnumerable<Karakatsiya.Models.PageSettings.NewsArticle>)
 @inject Karakatsiya.Localizations.SharedLocalizationService localizer
 
-<div>
+<div class="greeting-text">
     <p>@localizer.Pages["HomePage.Greetings"]</p>
 </div>
 
-<h2>Новости</h2>
+<h2 class="custom-title">Новости</h2>
 @if (Model.Item2 != null && Model.Item2.Any())
 {
-    <div class="row">
+    <div class="custom-news-container">
         @foreach (var news in Model.Item2.Take(3))
         {
-            <div class="col-md-4">
+            <div class="custom-news-card">
                 <div class="card">
                     @if (!string.IsNullOrEmpty(news.ImageUrl))
                     {
-                        <img src="@news.ImageUrl" class="card-img-top">
+                        <img src="@news.ImageUrl" class="custom-main-page-image">
                     }
                     <div class="card-body">
                         <h5 class="card-title">@news.Title</h5>
-                        <p class="card-text">@news.Summary</p>
-                        <p class="text-muted">@news.CreationDate.ToShortDateString()</p>
+                        <p class="card-text">
+                            @(news.Summary.Length > 50 ? news.Summary.Substring(0, 50) + "..." : news.Summary)
+                        </p>
+                        <a href="@Url.Action("Details", "News", new { id = news.Id })" class="btn btn-primary">
+                            Читать далее
+                        </a>
                     </div>
                 </div>
             </div>
@@ -29,7 +33,7 @@
 }
 else
 {
-    <p>Новостей пока нет.</p>
+    <p class="custom-no-news">Новостей пока нет.</p>
 }
 
 <h2>Контакты</h2>

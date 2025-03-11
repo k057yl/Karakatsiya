@@ -2,6 +2,8 @@
 @import url("components/currency.css");
 @import url("components/logo.css");
 @import url("components/language.css");
+@import url("components/main-page.css");
+@import url("components/news-details.css");
 
 html {
   font-size: 14px;
@@ -108,13 +110,7 @@ body {
 }
 
 /*GreetingText*/
-.greeting-text {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 24px;
-}
+
 
 /*MainPage*/
 .custom-main-page-wrapper {
@@ -124,26 +120,7 @@ body {
     margin-top: 20px;
 }
 
-.custom-main-page-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex: 1;
-}
 
-.custom-main-page-image {
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 20px;
-    border: 2px solid #ccc;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    margin-top: 10px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
 
-.custom-main-page-image:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
-    cursor: pointer;
-}
+
+

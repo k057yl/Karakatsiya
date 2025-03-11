@@ -37,7 +37,7 @@
                     <a class="main-menu-panel__link" asp-area="" asp-controller="Sale" asp-action="Sales">@_localizer.Buttons["Main.MenuSales"]</a>
                 </li>
                 <li class="main-menu-panel__item">
-                    @if (User.IsInRole("Gala"))
+                    @if (User.IsInRole(ProjectConstants.ROLE_ADMIN))
                     {
                         <a class="main-menu-panel__link" asp-area="" asp-controller="Admin" asp-action="AdminPanel">AdminPanel</a>
                     }
@@ -96,7 +96,7 @@
             <div class="footer-text">
                 &copy; 2025 - Karakatsiya - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
             </div>
-            <a href="@ProjectConstants.AboutMeUrl" target="_blank">
+            <a href="@ProjectConstants.ABOUT_ME_URL" target="_blank">
                 <img src="/images/KarakatsiyaKeeperLogoV1.png" alt="Karakatsiya" class="logo-karakatsiya">
             </a>
         </div>

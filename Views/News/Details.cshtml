@@ -1,0 +1,15 @@
+﻿@model Karakatsiya.Models.PageSettings.NewsArticle
+
+<div class="details-news-container">
+    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+    {
+        <img src="@Model.ImageUrl" class="details-news-image">
+    }
+
+    <h2>@Model.Title</h2>
+    <p class="text-muted">@Model.CreationDate.ToShortDateString()</p>
+
+    <p class="details-news-text">@Model.Summary</p>
+
+    <a href="@Url.Action("Index", "Home")" class="btn btn-secondary">Назад</a>
+</div>
