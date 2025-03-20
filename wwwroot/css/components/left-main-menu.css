@@ -1,27 +1,19 @@
-﻿.main-menu-panel {
+﻿.left-menu {
     width: 260px;
     height: 90vh;
     position: fixed;
     top: 0;
     left: 0;
-    background-color: #f8f9fa;
-    border-right: 1px solid #dee2e6;
+    background-color: var(--navbar-background-light);
+    color: var(--text-color-light);
     display: flex;
     flex-direction: column;
     padding: 1rem;
 }
 
-.main-menu-panel__header {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+.dark-theme .left-main {}
 
-.main-menu-panel__nav {
+.left-menu__nav {
     flex-grow: 1;
     list-style-type: none;
     display: flex;
@@ -30,15 +22,15 @@
     align-items: center;
 }
 
-.main-menu-panel__item {
+.left-menu__item {
     width: 100%;
     margin-bottom: 0.5rem;
     display: flex;
     justify-content: center;
 }
 
-.main-menu-panel__link {
-    color: #000;
+.left-menu__link {
+    color: var(--text-color-light);
     text-decoration: none;
     padding: 0.5rem 1rem;
     font-weight: bold;
@@ -48,8 +40,8 @@
     text-align: center;
 }
 
-.main-menu-panel__link:hover {
-    color: #ff7f50;
+.left-menu__link:hover {
+    color: var(--logo-hover-color);
     transform: scale(1.1);
     background: rgba(0, 0, 0, 0.1);
     cursor: pointer;

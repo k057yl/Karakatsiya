@@ -121,7 +121,7 @@
     <value>Євро</value>
   </data>
   <data name="ExchangeRates" xml:space="preserve">
-    <value>Курси валют</value>
+    <value>Курси валют :</value>
   </data>
   <data name="UAH" xml:space="preserve">
     <value>Гривня</value>

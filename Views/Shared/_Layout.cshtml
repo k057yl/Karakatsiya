@@ -12,78 +12,89 @@
     <link rel="stylesheet" href="~/Karakatsiya.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <div class="d-flex">
-        <nav class="main-menu-panel">
-            <div class="main-menu-panel__header">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                    K<span class="letter">a</span>r<span class="letter">a</span>k<span class="letter">a</span>tsiy<span class="letter">a</span>
-                </a>
+    <!-- TopPanel -->
+    <div class="top-menu">
+        <div class="custom-navbar__logo">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                K<span class="letter">a</span>r<span class="letter">a</span>k<span class="letter">a</span>tsiy<span class="letter">a</span>
+            </a>
+        </div>
+
+        <div class="custom-navbar__greeting">
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                <span class="auth-block__title">@_localizer.Messages["Main.Hello"] @User.Identity.Name</span>
+                <form method="post" asp-area="" asp-controller="Account" asp-action="Logout">
+                    <button type="submit" class="btn btn-outline-dark">@_localizer.Buttons["Main.Logout"]</button>
+                </form>
+            }
+            else
+            {
+                <a asp-area="" asp-controller="Account" asp-action="Login" class="btn btn-outline-dark">@_localizer.Buttons["Main.Login"]</a>
+            }
+        </div>
+
+        <div class="custom-navbar__theme-toggle">
+            <button id="themeToggle" class="btn" onclick="toggleTheme()">🌙/🌞</button>
+        </div>
+
+        <div class="custom-navbar__language">
+            <div class="language-selector">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    @_localizer.Buttons["Main.Language"]
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li>
+                        <form action="@Url.Action("SetLanguage", "Home")" method="post" class="d-inline">
+                            <input type="hidden" name="culture" value="en-US" />
+                            <input type="hidden" name="returnUrl" value="@Context.Request.Path" />
+                            <button type="submit" class="dropdown-item">English</button>
+                        </form>
+                    </li>
+                    <li>
+                        <form action="@Url.Action("SetLanguage", "Home")" method="post" class="d-inline">
+                            <input type="hidden" name="culture" value="uk-UA" />
+                            <input type="hidden" name="returnUrl" value="@Context.Request.Path" />
+                            <button type="submit" class="dropdown-item">Українська</button>
+                        </form>
+                    </li>
+                </ul>
             </div>
-            
-            <ul class="main-menu-panel__nav">
-                <li class="main-menu-panel__item">
-                    <a class="main-menu-panel__link" asp-area="" asp-controller="Home" asp-action="Index">@_localizer.Buttons["Main.Home"]</a>
+        </div>
+    </div>
+
+    <div class="d-flex">
+        <!-- RightPanel -->
+        <nav class="left-menu">
+            <ul class="left-menu__nav">
+                <li class="left-menu__item">
+                    <a class="left-menu__link" asp-area="" asp-controller="Home" asp-action="Index">@_localizer.Buttons["Main.Home"]</a>
                 </li>
-                <li class="main-menu-panel__item">
-                    <a class="main-menu-panel__link" asp-area="" asp-controller="Account" asp-action="Register">@_localizer.Buttons["Main.Registration"]</a>
+                <li class="left-menu__item">
+                    <a class="left-menu__link" asp-area="" asp-controller="Account" asp-action="Register">@_localizer.Buttons["Main.Registration"]</a>
                 </li>
-                <li class="main-menu-panel__item">
-                    <a class="main-menu-panel__link" asp-area="" asp-controller="Item" asp-action="CreateItem">@_localizer.Buttons["Main.Create"]</a>
+                <li class="left-menu__item">
+                    <a class="left-menu__link" asp-area="" asp-controller="Item" asp-action="CreateItem">@_localizer.Buttons["Main.Create"]</a>
                 </li>
-                <li class="main-menu-panel__item">
-                    <a class="main-menu-panel__link" asp-area="" asp-controller="Item" asp-action="UserItems">@_localizer.Buttons["Main.UserItems"]</a>
+                <li class="left-menu__item">
+                    <a class="left-menu__link" asp-area="" asp-controller="Item" asp-action="UserItems">@_localizer.Buttons["Main.UserItems"]</a>
                 </li>
-                <li class="main-menu-panel__item">
-                    <a class="main-menu-panel__link" asp-area="" asp-controller="Sale" asp-action="Sales">@_localizer.Buttons["Main.MenuSales"]</a>
+                <li class="left-menu__item">
+                    <a class="left-menu__link" asp-area="" asp-controller="Sale" asp-action="Sales">@_localizer.Buttons["Main.MenuSales"]</a>
                 </li>
-                <li class="main-menu-panel__item">
+                <li class="left-menu__item">
                     @if (User.IsInRole(ProjectConstants.ROLE_ADMIN))
                     {
-                        <a class="main-menu-panel__link" asp-area="" asp-controller="Admin" asp-action="AdminPanel">AdminPanel</a>
+                        <a class="left-menu__link" asp-area="" asp-controller="Admin" asp-action="AdminPanel">AdminPanel</a>
                     }
                 </li>
-                <!-- Language Button -->
-                <li class="main-menu-panel__item">
-                    <div class="language-selector">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                            @_localizer.Buttons["Main.Language"]
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <li>
-                                <form action="@Url.Action("SetLanguage", "Home")" method="post" class="d-inline">
-                                    <input type="hidden" name="culture" value="en-US" />
-                                    <input type="hidden" name="returnUrl" value="@Context.Request.Path" />
-                                    <button type="submit" class="dropdown-item">English</button>
-                                </form>
-                            </li>
-                            <li>
-                                <form action="@Url.Action("SetLanguage", "Home")" method="post" class="d-inline">
-                                    <input type="hidden" name="culture" value="uk-UA" />
-                                    <input type="hidden" name="returnUrl" value="@Context.Request.Path" />
-                                    <button type="submit" class="dropdown-item">Українська</button>
-                                </form>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
             </ul>
+
             <div class="currency-container">
                 @await Component.InvokeAsync("CurrencyRates")
             </div>
-            <div class="auth-block">
-                @if (User.Identity?.IsAuthenticated == true)
-                {
-                    <span class="auth-block__title">@_localizer.Messages["Main.Hello"] @User.Identity.Name</span>
-                    <form method="post" asp-area="" asp-controller="Account" asp-action="Logout">
-                        <button type="submit" class="btn btn-outline-dark">@_localizer.Buttons["Main.Logout"]</button>
-                    </form>
-                }
-                else
-                {
-                    <a asp-area="" asp-controller="Account" asp-action="Login" class="btn btn-outline-dark">@_localizer.Buttons["Main.Login"]</a>
-                }
-            </div>
         </nav>
+
         <div class="container-fluid">
             <main role="main" class="pb-3">
                 @RenderBody()
@@ -104,6 +115,54 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        // Функция для переключения темы
+        function toggleTheme() {
+            const body = document.body;
+            const themeButton = document.getElementById('themeToggle');
+
+            // Проверка на текущую тему
+            const isDark = body.classList.contains('dark-theme');
+
+            // Переключаем тему
+            body.classList.toggle('dark-theme', !isDark); // Убираем/добавляем класс для темной темы
+            body.classList.toggle('light-theme', isDark); // Убираем/добавляем класс для светлой темы
+
+            // Обновляем кнопку и фон
+            if (isDark) {
+                themeButton.innerHTML = '🌞'; // Солнце
+                themeButton.style.backgroundColor = '#fff'; // Белый фон
+                themeButton.style.color = '#000'; // Черный текст
+                localStorage.setItem('theme', 'light'); // Сохраняем в localStorage
+            } else {
+                themeButton.innerHTML = '🌙'; // Луна
+                themeButton.style.backgroundColor = '#333'; // Черный фон
+                themeButton.style.color = '#fff'; // Белый текст
+                localStorage.setItem('theme', 'dark'); // Сохраняем в localStorage
+            }
+        }
+
+        // Устанавливаем начальную тему при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function () {
+            const body = document.body;
+            const themeButton = document.getElementById('themeToggle');
+
+            // Проверяем сохраненную тему в localStorage
+            const savedTheme = localStorage.getItem('theme');
+
+            if (savedTheme === 'dark') {
+                body.classList.add('dark-theme');
+                themeButton.innerHTML = '🌙'; // Месяц для темной темы
+                themeButton.style.backgroundColor = '#333'; // Черный фон
+                themeButton.style.color = '#fff'; // Белый текст
+            } else {
+                body.classList.add('light-theme');
+                themeButton.innerHTML = '🌞'; // Солнце для светлой темы
+                themeButton.style.backgroundColor = '#fff'; // Белый фон
+                themeButton.style.color = '#000'; // Черный текст
+            }
+        });
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -1,39 +1,44 @@
 ﻿using Newtonsoft.Json.Linq;
 
-namespace Karakatsiya.Services
+public class CurrencyService
 {
-    public class CurrencyService
+    private readonly HttpClient _httpClient;
+
+    public CurrencyService(HttpClient httpClient)
     {
-        private readonly string _apiKey;
-        private readonly HttpClient _httpClient;
+        _httpClient = httpClient;
+    }
 
-        public CurrencyService(HttpClient httpClient, IConfiguration configuration)
+    public async Task<Dictionary<string, decimal>> GetExchangeRatesAsync()
+    {
+        var result = new Dictionary<string, decimal>();
+
+        try
         {
-            _httpClient = httpClient;
-            _apiKey = configuration["ApiKeys:CurrencyApiKey"];
+            HttpResponseMessage response = await _httpClient.GetAsync("https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json");
+            response.EnsureSuccessStatusCode();
+
+            string jsonResponse = await response.Content.ReadAsStringAsync();
+            JArray jsonRates = JArray.Parse(jsonResponse);
+
+            var usdRate = jsonRates.FirstOrDefault(rate => rate["cc"]?.ToString() == "USD");
+            if (usdRate != null)
+            {
+                result["USD"] = Math.Round(usdRate["rate"]?.ToObject<decimal>() ?? 0, 2);
+            }
+
+            var eurRate = jsonRates.FirstOrDefault(rate => rate["cc"]?.ToString() == "EUR");
+            if (eurRate != null)
+            {
+                result["EUR"] = Math.Round(eurRate["rate"]?.ToObject<decimal>() ?? 0, 2);
+            }
+        }
+        catch (Exception)
+        {
+            result["USD"] = 0;
+            result["EUR"] = 0;
         }
 
-        public async Task<Dictionary<string, decimal>> GetExchangeRatesAsync()
-        {
-            var result = new Dictionary<string, decimal>();
-            string urlUsd = $"https://v6.exchangerate-api.com/v6/{_apiKey}/pair/USD/UAH";
-            string urlEur = $"https://v6.exchangerate-api.com/v6/{_apiKey}/pair/EUR/UAH";
-
-            HttpResponseMessage responseUsd = await _httpClient.GetAsync(urlUsd);
-            responseUsd.EnsureSuccessStatusCode();
-            string jsonResponseUsd = await responseUsd.Content.ReadAsStringAsync();
-            JObject jsonUsd = JObject.Parse(jsonResponseUsd);
-            decimal usdRate = (decimal)jsonUsd["conversion_rate"];
-            result["USD"] = Math.Round(usdRate, 2);
-
-            HttpResponseMessage responseEur = await _httpClient.GetAsync(urlEur);
-            responseEur.EnsureSuccessStatusCode();
-            string jsonResponseEur = await responseEur.Content.ReadAsStringAsync();
-            JObject jsonEur = JObject.Parse(jsonResponseEur);
-            decimal eurRate = (decimal)jsonEur["conversion_rate"];
-            result["EUR"] = Math.Round(eurRate, 2);
-
-            return result;
-        }
+        return result;
     }
 }

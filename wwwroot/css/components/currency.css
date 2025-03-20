@@ -1,14 +1,15 @@
 ﻿.currency-container {
     margin-left: 50px;
+    width: 250px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
-    border-bottom: 1px solid #dee2e6;
 }
 
 .currency-component {
-    background-color: #ccffff;
+    background-color: var(--navbar-background-light);
+    color: var(--text-color-light);
     border: 1px solid #000;
     border-radius: 10px;
     display: flex;
@@ -17,6 +18,8 @@
     justify-content: center;
     height: 100px;
 }
+
+.dark-theme .currency-component {}
 
 .currency-component__label {
     font-weight: bold;

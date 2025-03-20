@@ -1,31 +1,20 @@
-@import url("components/menu.css");
+@import url("components/base.css");
+@import url("components/top-main-menu.css");
+@import url("components/left-main-menu.css");
+@import url("components/footer.css");
 @import url("components/currency.css");
 @import url("components/logo.css");
 @import url("components/language.css");
 @import url("components/main-page.css");
 @import url("components/news-details.css");
 
-html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
+/* Дополнительные стили для кнопки */
+#themeToggle {
+    border: none;
+    padding: 5px;
+    cursor: pointer;
     font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-  margin-bottom: 60px;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
@@ -59,11 +48,6 @@ body {
 
 .auth-block__title {
     margin-left: 0px;
-}
-
-.container-fluid {
-    margin-left: 260px;
-    padding: 1rem;
 }
 
 /* Стили для формы */
@@ -108,19 +92,3 @@ body {
     flex-direction: column;
     justify-content: center;
 }
-
-/*GreetingText*/
-
-
-/*MainPage*/
-.custom-main-page-wrapper {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    margin-top: 20px;
-}
-
-
-
-
-

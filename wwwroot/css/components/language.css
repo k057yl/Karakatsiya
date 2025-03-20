@@ -1,3 +1,8 @@
-﻿.language-selector {
+﻿.custom-navbar__language {
+    margin-right: 10px;
+    margin-top: -15px;
+}
+
+.language-selector {
     margin-top: 1rem;
 }

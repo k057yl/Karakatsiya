@@ -1,0 +1,16 @@
+﻿.top-menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 80px;
+    background-color: var(--navbar-background-light);
+    color: var(--text-color-light);
+    padding: 0 15px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+.dark-theme .top-menu {}
