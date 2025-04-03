@@ -12,80 +12,85 @@
     <link rel="stylesheet" href="~/Karakatsiya.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <!-- TopPanel -->
-    <div class="top-menu">
-        <div class="custom-navbar__logo">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+    <!-- Header -->
+    <div class="block-header">
+        <!-- Logo -->
+        <div class="block-header__container-logo">
+            <a class="block-header__logo-text" asp-area="" asp-controller="Home" asp-action="Index">
                 K<span class="letter">a</span>r<span class="letter">a</span>k<span class="letter">a</span>tsiy<span class="letter">a</span>
             </a>
         </div>
-
-        <div class="custom-navbar__greeting">
-            @if (User.Identity?.IsAuthenticated == true)
-            {
-                <span class="auth-block__title">@_localizer.Messages["Main.Hello"] @User.Identity.Name</span>
-                <form method="post" asp-area="" asp-controller="Account" asp-action="Logout">
-                    <button type="submit" class="btn btn-outline-dark">@_localizer.Buttons["Main.Logout"]</button>
-                </form>
-            }
-            else
-            {
-                <a asp-area="" asp-controller="Account" asp-action="Login" class="btn btn-outline-dark">@_localizer.Buttons["Main.Login"]</a>
-            }
+        <!-- Greeting -->
+        <div class="block-header__container-greeting">
+            <div class="block-header__greeting">
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <span class="auth-block__title">@_localizer.Messages["Main.Hello"] @User.Identity.Name</span>
+                    <form method="post" asp-area="" asp-controller="Account" asp-action="Logout">
+                        <button type="submit" class="btn btn-outline-dark">@_localizer.Buttons["Main.Logout"]</button>
+                    </form>
+                }
+                else
+                {
+                    <a asp-area="" asp-controller="Account" asp-action="Login" class="btn btn-outline-dark">@_localizer.Buttons["Main.Login"]</a>
+                }
+            </div>
         </div>
+        <!-- Theme/Language -->
+        <div class="block-header__container-theme-language">
+            <div class="block-header__theme-toggle">
+                <button id="themeToggle" class="btn" onclick="toggleTheme()">🌙/🌞</button>
+            </div>
 
-        <div class="custom-navbar__theme-toggle">
-            <button id="themeToggle" class="btn" onclick="toggleTheme()">🌙/🌞</button>
-        </div>
-
-        <div class="custom-navbar__language">
-            <div class="language-selector">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                    @_localizer.Buttons["Main.Language"]
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <li>
-                        <form action="@Url.Action("SetLanguage", "Home")" method="post" class="d-inline">
-                            <input type="hidden" name="culture" value="en-US" />
-                            <input type="hidden" name="returnUrl" value="@Context.Request.Path" />
-                            <button type="submit" class="dropdown-item">English</button>
-                        </form>
-                    </li>
-                    <li>
-                        <form action="@Url.Action("SetLanguage", "Home")" method="post" class="d-inline">
-                            <input type="hidden" name="culture" value="uk-UA" />
-                            <input type="hidden" name="returnUrl" value="@Context.Request.Path" />
-                            <button type="submit" class="dropdown-item">Українська</button>
-                        </form>
-                    </li>
-                </ul>
+            <div class="custom-navbar__language">
+                <div class="language-selector">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                        @_localizer.Buttons["Main.Language"]
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <li>
+                            <form action="@Url.Action("SetLanguage", "Home")" method="post" class="d-inline">
+                                <input type="hidden" name="culture" value="en-US" />
+                                <input type="hidden" name="returnUrl" value="@Context.Request.Path" />
+                                <button type="submit" class="dropdown-item">English</button>
+                            </form>
+                        </li>
+                        <li>
+                            <form action="@Url.Action("SetLanguage", "Home")" method="post" class="d-inline">
+                                <input type="hidden" name="culture" value="uk-UA" />
+                                <input type="hidden" name="returnUrl" value="@Context.Request.Path" />
+                                <button type="submit" class="dropdown-item">Українська</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="d-flex">
+    <div class="block-main">
         <!-- RightPanel -->
-        <nav class="left-menu">
-            <ul class="left-menu__nav">
-                <li class="left-menu__item">
-                    <a class="left-menu__link" asp-area="" asp-controller="Home" asp-action="Index">@_localizer.Buttons["Main.Home"]</a>
+        <nav class="block-sidebar">
+            <ul class="block-sidebar__container-main">
+                <li class="block-sidebar__container-button">
+                    <a class="block-sidebar__button" asp-area="" asp-controller="Home" asp-action="Index">@_localizer.Buttons["Main.Home"]</a>
                 </li>
-                <li class="left-menu__item">
-                    <a class="left-menu__link" asp-area="" asp-controller="Account" asp-action="Register">@_localizer.Buttons["Main.Registration"]</a>
+                <li class="block-sidebar__container-button">
+                    <a class="block-sidebar__button" asp-area="" asp-controller="Account" asp-action="Register">@_localizer.Buttons["Main.Registration"]</a>
                 </li>
-                <li class="left-menu__item">
-                    <a class="left-menu__link" asp-area="" asp-controller="Item" asp-action="CreateItem">@_localizer.Buttons["Main.Create"]</a>
+                <li class="block-sidebar__container-button">
+                    <a class="block-sidebar__button" asp-area="" asp-controller="Item" asp-action="CreateItem">@_localizer.Buttons["Main.Create"]</a>
                 </li>
-                <li class="left-menu__item">
-                    <a class="left-menu__link" asp-area="" asp-controller="Item" asp-action="UserItems">@_localizer.Buttons["Main.UserItems"]</a>
+                <li class="block-sidebar__container-button">
+                    <a class="block-sidebar__button" asp-area="" asp-controller="Item" asp-action="UserItems">@_localizer.Buttons["Main.UserItems"]</a>
                 </li>
-                <li class="left-menu__item">
-                    <a class="left-menu__link" asp-area="" asp-controller="Sale" asp-action="Sales">@_localizer.Buttons["Main.MenuSales"]</a>
+                <li class="block-sidebar__container-button">
+                    <a class="block-sidebar__button" asp-area="" asp-controller="Sale" asp-action="Sales">@_localizer.Buttons["Main.MenuSales"]</a>
                 </li>
-                <li class="left-menu__item">
+                <li class="block-sidebar__container-button">
                     @if (User.IsInRole(ProjectConstants.ROLE_ADMIN))
                     {
-                        <a class="left-menu__link" asp-area="" asp-controller="Admin" asp-action="AdminPanel">AdminPanel</a>
+                        <a class="block-sidebar__button" asp-area="" asp-controller="Admin" asp-action="AdminPanel">AdminPanel</a>
                     }
                 </li>
             </ul>
@@ -95,21 +100,23 @@
             </div>
         </nav>
 
-        <div class="container-fluid">
+        <div class="block-content">
             <main role="main" class="pb-3">
                 @RenderBody()
             </main>
         </div>
     </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            <div class="footer-text">
+    <!-- Footer -->
+    <footer class="block-footer">
+        <div class="block-footer__container-text">
+            <div class="block-footer__text">
                 &copy; 2025 - Karakatsiya - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
             </div>
-            <a href="@ProjectConstants.ABOUT_ME_URL" target="_blank">
-                <img src="/images/KarakatsiyaKeeperLogoV1.png" alt="Karakatsiya" class="logo-karakatsiya">
-            </a>
+            <div class="block-footer__container-logo">
+                <a href="@ProjectConstants.ABOUT_ME_URL" target="_blank">
+                    <img src="/images/KarakatsiyaKeeperLogoV1.png" alt="Karakatsiya" class="block-footer__logo">
+                </a>
+            </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

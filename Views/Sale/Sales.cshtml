@@ -27,7 +27,7 @@
     </ul>
 </div>
 
-<div class="sales-container">
+<div class="sale-test">
     <table class="table">
         <thead>
             <tr>
@@ -61,9 +61,14 @@
                     <td>@sale.SalePrice @sale.Currency</td>
                     <td>@sale.Profit @sale.Currency</td>
                     <td>
+                        <button type="button" class="btn btn-danger delete-sale-btn" data-saleid="@sale.SaleId">
+                            @sharedLocalizer.Buttons["Delete"]
+                        </button>
+                        @*
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-saleid="@sale.SaleId">
                             @sharedLocalizer.Buttons["Delete"]
                         </button>
+                        *@
                     </td>
                 </tr>
             }
@@ -71,26 +76,69 @@
     </table>
 </div>
 
-<!-- Bootstrap Modal -->
-<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmDeleteLabel">@sharedLocalizer.Messages["DeleteTitle"]</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<!-- Кастомное модальное окно -->
+<div id="customConfirmDeleteModal" class="custom-modal" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+    <div class="custom-modal-dialog">
+        <div class="custom-modal-content">
+            <div class="custom-modal-header">
+                <h5 class="custom-modal-title" id="confirmDeleteLabel">@sharedLocalizer.Messages["DeleteTitle"]</h5>
+                <button type="button" class="btn-close" id="closeModalButton" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="custom-modal-body">
                 @sharedLocalizer.Messages["DeletionConfirmation"]
             </div>
-            <div class="modal-footer">
+            <div class="custom-modal-footer">
                 <button type="button" class="btn btn-danger" id="confirmDeleteButton">@sharedLocalizer.Buttons["Yes"]</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@sharedLocalizer.Buttons["No"]</button>
+                <button type="button" class="btn btn-secondary" id="cancelDeleteButton">@sharedLocalizer.Buttons["No"]</button>
             </div>
         </div>
     </div>
 </div>
 
+<!-- Затемнение фона -->
+<div id="customModalBackdrop" class="custom-modal-backdrop"></div>
+
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
-    <script src="~/js/site.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const deleteButtons = document.querySelectorAll(".delete-sale-btn");
+            const modal = document.getElementById("customConfirmDeleteModal");
+            const modalBackdrop = document.getElementById("customModalBackdrop");
+            const confirmDeleteButton = document.getElementById("confirmDeleteButton");
+            const cancelDeleteButton = document.getElementById("cancelDeleteButton");
+
+            let saleIdToDelete = null;
+
+            // Открытие модального окна
+            deleteButtons.forEach(button => {
+                button.addEventListener("click", function () {
+                    saleIdToDelete = button.getAttribute("data-saleid");
+
+                    modal.style.display = "block";
+                    modalBackdrop.style.display = "block";
+                });
+            });
+
+            // Закрытие модального окна
+            cancelDeleteButton.addEventListener("click", function () {
+                modal.style.display = "none";
+                modalBackdrop.style.display = "none";
+            });
+
+            // Удаление продажи при подтверждении
+            confirmDeleteButton.addEventListener("click", function () {
+                if (saleIdToDelete) {
+                    fetch(`/Sale/DeleteSale?saleId=${saleIdToDelete}`, { method: "POST" })
+                        .then(() => location.reload());
+                }
+            });
+
+            // Закрытие окна при клике на затемненный фон
+            modalBackdrop.addEventListener("click", function () {
+                modal.style.display = "none";
+                modalBackdrop.style.display = "none";
+            });
+        });
+    </script>
 }

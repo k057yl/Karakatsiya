@@ -1,0 +1,51 @@
+﻿.create-item-form__container {
+    width: 50vw;
+    height: 80vh;
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: #6699ff;
+    border: 1px solid #ff0000;
+}
+
+/* Группы элементов формы */
+.create-item-form__group {
+    margin-bottom: 20px;
+}
+
+/* Метки формы */
+.create-item-form__label {
+    font-weight: bold;
+}
+
+/* Ввод текста */
+.create-item-form__input,
+.create-item-form__textarea,
+.create-item-form__select {
+    width: 100%;
+}
+
+/* Кнопки */
+.create-item-form__button,
+.create-item-form__submit {
+    width: 50%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
+    color: var(--bs-secondary-color);
+    text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
+    text-align: start;
+}
+

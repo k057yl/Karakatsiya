@@ -1,0 +1,7 @@
+﻿.block-content {
+    margin-left: 260px;
+    padding: 1rem;
+    position: fixed;
+    height: calc(100vh - 140px);
+    overflow: auto;
+}

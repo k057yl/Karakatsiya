@@ -5,13 +5,13 @@
     --text-color-light: black;
     --text-color-dark: #a3a0a0;
     /*Panel*/
-    --panel-background-light: #f0f0f0;
-    --panel-background-dark: #333;
+    --panel-background-light: #e6e3e3;
+    --panel-background-dark: #252525;
     --button-background-light: #007bff;
     --button-background-dark: #0056b3;
     /*Logo*/
     --logo-color-light: black;
-    --logo-color-dark: white;
+    --logo-color-dark: #a3a0a0;
     --logo-hover-color: #ff7f50;
 }
 
@@ -25,7 +25,7 @@
 
 html {
     font-size: 14px;
-    position: relative;
+    /*position: relative;*/
     min-height: 90%;
 }
 
@@ -44,14 +44,5 @@ body {
     color: var(--text-color-light);
     font-family: Arial, sans-serif;
     transition: background-color 0.3s, color 0.3s;
-    margin-bottom: 60px;
-    padding-top: 80px;
 }
 
-.container-fluid {
-    margin-left: 260px;
-    padding: 1rem;
-    border: solid 1px #00ff21;
-
-    position: relative;
-}

@@ -1,0 +1,13 @@
+﻿.modal {
+    z-index: 1050 !important;
+}
+
+.modal-backdrop {
+    z-index: 1040 !important;
+}
+
+.sale-test {
+    z-index: 1000;
+    background: #00ff21;
+    color: #ffd800;
+}

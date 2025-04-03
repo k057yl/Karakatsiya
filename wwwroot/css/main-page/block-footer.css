@@ -1,0 +1,31 @@
+﻿.block-footer {
+    width: 100%;
+    height: 60px;
+    position: fixed;
+    bottom: 0;
+    background-color: var(--panel-background-light);
+}
+
+.block-footer__container-text {
+    min-width: 80%;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.block-footer__text {
+    flex: 1;
+}
+
+.block-footer__container-logo {
+    max-width: 20%;
+}
+
+.block-footer__logo {
+    width: 70px;
+    height: 50px;
+    margin-right: 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}

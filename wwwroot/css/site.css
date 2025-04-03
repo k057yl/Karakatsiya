@@ -1,14 +1,22 @@
+/*componrnts*/
 @import url("components/base.css");
-@import url("components/top-main-menu.css");
-@import url("components/left-main-menu.css");
-@import url("components/footer.css");
 @import url("components/currency.css");
-@import url("components/logo.css");
 @import url("components/language.css");
 @import url("components/main-page.css");
 @import url("components/news-details.css");
+@import url("components/modal-window.css");
+/*new*/
+@import url("main-page/block-header.css");
+@import url("main-page/block-main.css");
+@import url("main-page/block-sidebar.css");
+@import url("main-page/block-content.css");
+@import url("main-page/block-footer.css");
+/*pages*/
+@import url("create-page/create.css");
+@import url("sale-page/sale.css");
 
 /* Дополнительные стили для кнопки */
+/*
 #themeToggle {
     border: none;
     padding: 5px;
@@ -16,15 +24,8 @@
     font-size: 16px;
     transition: background-color 0.3s, color 0.3s;
 }
+    */
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
-}
-
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
-}
 
 .image-thumb {
     cursor: pointer;
@@ -50,45 +51,15 @@
     margin-left: 0px;
 }
 
-/* Стили для формы */
-.create-item-form__container {
-    width: 50%;
-    height: 100%;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 20px;
-    box-sizing: border-box;
-    border: 2px solid #000;
-    border-radius: 10px;
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
-    background-color: #6699ff;
+/*
+.modal-backdrop {
+    display: none !important;
+}
+*/
+
+.item-photo {
+    max-width: 200px;
+    max-height: 150px;
+    object-fit: cover;
 }
 
-/* Группы элементов формы */
-.create-item-form__group {
-    margin-bottom: 20px;
-}
-
-/* Метки формы */
-.create-item-form__label {
-    font-weight: bold;
-}
-
-/* Ввод текста */
-.create-item-form__input,
-.create-item-form__textarea,
-.create-item-form__select {
-    width: 100%;
-}
-
-/* Кнопки */
-.create-item-form__button,
-.create-item-form__submit {
-    width: 50%;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}

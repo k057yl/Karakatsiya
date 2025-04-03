@@ -49,7 +49,19 @@
                         }
                     </td>
                     <td>@item.Name</td>
-                    <td>@item.Description</td>
+                    <td>
+                        @if (item.Description.Length > 30)
+                        {
+                            @foreach (var line in System.Text.RegularExpressions.Regex.Matches(item.Description, ".{1,30}"))
+                            {
+                                <div>@line</div>
+                            }
+                        }
+                        else
+                        {
+                            @item.Description
+                        }
+                    </td>
                     <td>@item.CreationDate.ToShortDateString()</td>
                     <td>
                         @if (item.ExpirationDate == null || item.ExpirationDate == new DateTime(2099, 12, 31))
