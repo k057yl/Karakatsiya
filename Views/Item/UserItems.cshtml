@@ -82,9 +82,18 @@
                                 @sharedLocalizer.Buttons["Edit"]
                             </a>
                         }
+                        <button type="button" class="btn btn-danger open-modal-btn"
+                                data-action="/Item/Delete"
+                                data-id="@item.ItemId"
+                                data-title="@sharedLocalizer.Buttons["DeleteTitle"]"
+                                data-message="@sharedLocalizer.Buttons["DeletionConfirmation"]">
+                            @sharedLocalizer.Buttons["Delete"]
+                        </button>
+                        @*
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-itemid="@item.ItemId">
                             @sharedLocalizer.Buttons["Delete"]
                         </button>
+                        *@
                     </td>
                     <td>
                         @if (item.IsSold)
@@ -106,28 +115,9 @@
     </table>
 </div>
 
-<!-- Bootstrap Modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">@sharedLocalizer.Messages["DeleteTitle"]</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                @sharedLocalizer.Messages["DeletionConfirmation"]
-            </div>
-            <div class="modal-footer">
-                <form id="deleteForm" method="post" action="">
-                    <button type="submit" class="btn btn-danger">@sharedLocalizer.Buttons["Yes"]</button>
-                </form>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">@sharedLocalizer.Buttons["No"]</button>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
-    <script src="~/js/site.js"></script>
+    @await Html.PartialAsync("_CustomModal")
 }

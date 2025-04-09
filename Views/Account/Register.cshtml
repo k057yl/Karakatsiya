@@ -2,16 +2,20 @@
     ViewData["Title"] = "Register";
 }
 
-<h2>Register</h2>
+<div class="register-page__wrapper">
+    <form asp-action="Register" method="post" class="register-page__form">
+        <h2 class="register-page__title">Register</h2>
 
-<form asp-action="Register" method="post">
-    <div>
-        <label>Email</label>
-        <input type="email" name="Email" required />
-    </div>
-    <div>
-        <label>Password</label>
-        <input type="password" name="Password" required />
-    </div>
-    <button type="submit">Register</button>
-</form>
+        <div class="register-page__form-group">
+            <label for="Email" class="register-page__form-label">Email</label>
+            <input type="email" name="Email" required class="register-page__form-input" />
+        </div>
+
+        <div class="register-page__form-group">
+            <label for="Password" class="register-page__form-label">Password</label>
+            <input type="password" name="Password" required class="register-page__form-input" />
+        </div>
+
+        <button type="submit" class="register-page__submit-button">Register</button>
+    </form>
+</div>

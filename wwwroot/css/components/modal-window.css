@@ -69,3 +69,7 @@
 .custom-modal-footer button {
     margin-left: 10px;
 }
+
+.hidden {
+    display: none !important;
+}

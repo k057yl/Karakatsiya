@@ -1,0 +1,24 @@
+﻿@inject Karakatsiya.Localizations.SharedLocalizationService sharedLocalizer
+
+<!-- Универсальное модальное окно -->
+<div id="customModal" class="custom-modal" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="custom-modal-dialog">
+        <div class="custom-modal-content">
+            <div class="custom-modal-header">
+                <h5 class="custom-modal-title" id="modalTitle"></h5>
+                <button type="button" class="btn-close" id="closeModalButton" aria-label="Close"></button>
+            </div>
+            <div class="custom-modal-body" id="modalMessage"></div>
+            <div class="custom-modal-footer">
+                <button type="button" class="btn btn-danger" id="confirmActionButton">@sharedLocalizer.Buttons["Yes"]</button>
+                <button type="button" class="btn btn-secondary" id="cancelModalButton">@sharedLocalizer.Buttons["No"]</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Затемнение фона -->
+<div id="customModalBackdrop" class="custom-modal-backdrop"></div>
+
+<!-- Подключение скрипта -->
+<script src="~/js/customModal.js"></script>

@@ -108,10 +108,10 @@ namespace Karakatsiya.Controllers
             var user = await _userManager.GetUserAsync(User);
             if (user == null || !await _itemService.DeleteItemAsync(id, user.Id))
             {
-                return NotFound();
+                return Json(new { success = false, message = "Item could not be deleted." });
             }
 
-            return RedirectToAction("UserItems");
+            return Json(new { success = true });
         }
 
         public async Task<IActionResult> Details(int id)
