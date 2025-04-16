@@ -5,6 +5,7 @@
 @import url("components/main-page.css");
 @import url("components/news-details.css");
 @import url("components/modal-window.css");
+@import url("components/filter.css");
 /*new*/
 @import url("main-page/block-header.css");
 @import url("main-page/block-main.css");

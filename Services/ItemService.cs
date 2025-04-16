@@ -155,11 +155,9 @@ namespace Karakatsiya.Services
             return await _context.Items.Where(i => i.UserId == userId).ToListAsync();
         }
 
-        //*************************
         public async Task<List<Item>> GetFilteredItemsAsync(ItemFilterDto filter)
         {
             var query = _context.Items
-                .Include(i => i.Sales)
                 .Where(i => !i.IsDeleted)
                 .AsQueryable();
 
@@ -181,25 +179,16 @@ namespace Karakatsiya.Services
             if (filter.CreatedBefore.HasValue)
                 query = query.Where(i => i.CreationDate <= filter.CreatedBefore.Value);
 
-            if (filter.SoldAfter.HasValue)
-                query = query.Where(i => i.Sales.Any(s => s.SaleDate >= filter.SoldAfter.Value));
-
-            if (filter.SoldBefore.HasValue)
-                query = query.Where(i => i.Sales.Any(s => s.SaleDate <= filter.SoldBefore.Value));
-
-            query = filter.SortBy switch
+            query = filter.SortOrder switch
             {
-                "name" => filter.Ascending ? query.OrderBy(i => i.Name) : query.OrderByDescending(i => i.Name),
-                "price" => filter.Ascending ? query.OrderBy(i => i.Price) : query.OrderByDescending(i => i.Price),
-                "creationDate" => filter.Ascending ? query.OrderBy(i => i.CreationDate) : query.OrderByDescending(i => i.CreationDate),
-                "saleDate" => filter.Ascending
-                    ? query.OrderBy(i => i.Sales.Min(s => s.SaleDate))
-                    : query.OrderByDescending(i => i.Sales.Max(s => s.SaleDate)),
+                "az" => query.OrderBy(i => i.Name),
+                "za" => query.OrderByDescending(i => i.Name),
+                "price_asc" => query.OrderBy(i => i.Price),
+                "price_desc" => query.OrderByDescending(i => i.Price),
                 _ => query.OrderBy(i => i.ItemId)
             };
 
             var items = await query.ToListAsync();
-
             return _mapper.Map<List<Item>>(items);
         }
     }

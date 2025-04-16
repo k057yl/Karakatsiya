@@ -11,11 +11,17 @@
         public DateTime? CreatedAfter { get; set; }
         public DateTime? CreatedBefore { get; set; }
 
-        public DateTime? SoldAfter { get; set; } // через Sale
-        public DateTime? SoldBefore { get; set; }
+        public string? SortOrder { get; set; } = "az"; // "az", "za", "price_asc", "price_desc"
 
-        public string? SortBy { get; set; } // "name", "price", "creationDate", "saleDate"
-        public bool Ascending { get; set; } = true;
-        public bool IncludeSold { get; set; } = true;
+        public bool IncludeSold { get; set; } = false;
+
+        public void Normalize()
+        {
+            if (CreatedAfter.HasValue)
+                CreatedAfter = DateTime.SpecifyKind(CreatedAfter.Value, DateTimeKind.Utc);
+
+            if (CreatedBefore.HasValue)
+                CreatedBefore = DateTime.SpecifyKind(CreatedBefore.Value, DateTimeKind.Utc);
+        }
     }
 }

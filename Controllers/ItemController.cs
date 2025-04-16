@@ -101,23 +101,27 @@ namespace Karakatsiya.Controllers
             filter ??= new ItemFilterDto();
             filter.UserId = user.Id;
 
-            var items = await _itemService.GetFilteredItemsAsync(filter);
+            filter.Normalize();
 
-            return View(items);
-        }
-        /*
-        public async Task<IActionResult> UserItems()
-        {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
+            if (string.IsNullOrEmpty(filter.SortOrder))
             {
-                return RedirectToAction("Login", "Account");
+                filter.SortOrder = "az";
             }
 
-            var items = await _itemService.GetUserItemsAsync(user.Id);
+            var items = await _itemService.GetFilteredItemsAsync(filter);
+
+            // Прокидываем фильтры во ViewData
+            ViewData["Name"] = filter.Name;
+            ViewData["MinPrice"] = filter.MinPrice;
+            ViewData["MaxPrice"] = filter.MaxPrice;
+            ViewData["CreatedAfter"] = filter.CreatedAfter?.ToString("yyyy-MM-dd");
+            ViewData["CreatedBefore"] = filter.CreatedBefore?.ToString("yyyy-MM-dd");
+            ViewData["SortOrder"] = filter.SortOrder;
+            ViewData["IncludeSold"] = filter.IncludeSold;
+
             return View(items);
         }
-        */
+
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
@@ -164,14 +168,6 @@ namespace Karakatsiya.Controllers
             return RedirectToAction("UserItems");
         }
 
-        /*
-        [HttpGet]
-        public async Task<IActionResult> FilteredItems([FromQuery] ItemFilterDto filter)
-        {
-            var items = await _itemService.GetFilteredItemsAsync(filter);
-            return View(items);
-        }
-        */
         #region Validation
         private bool ValidateHtmlFields(CreateItemDto model)
         {

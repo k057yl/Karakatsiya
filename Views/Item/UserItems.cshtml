@@ -8,22 +8,68 @@
 
 <h2>@ViewData["Title"]</h2>
 
-<form method="get" asp-action="UserItems" asp-controller="Item">
-    <input type="text" name="name" placeholder="Название" />
-    <input type="number" name="minPrice" placeholder="Мин. цена" />
-    <input type="number" name="maxPrice" placeholder="Макс. цена" />
-    <input type="date" name="createdAfter" />
-    <input type="date" name="createdBefore" />
-    <select name="sortBy">
-        <option value="name">По названию</option>
-        <option value="price">По цене</option>
-        <option value="creationdate">По дате создания</option>
-        <option value="saledate">По дате продажи</option>
-    </select>
-    <input type="checkbox" name="ascending" value="true" checked /> По возрастанию
-    <button type="submit">Применить</button>
-    <a href="@Url.Action("UserItems", "Item")" class="btn btn-secondary">Сбросить фильтры</a>
-</form>
+<div class="filter-header d-flex align-items-center gap-2 mb-3">
+    <button class="filter-toggle-btn btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#filterCollapse">
+        🔍 Фильтры
+    </button>
+
+    <div class="collapse" id="filterCollapse">
+        <div class="filter-block">
+            <form method="get" asp-action="UserItems" asp-controller="Item">
+                <input type="hidden" name="sortOrder" value="@ViewData["SortOrder"]" />
+                <div class="filter-form">
+                    <div class="filter-group">
+                        <label for="name">Название</label>
+                        <input type="text" id="name" name="name" value="@ViewData["Name"]" />
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="minPrice">Мин. цена</label>
+                        <input type="number" id="minPrice" name="minPrice" value="@ViewData["MinPrice"]" />
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="maxPrice">Макс. цена</label>
+                        <input type="number" id="maxPrice" name="maxPrice" value="@ViewData["MaxPrice"]" />
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="createdAfter">Создано после</label>
+                        <input type="date" id="createdAfter" name="createdAfter" value="@ViewData["CreatedAfter"]" />
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="createdBefore">Создано до</label>
+                        <input type="date" id="createdBefore" name="createdBefore" value="@ViewData["CreatedBefore"]" />
+                    </div>
+                </div>
+
+                <div class="filter-buttons">
+                    <div class="sold-checkbox">
+                        <input type="checkbox" id="includeSold" name="IncludeSold" value="true" @(ViewData["IncludeSold"] as bool? == true ? "checked" : "") />
+                        <label for="includeSold">Проданные</label>
+                    </div>
+
+                    <button type="submit" class="apply-btn">Применить</button>
+                    <a href="@Url.Action("UserItems", "Item")" class="reset-btn">Сбросить фильтры</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <form method="get" asp-action="UserItems" asp-controller="Item" class="d-inline">
+        <label for="sortOrder" class="me-1">Сортировка</label>
+        @{
+            var sortOrder = ViewData["SortOrder"] as string;
+        }
+        <select id="sortOrder" name="sortOrder" onchange="this.form.submit()" class="form-select d-inline w-auto">
+            <option value="az" selected="@(sortOrder == "az")">A-Z</option>
+            <option value="za" selected="@(sortOrder == "za")">Z-A</option>
+            <option value="price_asc" selected="@(sortOrder == "price_asc")">Цена ↑</option>
+            <option value="price_desc" selected="@(sortOrder == "price_desc")">Цена ↓</option>
+        </select>
+    </form>
+</div>
 
 <div class="item-container">
     <table class="table">
