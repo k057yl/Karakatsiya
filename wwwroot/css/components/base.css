@@ -4,10 +4,14 @@
     --background-color-dark: black;
     --text-color-light: black;
     --text-color-dark: #a3a0a0;
-    /*Panel*/
-    --panel-background-light: #e6e3e3;
+    /*HeaderAndFooter*/
+    --panel-background-light: #1E3A8A;
     --panel-background-dark: #252525;
+    /*Sidebar*/
+    --panel-sidebar-background-light: #b8dafb;
+    --panel-sidebar-background-dark: #232e6d;
     --button-background-light: #007bff;
+    --text-color-sidebar-light: black;
     --button-background-dark: #0056b3;
     /*Logo*/
     --logo-color-light: black;
@@ -21,12 +25,12 @@
     --panel-background-light: var(--panel-background-dark);
     --button-background-light: var(--button-background-dark);
     --logo-color-light: var(--logo-color-dark);
+    /*test*/
+    --panel-sidebar-background-light: var(--panel-sidebar-background-dark);
 }
 
 html {
     font-size: 14px;
-    /*position: relative;*/
-    /*min-height: 90%;*/
 }
 
 @media (min-width: 768px) {

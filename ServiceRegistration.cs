@@ -6,15 +6,22 @@ public static class ServiceRegistration
 {
     public static void AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
     {
+        //Singleton
+        services.AddSingleton<SharedLocalizationService>();
+        services.AddSingleton<CategoryLocalizationService>();
+        services.AddSingleton<CurrencyLocalizationService>();
+        services.AddHttpClient<CurrencyService>();
+
+        //Transient
+        services.AddTransient<EmailService>();
+        services.AddTransient<HtmlValidator>();
+        services.AddTransient<ConfirmationCodeGenerator>();
+
+        //Scoped
         services.AddScoped<IAccountService, AccountService>();
-        services.AddScoped<EmailService>();
-        services.AddScoped<ConfirmationCodeGenerator>();
-        services.AddScoped<HtmlValidator>();
-        services.AddScoped<SharedLocalizationService>();
         services.AddScoped<IItemService, ItemService>();
         services.AddScoped<ISaleService, SaleService>();
-        services.AddScoped<CategoryLocalizationService>();
-        services.AddScoped<CurrencyLocalizationService>();
+        services.AddScoped<IHomePageService, HomePageService>();
 
         services.AddHttpContextAccessor();
 
@@ -24,10 +31,5 @@ public static class ServiceRegistration
             options.Cookie.HttpOnly = true;
             options.Cookie.IsEssential = true;
         });
-
-        services.AddScoped<IHomePageService, HomePageService>();
-
-        services.AddHttpClient<CurrencyService>();
-        services.AddScoped<CurrencyService>();
     }
 }

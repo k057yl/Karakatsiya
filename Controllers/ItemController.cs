@@ -90,6 +90,22 @@ namespace Karakatsiya.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> UserItems([FromQuery] ItemFilterDto filter)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            filter ??= new ItemFilterDto();
+            filter.UserId = user.Id;
+
+            var items = await _itemService.GetFilteredItemsAsync(filter);
+
+            return View(items);
+        }
+        /*
         public async Task<IActionResult> UserItems()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -101,7 +117,7 @@ namespace Karakatsiya.Controllers
             var items = await _itemService.GetUserItemsAsync(user.Id);
             return View(items);
         }
-
+        */
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
@@ -148,6 +164,15 @@ namespace Karakatsiya.Controllers
             return RedirectToAction("UserItems");
         }
 
+        /*
+        [HttpGet]
+        public async Task<IActionResult> FilteredItems([FromQuery] ItemFilterDto filter)
+        {
+            var items = await _itemService.GetFilteredItemsAsync(filter);
+            return View(items);
+        }
+        */
+        #region Validation
         private bool ValidateHtmlFields(CreateItemDto model)
         {
             var isValid = true;
@@ -251,5 +276,7 @@ namespace Karakatsiya.Controllers
 
             return isValid;
         }
+        #endregion
+        
     }
 }

@@ -1,12 +1,10 @@
 ﻿.block-sidebar {
     min-width: 260px;
-    background-color: var(--navbar-background-light);
-    color: var(--text-color-light);
+    background-color: var(--panel-sidebar-background-light);
+    color: var(--text-color-sidebar-light);
     position: sticky;
-    top: 0;
+    top: 20px;
     height: 100%;
-    /*display: flex;
-    flex-direction: column;*/
 }
 
 .dark-theme .block-sidebar {}

@@ -8,6 +8,23 @@
 
 <h2>@ViewData["Title"]</h2>
 
+<form method="get" asp-action="UserItems" asp-controller="Item">
+    <input type="text" name="name" placeholder="Название" />
+    <input type="number" name="minPrice" placeholder="Мин. цена" />
+    <input type="number" name="maxPrice" placeholder="Макс. цена" />
+    <input type="date" name="createdAfter" />
+    <input type="date" name="createdBefore" />
+    <select name="sortBy">
+        <option value="name">По названию</option>
+        <option value="price">По цене</option>
+        <option value="creationdate">По дате создания</option>
+        <option value="saledate">По дате продажи</option>
+    </select>
+    <input type="checkbox" name="ascending" value="true" checked /> По возрастанию
+    <button type="submit">Применить</button>
+    <a href="@Url.Action("UserItems", "Item")" class="btn btn-secondary">Сбросить фильтры</a>
+</form>
+
 <div class="item-container">
     <table class="table">
         <thead>

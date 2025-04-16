@@ -1,4 +1,5 @@
-﻿using Karakatsiya.Data;
+﻿using AutoMapper;
+using Karakatsiya.Data;
 using Karakatsiya.Interfaces;
 using Karakatsiya.Models.DTOs;
 using Karakatsiya.Models.Entities;
@@ -10,9 +11,12 @@ namespace Karakatsiya.Services
     {
         private readonly ApplicationDbContext _context;
 
-        public ItemService(ApplicationDbContext context)
+        private readonly IMapper _mapper;//******
+
+        public ItemService(ApplicationDbContext context, IMapper mapper)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         public async Task<Item> CreateItemAsync(CreateItemDto model, string userId)
@@ -42,7 +46,8 @@ namespace Karakatsiya.Services
                 imagePaths.Add(relativePath);
             }
 
-            DateTime? expirationDate = model.ExpirationDate ?? new DateTime(2099, 12, 31);
+            DateTime? expirationDate = model.ExpirationDate?.ToUniversalTime()
+                ?? DateTime.SpecifyKind(new DateTime(2099, 12, 31), DateTimeKind.Utc);
 
             string mainImage = model.MainImage;
             if (string.IsNullOrEmpty(mainImage))
@@ -148,6 +153,54 @@ namespace Karakatsiya.Services
             if (string.IsNullOrEmpty(userId)) throw new ArgumentNullException(nameof(userId));
 
             return await _context.Items.Where(i => i.UserId == userId).ToListAsync();
+        }
+
+        //*************************
+        public async Task<List<Item>> GetFilteredItemsAsync(ItemFilterDto filter)
+        {
+            var query = _context.Items
+                .Include(i => i.Sales)
+                .Where(i => !i.IsDeleted)
+                .AsQueryable();
+
+            if (!filter.IncludeSold)
+                query = query.Where(i => !i.IsSold);
+
+            if (!string.IsNullOrEmpty(filter.Name))
+                query = query.Where(i => i.Name.Contains(filter.Name));
+
+            if (filter.MinPrice.HasValue)
+                query = query.Where(i => i.Price >= filter.MinPrice.Value);
+
+            if (filter.MaxPrice.HasValue)
+                query = query.Where(i => i.Price <= filter.MaxPrice.Value);
+
+            if (filter.CreatedAfter.HasValue)
+                query = query.Where(i => i.CreationDate >= filter.CreatedAfter.Value);
+
+            if (filter.CreatedBefore.HasValue)
+                query = query.Where(i => i.CreationDate <= filter.CreatedBefore.Value);
+
+            if (filter.SoldAfter.HasValue)
+                query = query.Where(i => i.Sales.Any(s => s.SaleDate >= filter.SoldAfter.Value));
+
+            if (filter.SoldBefore.HasValue)
+                query = query.Where(i => i.Sales.Any(s => s.SaleDate <= filter.SoldBefore.Value));
+
+            query = filter.SortBy switch
+            {
+                "name" => filter.Ascending ? query.OrderBy(i => i.Name) : query.OrderByDescending(i => i.Name),
+                "price" => filter.Ascending ? query.OrderBy(i => i.Price) : query.OrderByDescending(i => i.Price),
+                "creationDate" => filter.Ascending ? query.OrderBy(i => i.CreationDate) : query.OrderByDescending(i => i.CreationDate),
+                "saleDate" => filter.Ascending
+                    ? query.OrderBy(i => i.Sales.Min(s => s.SaleDate))
+                    : query.OrderByDescending(i => i.Sales.Max(s => s.SaleDate)),
+                _ => query.OrderBy(i => i.ItemId)
+            };
+
+            var items = await query.ToListAsync();
+
+            return _mapper.Map<List<Item>>(items);
         }
     }
 }

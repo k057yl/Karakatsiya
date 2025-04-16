@@ -1,5 +1,4 @@
 ﻿.block-content {
     flex: 1;
     overflow-y: auto;
-    border: solid 1px #ff0000;
 }

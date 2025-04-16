@@ -39,14 +39,11 @@
                 ? `${actionUrl}?saleId=${itemId}`
                 : `${actionUrl}?id=${itemId}`;
 
-            console.log("Отправка запроса на:", fetchUrl);
 
             fetch(fetchUrl, { method: "POST" })
                 .then(response => response.json())
                 .then(data => {
-                    console.log("Ответ сервера:", data);
                     if (data.success) {
-                        console.log("Удаление успешно, закрываем окно");
                         closeModal();
                         setTimeout(() => location.reload(), 300);
                     } else {
