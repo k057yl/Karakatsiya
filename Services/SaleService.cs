@@ -1,5 +1,6 @@
 ﻿using Karakatsiya.Data;
 using Karakatsiya.Interfaces;
+using Karakatsiya.Models.DTOs;
 using Karakatsiya.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -79,6 +80,46 @@ namespace Karakatsiya.Services
             }
 
             return true;
+        }
+
+        public async Task<List<Sale>> GetFilteredSalesAsync(SaleFilterDto filter)
+        {
+            filter.Normalize();
+
+            var salesQuery = _context.Sales.AsQueryable();
+
+            if (!string.IsNullOrEmpty(filter.ItemName))
+                salesQuery = salesQuery.Where(s => s.Item.Name.Contains(filter.ItemName));
+
+            if (filter.StartDate.HasValue)
+                salesQuery = salesQuery.Where(s => s.SaleDate >= filter.StartDate.Value);
+
+            if (filter.EndDate.HasValue)
+                salesQuery = salesQuery.Where(s => s.SaleDate <= filter.EndDate.Value);
+
+            if (filter.MinPrice.HasValue)
+                salesQuery = salesQuery.Where(s => s.SalePrice >= filter.MinPrice.Value);
+
+            if (filter.MaxPrice.HasValue)
+                salesQuery = salesQuery.Where(s => s.SalePrice <= filter.MaxPrice.Value);
+
+            if (filter.MinProfit.HasValue)
+                salesQuery = salesQuery.Where(s => s.Profit >= filter.MinProfit.Value);
+
+            if (filter.MaxProfit.HasValue)
+                salesQuery = salesQuery.Where(s => s.Profit <= filter.MaxProfit.Value);
+
+            salesQuery = filter.SortOrder switch
+            {
+                "name_asc" => salesQuery.OrderBy(s => s.Item.Name),
+                "name_desc" => salesQuery.OrderByDescending(s => s.Item.Name),
+                "profit_asc" => salesQuery.OrderBy(s => s.Profit),
+                "profit_desc" => salesQuery.OrderByDescending(s => s.Profit),
+                _ => salesQuery.OrderByDescending(s => s.SaleDate)
+            };
+
+            var sales = await salesQuery.ToListAsync();
+            return sales;
         }
     }
 }

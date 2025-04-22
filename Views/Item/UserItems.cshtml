@@ -10,7 +10,7 @@
 
 <div class="filter-header d-flex align-items-center gap-2 mb-3">
     <button class="filter-toggle-btn btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#filterCollapse">
-        🔍 Фильтры
+        🔍 @sharedLocalizer.CreateItems["Button.Filter"]
     </button>
 
     <div class="collapse" id="filterCollapse">
@@ -19,27 +19,27 @@
                 <input type="hidden" name="sortOrder" value="@ViewData["SortOrder"]" />
                 <div class="filter-form">
                     <div class="filter-group">
-                        <label for="name">Название</label>
+                        <label for="name">@sharedLocalizer.CreateItems["Filter.Title.Name"]</label>
                         <input type="text" id="name" name="name" value="@ViewData["Name"]" />
                     </div>
 
                     <div class="filter-group">
-                        <label for="minPrice">Мин. цена</label>
+                        <label for="minPrice">@sharedLocalizer.CreateItems["Filter.Title.MinPrice"]</label>
                         <input type="number" id="minPrice" name="minPrice" value="@ViewData["MinPrice"]" />
                     </div>
 
                     <div class="filter-group">
-                        <label for="maxPrice">Макс. цена</label>
+                        <label for="maxPrice">@sharedLocalizer.CreateItems["Filter.Title.MaxPrice"]</label>
                         <input type="number" id="maxPrice" name="maxPrice" value="@ViewData["MaxPrice"]" />
                     </div>
 
                     <div class="filter-group">
-                        <label for="createdAfter">Создано после</label>
+                        <label for="createdAfter">@sharedLocalizer.CreateItems["Filter.Title.CreatedAfter"]</label>
                         <input type="date" id="createdAfter" name="createdAfter" value="@ViewData["CreatedAfter"]" />
                     </div>
 
                     <div class="filter-group">
-                        <label for="createdBefore">Создано до</label>
+                        <label for="createdBefore">@sharedLocalizer.CreateItems["Filter.Title.CreatedBefore"]</label>
                         <input type="date" id="createdBefore" name="createdBefore" value="@ViewData["CreatedBefore"]" />
                     </div>
                 </div>
@@ -47,26 +47,35 @@
                 <div class="filter-buttons">
                     <div class="sold-checkbox">
                         <input type="checkbox" id="includeSold" name="IncludeSold" value="true" @(ViewData["IncludeSold"] as bool? == true ? "checked" : "") />
-                        <label for="includeSold">Проданные</label>
+                        <label for="includeSold">@sharedLocalizer.CreateItems["Filter.Title.Sold"]</label>
                     </div>
 
-                    <button type="submit" class="apply-btn">Применить</button>
-                    <a href="@Url.Action("UserItems", "Item")" class="reset-btn">Сбросить фильтры</a>
+                    <button type="submit" class="apply-btn">@sharedLocalizer.CreateItems["Filter.Title.Apply"]</button>
+                    <a href="@Url.Action("UserItems", "Item")" class="reset-btn">@sharedLocalizer.CreateItems["Filter.Title.ResetAllFilters"]</a>
                 </div>
             </form>
         </div>
     </div>
 
     <form method="get" asp-action="UserItems" asp-controller="Item" class="d-inline">
-        <label for="sortOrder" class="me-1">Сортировка</label>
+        <label for="sortOrder" class="me-1">@sharedLocalizer.CreateItems["Button.Title.SortBy"]</label>
         @{
             var sortOrder = ViewData["SortOrder"] as string;
         }
+
+        <!-- We pass the current filter values -->
+        <input type="hidden" name="name" value="@ViewData["Name"]" />
+        <input type="hidden" name="minPrice" value="@ViewData["MinPrice"]" />
+        <input type="hidden" name="maxPrice" value="@ViewData["MaxPrice"]" />
+        <input type="hidden" name="createdAfter" value="@ViewData["CreatedAfter"]" />
+        <input type="hidden" name="createdBefore" value="@ViewData["CreatedBefore"]" />
+        <input type="hidden" name="IncludeSold" value="@(ViewData["IncludeSold"] as bool? == true ? "true" : "false")" />
+
         <select id="sortOrder" name="sortOrder" onchange="this.form.submit()" class="form-select d-inline w-auto">
             <option value="az" selected="@(sortOrder == "az")">A-Z</option>
             <option value="za" selected="@(sortOrder == "za")">Z-A</option>
-            <option value="price_asc" selected="@(sortOrder == "price_asc")">Цена ↑</option>
-            <option value="price_desc" selected="@(sortOrder == "price_desc")">Цена ↓</option>
+            <option value="price_asc" selected="@(sortOrder == "price_asc")">@sharedLocalizer.CreateItems["Button.SortBy.Price"] ↑</option>
+            <option value="price_desc" selected="@(sortOrder == "price_desc")">@sharedLocalizer.CreateItems["Button.SortBy.Price"] ↓</option>
         </select>
     </form>
 </div>
@@ -152,11 +161,6 @@
                                 data-message="@sharedLocalizer.Buttons["DeletionConfirmation"]">
                             @sharedLocalizer.Buttons["Delete"]
                         </button>
-                        @*
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-itemid="@item.ItemId">
-                            @sharedLocalizer.Buttons["Delete"]
-                        </button>
-                        *@
                     </td>
                     <td>
                         @if (item.IsSold)

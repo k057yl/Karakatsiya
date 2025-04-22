@@ -110,7 +110,6 @@ namespace Karakatsiya.Controllers
 
             var items = await _itemService.GetFilteredItemsAsync(filter);
 
-            // Прокидываем фильтры во ViewData
             ViewData["Name"] = filter.Name;
             ViewData["MinPrice"] = filter.MinPrice;
             ViewData["MaxPrice"] = filter.MaxPrice;

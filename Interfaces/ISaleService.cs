@@ -1,4 +1,5 @@
-﻿using Karakatsiya.Models.Entities;
+﻿using Karakatsiya.Models.DTOs;
+using Karakatsiya.Models.Entities;
 
 namespace Karakatsiya.Interfaces
 {
@@ -7,5 +8,6 @@ namespace Karakatsiya.Interfaces
         Task<Sale> SellItemAsync(int itemId, decimal salePrice, string userId);
         Task<List<Sale>> GetSalesAsync(string userId, DateTime? startDate, DateTime? endDate);
         Task<bool> DeleteSaleAsync(int saleId);
+        Task<List<Sale>> GetFilteredSalesAsync(SaleFilterDto filter);
     }
 }

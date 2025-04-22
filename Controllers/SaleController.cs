@@ -1,4 +1,5 @@
 ﻿using Karakatsiya.Interfaces;
+using Karakatsiya.Models.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,13 +18,20 @@ namespace Karakatsiya.Controllers
             _userManager = userManager;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Sales(DateTime? startDate, DateTime? endDate)
+        public async Task<IActionResult> Sales(SaleFilterDto filter)
         {
-            var user = await _userManager.GetUserAsync(User);
-            var sales = await _saleService.GetSalesAsync(user.Id, startDate, endDate);
-            ViewData["StartDate"] = startDate?.ToString("yyyy-MM-dd");
-            ViewData["EndDate"] = endDate?.ToString("yyyy-MM-dd");
+            filter.Normalize();
+
+            var sales = await _saleService.GetFilteredSalesAsync(filter);
+
+            ViewData["StartDate"] = filter.StartDate?.ToString("yyyy-MM-dd");
+            ViewData["EndDate"] = filter.EndDate?.ToString("yyyy-MM-dd");
+            ViewData["MinPrice"] = filter.MinPrice;
+            ViewData["MaxPrice"] = filter.MaxPrice;
+            ViewData["MinProfit"] = filter.MinProfit;
+            ViewData["MaxProfit"] = filter.MaxProfit;
+            ViewData["SortOrder"] = filter.SortOrder;
+
             return View(sales);
         }
 

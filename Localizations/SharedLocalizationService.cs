@@ -27,5 +27,7 @@ namespace Karakatsiya.Localizations
         public IStringLocalizer Fields => GetLocalizer<FieldLocalizer>();
         public IStringLocalizer Currencies => GetLocalizer<CurrensiesLocalizer>();
         public IStringLocalizer Pages => GetLocalizer<PagesTextLocalizer>();
+        public IStringLocalizer CreateItems => GetLocalizer<CreateItemPageLocalozation>();
+        public IStringLocalizer SaleItems => GetLocalizer<SaleIPageLocalization>();
     }
 }

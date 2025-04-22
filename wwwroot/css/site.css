@@ -17,17 +17,6 @@
 @import url("sale-page/sale.css");
 @import url("register-page/register.css");
 
-/* Дополнительные стили для кнопки */
-/*
-#themeToggle {
-    border: none;
-    padding: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s, color 0.3s;
-}
-    */
-
 
 .image-thumb {
     cursor: pointer;
@@ -52,12 +41,6 @@
 .auth-block__title {
     margin-left: 0px;
 }
-
-/*
-.modal-backdrop {
-    display: none !important;
-}
-*/
 
 .item-photo {
     max-width: 200px;
