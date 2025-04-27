@@ -1,38 +1,44 @@
-﻿/* Стили для страницы регистрации */
-.register-page__title {
+﻿.register-page__title {
     text-align: center;
     margin-bottom: 20px;
 }
 
-/* Стили для формы регистрации */
-.register-page__form {
-    /*position: relative;*/
-    min-width: 100vh;
-    height: 50%;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
+.register-page__wrapper {
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
+    margin-top: 50px;
+    min-height: 50vh;
+    opacity: 0;
+    animation: fadeIn 1s ease-out forwards;
 }
 
-/* Стили для групп элементов формы */
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUpFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .register-page__form-group {
     margin-bottom: 15px;
 }
 
-/* Стили для меток (label) */
 .register-page__form-label {
     display: block;
     font-size: 14px;
     margin-bottom: 5px;
 }
 
-/* Стили для полей ввода */
 .register-page__form-input {
     width: 100%;
     padding: 8px;
@@ -41,18 +47,36 @@
     border: 1px solid #ccc;
 }
 
-/* Стили для кнопки отправки */
+.register-page__submit-button:hover {
+    background-color: #45a049;
+}
+
+.register-page__inner-container {
+    width: 300px;
+    height: 460px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.register-page__form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
 .register-page__submit-button {
     width: 100%;
-    padding: 10px;
+    padding: 8px;
     background-color: #4CAF50;
     color: white;
     font-size: 16px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-}
-
-.register-page__submit-button:hover {
-    background-color: #45a049;
 }

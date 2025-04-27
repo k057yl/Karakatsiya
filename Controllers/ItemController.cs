@@ -1,6 +1,6 @@
 ﻿using Karakatsiya.Interfaces;
-using Karakatsiya.Localizations;
 using Karakatsiya.Models.DTOs;
+using Karakatsiya.Models.Entities;
 using Karakatsiya.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -14,20 +14,21 @@ namespace Karakatsiya.Controllers
     {
         private readonly IItemService _itemService;
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly HtmlValidator _htmlValidator;
-        private readonly SharedLocalizationService _localization;
+        private readonly IItemValidationService _itemValidationService;
+
+        private readonly CategoryLocalizationService _categoryLocalizationService;//************
 
         public ItemController(
             IItemService itemService,
             UserManager<IdentityUser> userManager,
-            HtmlValidator htmlValidator,
-            SharedLocalizationService localization)
+            IItemValidationService itemValidationService,
+            CategoryLocalizationService categoryLocalizationService)
             : base()
         {
             _itemService = itemService;
-            _htmlValidator = htmlValidator;
             _userManager = userManager;
-            _localization = localization;
+            _itemValidationService = itemValidationService;
+            _categoryLocalizationService = categoryLocalizationService;
         }
 
         [HttpGet]
@@ -39,7 +40,7 @@ namespace Karakatsiya.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateItem(CreateItemDto model)
         {
-            if (!ModelState.IsValid || !ValidateHtmlFields(model))
+            if (!ModelState.IsValid || !_itemValidationService.Validate(model, ModelState))
             {
                 return View(model);
             }
@@ -118,6 +119,9 @@ namespace Karakatsiya.Controllers
             ViewData["SortOrder"] = filter.SortOrder;
             ViewData["IncludeSold"] = filter.IncludeSold;
 
+            ViewData["Category"] = filter.Category?.ToString();//****************** 
+            ViewData["LocalizedCategories"] = _categoryLocalizationService.GetLocalizedCategories();
+
             return View(items);
         }
 
@@ -147,7 +151,7 @@ namespace Karakatsiya.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(int id, EditItemDto model)
         {
-            if (!ModelState.IsValid || !ValidateHtmlFields(model))
+            if (!ModelState.IsValid || !_itemValidationService.Validate(model, ModelState))
             {
                 return View(model);
             }
@@ -166,112 +170,5 @@ namespace Karakatsiya.Controllers
 
             return RedirectToAction("UserItems");
         }
-
-        #region Validation
-        private bool ValidateHtmlFields(CreateItemDto model)
-        {
-            var isValid = true;
-
-            if (string.IsNullOrWhiteSpace(model.Name))
-            {
-                ModelState.AddModelError(nameof(model.Name), @_localization.WarningMessages["NameCannotBeEmpty"]);
-                isValid = false;
-            }
-            else
-            {
-                var nameValidationResult = _htmlValidator.ValidateHtml(model.Name);
-                if (!nameValidationResult.IsValid)
-                {
-                    ModelState.AddModelError(nameof(model.Name), nameValidationResult.ErrorMessage);
-                    isValid = false;
-                }
-            }
-
-            if (string.IsNullOrWhiteSpace(model.Description))
-            {
-                ModelState.AddModelError(nameof(model.Description), @_localization.WarningMessages["DescriptionCannotBeEmpty"]);
-                isValid = false;
-            }
-            else
-            {
-                var descriptionValidationResult = _htmlValidator.ValidateHtml(model.Description);
-                if (!descriptionValidationResult.IsValid)
-                {
-                    ModelState.AddModelError(nameof(model.Description), descriptionValidationResult.ErrorMessage);
-                    isValid = false;
-                }
-            }
-
-            if (model.Price <= 0)
-            {
-                ModelState.AddModelError(nameof(model.Price), @_localization.WarningMessages["PriceCannotBeZero"]);
-                isValid = false;
-            }
-            else
-            {
-                var priceValidationResult = _htmlValidator.ValidateHtml(model.Price.ToString());
-                if (!priceValidationResult.IsValid)
-                {
-                    ModelState.AddModelError(nameof(model.Price), priceValidationResult.ErrorMessage);
-                    isValid = false;
-                }
-            }
-
-            return isValid;
-        }
-
-        private bool ValidateHtmlFields(EditItemDto model)
-        {
-            var isValid = true;
-
-            if (string.IsNullOrWhiteSpace(model.Name))
-            {
-                ModelState.AddModelError(nameof(model.Name), "Название не может быть пустым.");
-                isValid = false;
-            }
-            else
-            {
-                var nameValidationResult = _htmlValidator.ValidateHtml(model.Name);
-                if (!nameValidationResult.IsValid)
-                {
-                    ModelState.AddModelError(nameof(model.Name), nameValidationResult.ErrorMessage);
-                    isValid = false;
-                }
-            }
-
-            if (string.IsNullOrWhiteSpace(model.Description))
-            {
-                ModelState.AddModelError(nameof(model.Description), "Описание не может быть пустым.");
-                isValid = false;
-            }
-            else
-            {
-                var descriptionValidationResult = _htmlValidator.ValidateHtml(model.Description);
-                if (!descriptionValidationResult.IsValid)
-                {
-                    ModelState.AddModelError(nameof(model.Description), descriptionValidationResult.ErrorMessage);
-                    isValid = false;
-                }
-            }
-
-            if (model.Price <= 0)
-            {
-                ModelState.AddModelError(nameof(model.Price), "Цена должна быть больше нуля.");
-                isValid = false;
-            }
-            else
-            {
-                var priceValidationResult = _htmlValidator.ValidateHtml(model.Price.ToString());
-                if (!priceValidationResult.IsValid)
-                {
-                    ModelState.AddModelError(nameof(model.Price), priceValidationResult.ErrorMessage);
-                    isValid = false;
-                }
-            }
-
-            return isValid;
-        }
-        #endregion
-        
     }
 }

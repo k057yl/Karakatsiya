@@ -22,6 +22,7 @@ public static class ServiceRegistration
         services.AddScoped<IItemService, ItemService>();
         services.AddScoped<ISaleService, SaleService>();
         services.AddScoped<IHomePageService, HomePageService>();
+        services.AddScoped<IItemValidationService, ItemValidationService>();
 
         services.AddHttpContextAccessor();
 

@@ -1,21 +1,21 @@
-﻿@{
-    ViewData["Title"] = "Register";
-}
+﻿<div class="register-page__wrapper">
+    <div class="register-page__inner-container">
+        <form asp-action="Register" method="post" class="register-page__form">
+            <h2 class="register-page__title">Register</h2>
 
-<div class="register-page__wrapper">
-    <form asp-action="Register" method="post" class="register-page__form">
-        <h2 class="register-page__title">Register</h2>
+            <div class="register-page__form-group">
+                <label for="Email" class="register-page__form-label">Email</label>
+                <input type="email" name="Email" required class="register-page__form-input" />
+            </div>
 
-        <div class="register-page__form-group">
-            <label for="Email" class="register-page__form-label">Email</label>
-            <input type="email" name="Email" required class="register-page__form-input" />
-        </div>
+            <div class="register-page__form-group">
+                <label for="Password" class="register-page__form-label">Password</label>
+                <input type="password" name="Password" required class="register-page__form-input" />
+            </div>
 
-        <div class="register-page__form-group">
-            <label for="Password" class="register-page__form-label">Password</label>
-            <input type="password" name="Password" required class="register-page__form-input" />
-        </div>
-
-        <button type="submit" class="register-page__submit-button">Register</button>
-    </form>
+            <div class="register-page__form-group">
+                <button type="submit" class="register-page__submit-button">Register</button>
+            </div>
+        </form>
+    </div>
 </div>

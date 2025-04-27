@@ -1,7 +1,6 @@
 ﻿.block-sidebar {
     min-width: 260px;
     background-color: var(--panel-sidebar-background-light);
-    color: var(--text-color-sidebar-light);
     position: sticky;
     top: 20px;
     height: 100%;
@@ -30,7 +29,7 @@
 }
 
 .block-sidebar__button {
-    color: var(--text-color-light);
+    color: var(--text-sidebar-color-light);
     text-decoration: none;
     padding: 0.5rem 1rem;
     font-weight: bold;
@@ -41,9 +40,9 @@
 }
 
 .block-sidebar__button:hover {
-    color: var(--logo-hover-color);
-    transform: scale(1.1);
-    background: rgba(0, 0, 0, 0.1);
+    color: var(--text-sidebar-color-light);
+    background-color: var(--button-sidebar-background-hover-light);
+    transform: scale(1.1);  
     cursor: pointer;
     text-decoration: none;
 }

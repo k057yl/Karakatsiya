@@ -61,6 +61,8 @@
         <label for="sortOrder" class="me-1">@sharedLocalizer.CreateItems["Button.Title.SortBy"]</label>
         @{
             var sortOrder = ViewData["SortOrder"] as string;
+            var category = ViewData["Category"] as string;
+            var localizedCategories = ViewData["LocalizedCategories"] as IDictionary<Karakatsiya.Models.Entities.Category, string>;
         }
 
         <!-- We pass the current filter values -->
@@ -71,14 +73,28 @@
         <input type="hidden" name="createdBefore" value="@ViewData["CreatedBefore"]" />
         <input type="hidden" name="IncludeSold" value="@(ViewData["IncludeSold"] as bool? == true ? "true" : "false")" />
 
+        <input type="hidden" name="category" value="@category" />
+
         <select id="sortOrder" name="sortOrder" onchange="this.form.submit()" class="form-select d-inline w-auto">
-            <option value="az" selected="@(sortOrder == "az")">A-Z</option>
-            <option value="za" selected="@(sortOrder == "za")">Z-A</option>
+            <option value="az" selected="@(sortOrder == "az")">@sharedLocalizer.CreateItems["Button.SortBy.A-Z"]</option>
+            <option value="za" selected="@(sortOrder == "za")">@sharedLocalizer.CreateItems["Button.SortBy.Z-A"]</option>
             <option value="price_asc" selected="@(sortOrder == "price_asc")">@sharedLocalizer.CreateItems["Button.SortBy.Price"] ↑</option>
             <option value="price_desc" selected="@(sortOrder == "price_desc")">@sharedLocalizer.CreateItems["Button.SortBy.Price"] ↓</option>
         </select>
+
+        <label for="category" class="me-1">@sharedLocalizer.CreateItems["Button.Title.SortBy.Category"]</label>
+        <select id="category" name="category" onchange="this.form.submit()" class="form-select d-inline w-auto">
+            <option value="" selected="@(string.IsNullOrEmpty(category))">@sharedLocalizer.Categories["AllCategories"]</option>
+            @foreach (var cat in localizedCategories)
+            {
+                <option value="@cat.Key.ToString()" selected="@(category == cat.Key.ToString())">
+                    @cat.Value
+                </option>
+            }
+        </select>
     </form>
 </div>
+
 
 <div class="item-container">
     <table class="table">
@@ -151,7 +167,7 @@
                         @if (!item.IsSold)
                         {
                             <a asp-action="Edit" asp-controller="Item" asp-route-id="@item.ItemId" class="btn btn-secondary me-2">
-                                @sharedLocalizer.Buttons["Edit"]
+                                @sharedLocalizer.CreateItems["Button.Edit"]
                             </a>
                         }
                         <button type="button" class="btn btn-danger open-modal-btn"
@@ -159,20 +175,20 @@
                                 data-id="@item.ItemId"
                                 data-title="@sharedLocalizer.Buttons["DeleteTitle"]"
                                 data-message="@sharedLocalizer.Buttons["DeletionConfirmation"]">
-                            @sharedLocalizer.Buttons["Delete"]
+                            @sharedLocalizer.CreateItems["Button.Delete"]
                         </button>
                     </td>
                     <td>
                         @if (item.IsSold)
                         {
-                            <span>@sharedLocalizer.Buttons["Sold"]</span>
+                            <span>@sharedLocalizer.CreateItems["Button.Sell"]</span>
                         }
                         else
                         {
                             <form asp-action="SellItem" asp-controller="Sale" method="post">
                                 <input type="hidden" name="itemId" value="@item.ItemId" />
                                 <input type="number" name="salePrice" placeholder=@sharedLocalizer.Buttons["SoldPrice"] required />
-                                <button type="submit" class="btn btn-success">@sharedLocalizer.Buttons["Sell"]</button>
+                                <button type="submit" class="btn btn-success">@sharedLocalizer.CreateItems["Button.Sell"]</button>
                             </form>
                         }
                     </td>
@@ -187,4 +203,5 @@
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
     @await Html.PartialAsync("_CustomModal")
+    <script src="~/js/site.js" asp-append-version="true"></script>
 }

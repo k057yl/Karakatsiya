@@ -178,6 +178,11 @@ namespace Karakatsiya.Services
             if (filter.CreatedBefore.HasValue)
                 query = query.Where(i => i.CreationDate <= filter.CreatedBefore.Value);
 
+            if (filter.Category.HasValue)
+            {
+                query = query.Where(i => i.Category == filter.Category.Value);
+            }
+
             query = filter.SortOrder switch
             {
                 "az" => query.OrderBy(i => i.Name),

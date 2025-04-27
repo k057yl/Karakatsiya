@@ -7,12 +7,14 @@
     /*HeaderAndFooter*/
     --panel-background-light: #1E3A8A;
     --panel-background-dark: #252525;
-    /*Sidebar*/
-    --panel-sidebar-background-light: #b8dafb;
+    --panel-sidebar-background-light: #E0E7FF;
     --panel-sidebar-background-dark: #232e6d;
-    --button-background-light: #007bff;
-    --text-color-sidebar-light: black;
-    --button-background-dark: #0056b3;
+    --button-sidebar-background-light: #007bff;
+    --button-sidebar-background-dark: #0056b3;
+    --button-sidebar-background-hover-light: #cbd5fe;
+    --button-sidebar-background-hover-dark: #3c55a5;
+    --text-sidebar-color-light: #1e3a8a;
+    --text-sidebar-color-dark: #8091c7;
     /*Logo*/
     --logo-color-light: black;
     --logo-color-dark: #a3a0a0;
@@ -23,10 +25,12 @@
     --background-color-light: var(--background-color-dark);
     --text-color-light: var(--text-color-dark);
     --panel-background-light: var(--panel-background-dark);
-    --button-background-light: var(--button-background-dark);
+    --button-sidebar-background-light: var(--button-sidebar-background-dark);
     --logo-color-light: var(--logo-color-dark);
     /*test*/
     --panel-sidebar-background-light: var(--panel-sidebar-background-dark);
+    --text-sidebar-color-light: var(--text-sidebar-color-dark);
+    --button-sidebar-background-hover-light: var(--button-sidebar-background-hover-dark);
 }
 
 html {

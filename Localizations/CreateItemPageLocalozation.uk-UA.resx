@@ -150,4 +150,22 @@
   <data name="Button.Title.SortBy" xml:space="preserve">
     <value>Сортувати за :</value>
   </data>
+  <data name="Button.SortBy.A-Z" xml:space="preserve">
+    <value>А-Я</value>
+  </data>
+  <data name="Button.SortBy.Z-A" xml:space="preserve">
+    <value>Я-А</value>
+  </data>
+  <data name="Button.Edit" xml:space="preserve">
+    <value>Редагувати</value>
+  </data>
+  <data name="Button.Delete" xml:space="preserve">
+    <value>Видалити</value>
+  </data>
+  <data name="Button.Sell" xml:space="preserve">
+    <value>Продати</value>
+  </data>
+  <data name="Button.Title.SortBy.Category" xml:space="preserve">
+    <value>Категорії :</value>
+  </data>
 </root>

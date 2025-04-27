@@ -1,65 +1,80 @@
 ﻿document.addEventListener("DOMContentLoaded", function () {
+    initFileUploadPreview();
+    initExpirationDateToggle();
+    initDeleteModal();
+    initSellFormHandling();
+    initSaleDeleteHandling();
+    fixBackdropIssue();
+});
+
+// Превью изображения при выборе файла
+function initFileUploadPreview() {
     const fileInput = document.getElementById("fileUpload");
     const thumbnail = document.getElementById("thumbnail");
     const removeButton = document.getElementById("removeButton");
     const fileLabel = document.querySelector("label[for='fileUpload']");
     const defaultLabelText = "Select File";
 
-    if (fileInput && thumbnail && removeButton) {
-        fileInput.addEventListener("change", function (event) {
-            const file = event.target.files[0];
+    if (!fileInput || !thumbnail || !removeButton) return;
 
-            if (file && file.type.startsWith("image/")) {
-                fileLabel.textContent = file.name;
-
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    thumbnail.src = e.target.result;
-                    thumbnail.style.display = "block";
-                    removeButton.style.display = "block";
-                };
-                reader.readAsDataURL(file);
-            } else {
-                clearThumbnail();
-            }
-        });
-
-        removeButton.addEventListener("click", function () {
+    fileInput.addEventListener("change", function (event) {
+        const file = event.target.files[0];
+        if (file && file.type.startsWith("image/")) {
+            fileLabel.textContent = file.name;
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                thumbnail.src = e.target.result;
+                thumbnail.style.display = "block";
+                removeButton.style.display = "block";
+            };
+            reader.readAsDataURL(file);
+        } else {
             clearThumbnail();
-            fileInput.value = "";
-            fileLabel.textContent = defaultLabelText;
-        });
-
-        function clearThumbnail() {
-            thumbnail.style.display = "none";
-            thumbnail.src = "#";
-            removeButton.style.display = "none";
-            fileLabel.textContent = defaultLabelText;
         }
-    }
+    });
 
+    removeButton.addEventListener("click", function () {
+        clearThumbnail();
+        fileInput.value = "";
+        fileLabel.textContent = defaultLabelText;
+    });
+
+    function clearThumbnail() {
+        thumbnail.style.display = "none";
+        thumbnail.src = "#";
+        removeButton.style.display = "none";
+        fileLabel.textContent = defaultLabelText;
+    }
+}
+
+// Переключатель отображения даты истечения
+function initExpirationDateToggle() {
     const showExpirationDateCheckbox = document.getElementById("ShowExpirationDateCheckbox");
     const expirationDateContainer = document.getElementById("expirationDateContainer");
 
-    if (showExpirationDateCheckbox && expirationDateContainer) {
-        showExpirationDateCheckbox.addEventListener("change", function () {
-            expirationDateContainer.style.display = showExpirationDateCheckbox.checked ? "block" : "none";
-        });
-    }
+    if (!showExpirationDateCheckbox || !expirationDateContainer) return;
 
-    // Modal setup for deleting items
+    showExpirationDateCheckbox.addEventListener("change", function () {
+        expirationDateContainer.style.display = showExpirationDateCheckbox.checked ? "block" : "none";
+    });
+}
+
+// Установка действия формы удаления
+function initDeleteModal() {
     const deleteModal = document.getElementById("deleteModal");
-    if (deleteModal) {
-        deleteModal.addEventListener("show.bs.modal", function (event) {
-            const button = event.relatedTarget;
-            const itemId = button.getAttribute("data-itemid");
-            const formAction = `/Item/Delete/${itemId}`;
-            const deleteForm = document.getElementById("deleteForm");
-            deleteForm.setAttribute("action", formAction);
-        });
-    }
+    if (!deleteModal) return;
 
-    // Sell item functionality
+    deleteModal.addEventListener("show.bs.modal", function (event) {
+        const button = event.relatedTarget;
+        const itemId = button.getAttribute("data-itemid");
+        const formAction = `/Item/Delete/${itemId}`;
+        const deleteForm = document.getElementById("deleteForm");
+        if (deleteForm) deleteForm.setAttribute("action", formAction);
+    });
+}
+
+// Обработка формы продажи
+function initSellFormHandling() {
     document.querySelectorAll("form[action='SellItem']").forEach(form => {
         form.addEventListener("submit", function (event) {
             event.preventDefault();
@@ -68,7 +83,7 @@
             const salePrice = form.querySelector("input[name='salePrice']").value;
             const profit = form.querySelector("input[name='profit']").value;
 
-            if (!salePrice || parseFloat(salePrice) <= 0) {
+            if (!salePrice || parseFloat(salePrice) <= 0 || !profit || isNaN(parseFloat(profit))) {
                 alert("Please enter valid sale price and profit.");
                 return;
             }
@@ -76,11 +91,7 @@
             fetch("/Sale/Sales", {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: new URLSearchParams({
-                    itemId: itemId,
-                    salePrice: salePrice,
-                    profit: profit
-                })
+                body: new URLSearchParams({ itemId, salePrice, profit })
             })
                 .then(response => {
                     if (response.ok) {
@@ -91,8 +102,10 @@
                 });
         });
     });
+}
 
-    // Delete sell functionality
+// Удаление продажи
+function initSaleDeleteHandling() {
     const deleteButtons = document.querySelectorAll("button[data-saleid]");
     let saleIdToDelete = null;
 
@@ -112,13 +125,14 @@
     });
 
     function deleteSale(saleId) {
-        fetch(`/Sale/DeleteSale?saleId=${saleId}`, {
-            method: 'POST'
-        }).then(() => location.reload());
+        fetch(`/Sale/DeleteSale?saleId=${saleId}`, { method: "POST" })
+            .then(() => location.reload());
     }
+}
 
+// Удаление лишних затемнений от модальных окон
+function fixBackdropIssue() {
     document.addEventListener("hidden.bs.modal", function () {
-        const backdrops = document.querySelectorAll(".modal-backdrop");
-        backdrops.forEach(backdrop => backdrop.remove());
+        document.querySelectorAll(".modal-backdrop").forEach(backdrop => backdrop.remove());
     });
-});
+}

@@ -1,4 +1,6 @@
-﻿namespace Karakatsiya.Models.DTOs
+﻿using Karakatsiya.Models.Entities;
+
+namespace Karakatsiya.Models.DTOs
 {
     public class ItemFilterDto
     {
@@ -14,6 +16,8 @@
         public string? SortOrder { get; set; } = "az"; // "az", "za", "price_asc", "price_desc"
 
         public bool IncludeSold { get; set; } = false;
+
+        public Category? Category { get; set; }
 
         public void Normalize()
         {

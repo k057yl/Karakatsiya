@@ -150,4 +150,22 @@
   <data name="Button.Title.SortBy" xml:space="preserve">
     <value>Sort by :</value>
   </data>
+  <data name="Button.SortBy.A-Z" xml:space="preserve">
+    <value>A-Z</value>
+  </data>
+  <data name="Button.SortBy.Z-A" xml:space="preserve">
+    <value>Z-A</value>
+  </data>
+  <data name="Button.Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Button.Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Button.Sell" xml:space="preserve">
+    <value>Sell</value>
+  </data>
+  <data name="Button.Title.SortBy.Category" xml:space="preserve">
+    <value>Category</value>
+  </data>
 </root>

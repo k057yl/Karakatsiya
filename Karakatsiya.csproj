@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Localizations\Pages\" />
     <Folder Include="Temp\" />
   </ItemGroup>
 
