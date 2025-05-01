@@ -62,7 +62,7 @@ namespace Karakatsiya.Services
                 ImagePaths = imagePaths,
                 MainImage = mainImage,
                 Description = model.Description,
-                Category = model.Category,
+                CategoryId = model.CategoryId,
                 Price = model.Price,
                 Currency = model.Currency,
                 UserId = userId
@@ -87,7 +87,7 @@ namespace Karakatsiya.Services
             item.ExpirationDate = model.ExpirationDate.HasValue
                 ? DateTime.SpecifyKind(model.ExpirationDate.Value, DateTimeKind.Utc)
                 : item.ExpirationDate;
-            item.Category = model.Category;
+            item.CategoryId = model.CategoryId;
             item.Price = model.Price;
             item.Currency = model.Currency;
 
@@ -178,10 +178,8 @@ namespace Karakatsiya.Services
             if (filter.CreatedBefore.HasValue)
                 query = query.Where(i => i.CreationDate <= filter.CreatedBefore.Value);
 
-            if (filter.Category.HasValue)
-            {
-                query = query.Where(i => i.Category == filter.Category.Value);
-            }
+            if (filter.CategoryId.HasValue)
+                query = query.Where(i => i.CategoryId == filter.CategoryId.Value);
 
             query = filter.SortOrder switch
             {
@@ -197,3 +195,12 @@ namespace Karakatsiya.Services
         }
     }
 }
+/*
+        public async Task<List<Item>> GetItemsByCategoryAsync(int categoryId)//**********
+        {
+            return await _context.Items
+                .Where(i => i.CategoryId == categoryId && !i.IsDeleted && !i.IsSold)
+                .OrderBy(i => i.CreationDate)
+                .ToListAsync();
+        }
+        */

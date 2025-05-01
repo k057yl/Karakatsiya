@@ -11,6 +11,7 @@ namespace Karakatsiya.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
         public DbSet<Item> Items { get; set; }
+        public DbSet<Category> Categories { get; set; }
         public DbSet<Sale> Sales { get; set; }
         public DbSet<ContactInfo> ContactInfos { get; set; }
         public DbSet<NewsArticle> NewsArticles { get; set; }

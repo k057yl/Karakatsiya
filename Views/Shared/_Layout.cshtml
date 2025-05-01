@@ -82,7 +82,7 @@
                     <a class="block-sidebar__button" asp-area="" asp-controller="Item" asp-action="CreateItem">@_localizer.Buttons["Main.Create"]</a>
                 </li>
                 <li class="block-sidebar__container-button">
-                    <a class="block-sidebar__button" asp-area="" asp-controller="Item" asp-action="UserItems">@_localizer.Buttons["Main.UserItems"]</a>
+                    <a class="block-sidebar__button" asp-area="" asp-controller="Category" asp-action="ShowCategories">@_localizer.Buttons["Category"]</a>
                 </li>
                 <li class="block-sidebar__container-button">
                     <a class="block-sidebar__button" asp-area="" asp-controller="Sale" asp-action="Sales">@_localizer.Buttons["Main.MenuSales"]</a>
@@ -121,7 +121,7 @@
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    @*<script src="~/js/site.js" asp-append-version="true"></script>*@
+    <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/theme.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

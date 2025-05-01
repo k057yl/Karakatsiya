@@ -1,5 +1,4 @@
-﻿@*
-@model List<Karakatsiya.Models.Entities.Item>
+﻿@model List<Karakatsiya.Models.Entities.Item>
 
 @inject Karakatsiya.Localizations.SharedLocalizationService sharedLocalizer
 
@@ -16,7 +15,8 @@
 
     <div class="collapse" id="filterCollapse">
         <div class="filter-block">
-            <form method="get" asp-action="UserItems" asp-controller="Item">
+            <form method="get" asp-action="ByCategory" asp-controller="Item">
+                <input type="hidden" name="categoryId" value="@ViewData["Category"]" />@********************@
                 <input type="hidden" name="sortOrder" value="@ViewData["SortOrder"]" />
                 <div class="filter-form">
                     <div class="filter-group">
@@ -52,13 +52,13 @@
                     </div>
 
                     <button type="submit" class="apply-btn">@sharedLocalizer.CreateItems["Filter.Title.Apply"]</button>
-                    <a href="@Url.Action("UserItems", "Item")" class="reset-btn">@sharedLocalizer.CreateItems["Filter.Title.ResetAllFilters"]</a>
+                    <a href="@Url.Action("ByCategory", "Item", new { categoryId = ViewData["Category"] })" class="reset-btn">@sharedLocalizer.CreateItems["Filter.Title.ResetAllFilters"]</a>
                 </div>
             </form>
         </div>
     </div>
 
-    <form method="get" asp-action="UserItems" asp-controller="Item" id="filterForm" class="d-inline">
+    <form method="get" asp-action="ByCategory" asp-controller="Item" id="filterForm" class="d-inline">
         @{
             var sortOrder = ViewData["SortOrder"] as string;
         }
@@ -70,6 +70,7 @@
         <input type="hidden" name="createdAfter" value="@ViewData["CreatedAfter"]" />
         <input type="hidden" name="createdBefore" value="@ViewData["CreatedBefore"]" />
         <input type="hidden" name="IncludeSold" value="@(ViewData["IncludeSold"] as bool? == true ? "true" : "false")" />
+        <input type="hidden" name="CategoryId" value="@ViewData["Category"]" />
 
         <!-- Сортировка -->
         <label for="sortOrder" class="me-1">@sharedLocalizer.CreateItems["Button.Title.SortBy"]</label>
@@ -93,7 +94,6 @@
                 <th>@sharedLocalizer.Tables["CreateDate"]</th>
                 <th>@sharedLocalizer.Tables["ExpirationDate"]</th>
                 <th>@sharedLocalizer.Tables["Price"]</th>
-                <th>@sharedLocalizer.Tables["Category"]</th>
                 <th>@sharedLocalizer.Tables["Actions"]</th>
                 <th>@sharedLocalizer.Tables["Actions"]</th>
             </tr>
@@ -149,7 +149,6 @@
                         }
                     </td>
                     <td>@item.Price @item.Currency</td>
-                    <td>@item.Category</td>
                     <td>
                         @if (!item.IsSold)
                         {
@@ -191,4 +190,3 @@
     @await Html.PartialAsync("_ValidationScriptsPartial")
     @await Html.PartialAsync("_CustomModal")
 }
-*@

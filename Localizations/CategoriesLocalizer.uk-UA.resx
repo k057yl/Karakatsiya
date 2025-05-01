@@ -120,25 +120,16 @@
   <data name="AllCategories" xml:space="preserve">
     <value>Всі Категорії</value>
   </data>
-  <data name="Books" xml:space="preserve">
+  <data name="CategoryBooks" xml:space="preserve">
     <value>Книги</value>
   </data>
-  <data name="Clothing" xml:space="preserve">
+  <data name="CategoryClothes" xml:space="preserve">
     <value>Одяг</value>
   </data>
-  <data name="Cosmetics" xml:space="preserve">
-    <value>Косметика</value>
-  </data>
-  <data name="Default" xml:space="preserve">
-    <value>За замовчуванням</value>
-  </data>
-  <data name="Electronics" xml:space="preserve">
+  <data name="CategoryElectronics" xml:space="preserve">
     <value>Електроніка</value>
   </data>
-  <data name="Groceries" xml:space="preserve">
-    <value>Продукти</value>
-  </data>
-  <data name="Other" xml:space="preserve">
+  <data name="CategoryOther" xml:space="preserve">
     <value>Iнше</value>
   </data>
 </root>

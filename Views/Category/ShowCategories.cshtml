@@ -1,0 +1,18 @@
+﻿@model IEnumerable<Karakatsiya.Models.Entities.Category>
+
+@{
+    ViewData["Title"] = "Категории";
+}
+
+<h2>Категории</h2>
+
+<ul class="list-group">
+    @foreach (var category in Model)
+    {
+        <li class="list-group-item">
+            <a asp-controller="Item" asp-action="ByCategory" asp-route-categoryId="@category.Id">
+                @category.Name
+            </a>
+        </li>
+    }
+</ul>

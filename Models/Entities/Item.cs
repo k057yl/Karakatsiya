@@ -50,9 +50,6 @@ namespace Karakatsiya.Models.Entities
         [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
 
-        [Required]
-        public Category Category { get; set; }
-
         [MaxLength(10)]
         public string? Currency { get; set; }
 
@@ -63,5 +60,10 @@ namespace Karakatsiya.Models.Entities
         public bool IsDeleted { get; set; }
 
         public ICollection<Sale>? Sales { get; set; }
+
+        [Required]
+        public int CategoryId { get; set; }
+        [Required]
+        public Category Category { get; set; }
     }
 }

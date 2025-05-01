@@ -1,24 +1,28 @@
-﻿using Karakatsiya.Localizations;
-using Karakatsiya.Models.Entities;
+﻿using Karakatsiya.Data;
+using Karakatsiya.Localizations;
+using Microsoft.EntityFrameworkCore;
 
 namespace Karakatsiya.Services
 {
     public class CategoryLocalizationService
     {
         private readonly SharedLocalizationService _localizer;
+        private readonly ApplicationDbContext _context;
 
-        public CategoryLocalizationService(SharedLocalizationService localizer)
+        public CategoryLocalizationService(SharedLocalizationService localizer, ApplicationDbContext context)
         {
             _localizer = localizer;
+            _context = context;
         }
 
-        public IDictionary<Category, string> GetLocalizedCategories()
+        public async Task<Dictionary<int, string>> GetLocalizedCategoriesAsync()
         {
-            return Enum.GetValues(typeof(Category))
-                .Cast<Category>()
-                .ToDictionary(
-                    category => category,
-                    category => _localizer.Categories[category.ToString()]?.Value ?? category.ToString());
+            var categories = await _context.Categories.ToListAsync();
+
+            return categories.ToDictionary(
+                c => c.Id,
+                c => _localizer.Categories[c.ResourceKey] ?? c.Name
+            );
         }
     }
 }

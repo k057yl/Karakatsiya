@@ -17,7 +17,7 @@ namespace Karakatsiya.Models.DTOs
 
         public bool IncludeSold { get; set; } = false;
 
-        public Category? Category { get; set; }
+        public int? CategoryId { get; set; }
 
         public void Normalize()
         {

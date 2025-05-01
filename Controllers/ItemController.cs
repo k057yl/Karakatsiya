@@ -1,10 +1,13 @@
-﻿using Karakatsiya.Interfaces;
+﻿using Karakatsiya.Data;
+using Karakatsiya.Interfaces;
 using Karakatsiya.Models.DTOs;
 using Karakatsiya.Models.Entities;
 using Karakatsiya.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace Karakatsiya.Controllers
@@ -16,25 +19,38 @@ namespace Karakatsiya.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IItemValidationService _itemValidationService;
 
-        private readonly CategoryLocalizationService _categoryLocalizationService;//************
+        private readonly CategoryLocalizationService _categoryLocalizationService;
+        private readonly ApplicationDbContext _context;
 
         public ItemController(
             IItemService itemService,
             UserManager<IdentityUser> userManager,
             IItemValidationService itemValidationService,
-            CategoryLocalizationService categoryLocalizationService)
+            CategoryLocalizationService categoryLocalizationService,
+            ApplicationDbContext context)
             : base()
         {
             _itemService = itemService;
             _userManager = userManager;
             _itemValidationService = itemValidationService;
             _categoryLocalizationService = categoryLocalizationService;
+            _context = context;
         }
 
         [HttpGet]
-        public IActionResult CreateItem()
+        public async Task<IActionResult> CreateItemAsync()
         {
-            return View(new CreateItemDto());
+            var categories = await _categoryLocalizationService.GetLocalizedCategoriesAsync();
+            var model = new CreateItemDto
+            {
+                Categories = categories.Select(c => new SelectListItem
+                {
+                    Value = c.Key.ToString(),
+                    Text = c.Value
+                }).ToList()
+            };
+
+            return View(model);
         }
 
         [HttpPost]
@@ -42,6 +58,14 @@ namespace Karakatsiya.Controllers
         {
             if (!ModelState.IsValid || !_itemValidationService.Validate(model, ModelState))
             {
+                model.Categories = _context.Categories
+                    .OrderBy(c => c.SortOrder)
+                    .Select(c => new SelectListItem
+                    {
+                        Value = c.Id.ToString(),
+                        Text = c.Name
+                    }).ToList();
+
                 return View(model);
             }
 
@@ -91,7 +115,7 @@ namespace Karakatsiya.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> UserItems([FromQuery] ItemFilterDto filter)
+        public async Task<IActionResult> ByCategory ([FromQuery] ItemFilterDto filter)//UserItems
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
@@ -106,10 +130,13 @@ namespace Karakatsiya.Controllers
 
             if (string.IsNullOrEmpty(filter.SortOrder))
             {
-                filter.SortOrder = "az";
+                filter.SortOrder = "az"; // По умолчанию сортировка по имени от А до Я
             }
 
             var items = await _itemService.GetFilteredItemsAsync(filter);
+
+            // Получаем список категорий
+            var categories = await _categoryLocalizationService.GetLocalizedCategoriesAsync();
 
             ViewData["Name"] = filter.Name;
             ViewData["MinPrice"] = filter.MinPrice;
@@ -118,9 +145,12 @@ namespace Karakatsiya.Controllers
             ViewData["CreatedBefore"] = filter.CreatedBefore?.ToString("yyyy-MM-dd");
             ViewData["SortOrder"] = filter.SortOrder;
             ViewData["IncludeSold"] = filter.IncludeSold;
-
-            ViewData["Category"] = filter.Category?.ToString();//****************** 
-            ViewData["LocalizedCategories"] = _categoryLocalizationService.GetLocalizedCategories();
+            ViewData["Category"] = filter.CategoryId;
+            ViewData["Categories"] = categories.Select(c => new SelectListItem
+            {
+                Value = c.Key.ToString(),
+                Text = c.Value
+            }).ToList();
 
             return View(items);
         }
@@ -169,6 +199,15 @@ namespace Karakatsiya.Controllers
             }
 
             return RedirectToAction("UserItems");
+        }
+
+        public async Task<IActionResult> ByCategory(int categoryId)
+        {
+            var items = await _context.Items
+                .Where(i => i.CategoryId == categoryId && !i.IsDeleted && !i.IsSold)
+                .ToListAsync();
+
+            return View(items);
         }
     }
 }

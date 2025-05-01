@@ -1,6 +1,7 @@
 ﻿using Karakatsiya.Models.Entities;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Karakatsiya.Models.DTOs
 {
@@ -22,7 +23,8 @@ namespace Karakatsiya.Models.DTOs
         public decimal Price { get; set; }
 
         [Required]
-        public Category Category { get; set; }
+        public int CategoryId { get; set; }
+        public List<SelectListItem> Categories { get; set; }
 
         [MaxLength(10)]
         public string? Currency { get; set; }
