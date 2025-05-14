@@ -120,6 +120,9 @@
   <data name="AllCategories" xml:space="preserve">
     <value>All Categories</value>
   </data>
+  <data name="SelectCategory" xml:space="preserve">
+    <value>Select Category</value>
+  </data>
   <data name="CategoryBooks" xml:space="preserve">
     <value>Books</value>
   </data>

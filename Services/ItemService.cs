@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Karakatsiya.Data;
 using Karakatsiya.Interfaces;
+using Karakatsiya.Localizations;
 using Karakatsiya.Models.DTOs;
 using Karakatsiya.Models.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -11,20 +12,30 @@ namespace Karakatsiya.Services
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
+        private readonly CategoryLocalizationService _categoryLocalizationService;
+        private readonly SharedLocalizationService _localizer;
 
-        public ItemService(ApplicationDbContext context, IMapper mapper)
+        public ItemService(ApplicationDbContext context, IMapper mapper, CategoryLocalizationService categoryLocalizationService,
+            SharedLocalizationService localizationService)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _categoryLocalizationService = categoryLocalizationService ?? throw new ArgumentNullException(nameof(categoryLocalizationService));
+            _localizer = localizationService ?? throw new ArgumentNullException(nameof(localizationService));
+        }
+
+        public async Task<Dictionary<int, string>> GetLocalizedCategoriesAsync()
+        {
+            return await _categoryLocalizationService.GetLocalizedCategoriesAsync();
         }
 
         public async Task<Item> CreateItemAsync(CreateItemDto model, string userId)
         {
             if (model == null) throw new ArgumentNullException(nameof(model));
             if (model.ImageFiles == null || model.ImageFiles.Count == 0)
-                throw new ArgumentException("Необходимо загрузить хотя бы одно изображение.");
+                throw new ArgumentException(_localizer.WarningMessages["WarningMessage.NeedToSelectImage"]);
 
-            var uploads = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
+            var uploads = Path.Combine(Directory.GetCurrentDirectory(), ProjectConstants.UPLOADS_PATH);
             if (!Directory.Exists(uploads))
             {
                 Directory.CreateDirectory(uploads);
@@ -93,7 +104,7 @@ namespace Karakatsiya.Services
 
             if (model.ImageFiles != null && model.ImageFiles.Count > 0)
             {
-                var uploads = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
+                var uploads = Path.Combine(Directory.GetCurrentDirectory(), ProjectConstants.UPLOADS_PATH);
                 if (!Directory.Exists(uploads))
                 {
                     Directory.CreateDirectory(uploads);
@@ -195,12 +206,3 @@ namespace Karakatsiya.Services
         }
     }
 }
-/*
-        public async Task<List<Item>> GetItemsByCategoryAsync(int categoryId)//**********
-        {
-            return await _context.Items
-                .Where(i => i.CategoryId == categoryId && !i.IsDeleted && !i.IsSold)
-                .OrderBy(i => i.CreationDate)
-                .ToListAsync();
-        }
-        */

@@ -1,13 +1,11 @@
 ﻿using Karakatsiya.Data;
 using Karakatsiya.Interfaces;
 using Karakatsiya.Models.DTOs;
-using Karakatsiya.Models.Entities;
 using Karakatsiya.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 
 
 namespace Karakatsiya.Controllers
@@ -20,34 +18,34 @@ namespace Karakatsiya.Controllers
         private readonly IItemValidationService _itemValidationService;
 
         private readonly CategoryLocalizationService _categoryLocalizationService;
-        private readonly ApplicationDbContext _context;
 
         public ItemController(
             IItemService itemService,
             UserManager<IdentityUser> userManager,
             IItemValidationService itemValidationService,
-            CategoryLocalizationService categoryLocalizationService,
-            ApplicationDbContext context)
+            CategoryLocalizationService categoryLocalizationService)
             : base()
         {
             _itemService = itemService;
             _userManager = userManager;
             _itemValidationService = itemValidationService;
             _categoryLocalizationService = categoryLocalizationService;
-            _context = context;
         }
 
         [HttpGet]
-        public async Task<IActionResult> CreateItemAsync()
+        public async Task<IActionResult> CreateItem()
         {
-            var categories = await _categoryLocalizationService.GetLocalizedCategoriesAsync();
+            var localizedCategories = await _categoryLocalizationService.GetLocalizedCategoriesAsync();
+
             var model = new CreateItemDto
             {
-                Categories = categories.Select(c => new SelectListItem
-                {
-                    Value = c.Key.ToString(),
-                    Text = c.Value
-                }).ToList()
+                Categories = localizedCategories
+                    .OrderBy(c => c.Value)
+                    .Select(c => new SelectListItem
+                    {
+                        Value = c.Key.ToString(),
+                        Text = c.Value
+                    }).ToList()
             };
 
             return View(model);
@@ -58,12 +56,14 @@ namespace Karakatsiya.Controllers
         {
             if (!ModelState.IsValid || !_itemValidationService.Validate(model, ModelState))
             {
-                model.Categories = _context.Categories
-                    .OrderBy(c => c.SortOrder)
+                var localizedCategories = await _categoryLocalizationService.GetLocalizedCategoriesAsync();
+
+                model.Categories = localizedCategories
+                    .OrderBy(c => c.Value)
                     .Select(c => new SelectListItem
                     {
-                        Value = c.Id.ToString(),
-                        Text = c.Name
+                        Value = c.Key.ToString(),
+                        Text = c.Value
                     }).ToList();
 
                 return View(model);
@@ -75,52 +75,18 @@ namespace Karakatsiya.Controllers
                 return View(model);
             }
 
-            var imagePaths = new List<string>();
-            string mainImage = model.MainImage;
-
-            if (model.ImageFiles != null && model.ImageFiles.Any())
-            {
-                var uploads = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
-                Directory.CreateDirectory(uploads);
-
-                foreach (var file in model.ImageFiles)
-                {
-                    if (file.Length > 0)
-                    {
-                        var fileName = Path.GetFileName(file.FileName);
-                        var filePath = Path.Combine(uploads, fileName);
-
-                        using (var stream = new FileStream(filePath, FileMode.Create))
-                        {
-                            await file.CopyToAsync(stream);
-                        }
-
-                        var relativePath = $"/images/{fileName}";
-                        imagePaths.Add(relativePath);
-
-                        if (mainImage == null)
-                        {
-                            mainImage = relativePath;
-                        }
-                    }
-                }
-            }
-
-            mainImage ??= imagePaths.FirstOrDefault();
-
-            model.MainImage = mainImage;
-
             await _itemService.CreateItemAsync(model, user.Id);
-            return RedirectToAction("UserItems");
+
+            return RedirectToAction(ProjectConstants.PAGE_CATEGORY);
         }
 
         [HttpGet]
-        public async Task<IActionResult> ByCategory ([FromQuery] ItemFilterDto filter)//UserItems
+        public async Task<IActionResult> ByCategory ([FromQuery] ItemFilterDto filter)
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction(ProjectConstants.REDIRECT_LOGIN);
             }
 
             filter ??= new ItemFilterDto();
@@ -130,12 +96,11 @@ namespace Karakatsiya.Controllers
 
             if (string.IsNullOrEmpty(filter.SortOrder))
             {
-                filter.SortOrder = "az"; // По умолчанию сортировка по имени от А до Я
+                filter.SortOrder = "az";
             }
 
             var items = await _itemService.GetFilteredItemsAsync(filter);
 
-            // Получаем список категорий
             var categories = await _categoryLocalizationService.GetLocalizedCategoriesAsync();
 
             ViewData["Name"] = filter.Name;
@@ -189,7 +154,7 @@ namespace Karakatsiya.Controllers
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction(ProjectConstants.REDIRECT_LOGIN);
             }
 
             var item = await _itemService.EditItemAsync(id, model, user.Id);
@@ -198,16 +163,8 @@ namespace Karakatsiya.Controllers
                 return NotFound();
             }
 
-            return RedirectToAction("UserItems");
+            return RedirectToAction(ProjectConstants.PAGE_CATEGORY);
         }
-
-        public async Task<IActionResult> ByCategory(int categoryId)
-        {
-            var items = await _context.Items
-                .Where(i => i.CategoryId == categoryId && !i.IsDeleted && !i.IsSold)
-                .ToListAsync();
-
-            return View(items);
-        }
+        
     }
 }

@@ -1,17 +1,24 @@
 ﻿@model IEnumerable<Karakatsiya.Models.Entities.Category>
+@inject Karakatsiya.Localizations.SharedLocalizationService localizer
+@inject Karakatsiya.Services.CategoryLocalizationService categoryLocalizationService
 
 @{
-    ViewData["Title"] = "Категории";
+    ViewData["Title"] = localizer.Categories["AllCategories"];
+    var localizedCategories = await categoryLocalizationService.GetLocalizedCategoriesAsync();
 }
 
-<h2>Категории</h2>
+<h2>@ViewData["Title"]</h2>
 
 <ul class="list-group">
     @foreach (var category in Model)
     {
-        <li class="list-group-item">
+        var localizedCategoryName = localizedCategories.ContainsKey(category.Id)
+        ? localizedCategories[category.Id]
+        : category.Name;
+
+        <li>
             <a asp-controller="Item" asp-action="ByCategory" asp-route-categoryId="@category.Id">
-                @category.Name
+                @localizedCategoryName
             </a>
         </li>
     }

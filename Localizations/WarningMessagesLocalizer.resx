@@ -129,4 +129,7 @@
   <data name="PriceCannotBeZero" xml:space="preserve">
     <value>The price must be greater than zero</value>
   </data>
+  <data name="WarningMessage.NeedToSelectImage" xml:space="preserve">
+    <value>You must upload at least one image</value>
+  </data>
 </root>

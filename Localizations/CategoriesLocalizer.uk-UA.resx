@@ -120,6 +120,9 @@
   <data name="AllCategories" xml:space="preserve">
     <value>Всі Категорії</value>
   </data>
+  <data name="SelectCategory" xml:space="preserve">
+    <value>Оберiть Категорію</value>
+  </data>
   <data name="CategoryBooks" xml:space="preserve">
     <value>Книги</value>
   </data>

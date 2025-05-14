@@ -1,6 +1,5 @@
 ﻿using Karakatsiya.Models.DTOs;
 using Karakatsiya.Models.Entities;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Karakatsiya.Interfaces
 {
@@ -12,5 +11,6 @@ namespace Karakatsiya.Interfaces
         Task<Item> GetItemDetailsAsync(int id);
         Task<List<Item>> GetUserItemsAsync(string userId);
         Task<List<Item>> GetFilteredItemsAsync(ItemFilterDto filter);
+        Task<Dictionary<int, string>> GetLocalizedCategoriesAsync();
     }
 }

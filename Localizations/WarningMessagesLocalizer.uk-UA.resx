@@ -129,4 +129,7 @@
   <data name="PriceCannotBeZero" xml:space="preserve">
     <value>Ціна має бути більше нуля</value>
   </data>
+  <data name="WarningMessage.NeedToSelectImage" xml:space="preserve">
+    <value>Необхідно завантажити хоча б одне зображення</value>
+  </data>
 </root>
