@@ -1,5 +1,5 @@
-﻿using Karakatsiya.Data;
-using Karakatsiya.Interfaces;
+﻿using Karakatsiya.Interfaces;
+using Karakatsiya.Localizations;
 using Karakatsiya.Models.DTOs;
 using Karakatsiya.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -16,20 +16,22 @@ namespace Karakatsiya.Controllers
         private readonly IItemService _itemService;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IItemValidationService _itemValidationService;
-
         private readonly CategoryLocalizationService _categoryLocalizationService;
+        private readonly SharedLocalizationService _localizer;
 
         public ItemController(
             IItemService itemService,
             UserManager<IdentityUser> userManager,
             IItemValidationService itemValidationService,
-            CategoryLocalizationService categoryLocalizationService)
+            CategoryLocalizationService categoryLocalizationService,
+            SharedLocalizationService sharedLocalizationService)
             : base()
         {
             _itemService = itemService;
             _userManager = userManager;
             _itemValidationService = itemValidationService;
             _categoryLocalizationService = categoryLocalizationService;
+            _localizer = sharedLocalizationService;
         }
 
         [HttpGet]
@@ -54,6 +56,11 @@ namespace Karakatsiya.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateItem(CreateItemDto model)
         {
+            if (model.ImageFiles == null || model.ImageFiles.Count == 0)
+            {
+                ModelState.AddModelError(nameof(model.ImageFiles), _localizer.WarningMessages["NeedToSelectImage"]);
+            }
+
             if (!ModelState.IsValid || !_itemValidationService.Validate(model, ModelState))
             {
                 var localizedCategories = await _categoryLocalizationService.GetLocalizedCategoriesAsync();
@@ -86,7 +93,7 @@ namespace Karakatsiya.Controllers
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return RedirectToAction(ProjectConstants.REDIRECT_LOGIN);
+                return RedirectToAction(ProjectConstants.CONTROLLER_ACCOUNT, ProjectConstants.PAGE_LOGIN);
             }
 
             filter ??= new ItemFilterDto();
@@ -126,7 +133,7 @@ namespace Karakatsiya.Controllers
             var user = await _userManager.GetUserAsync(User);
             if (user == null || !await _itemService.DeleteItemAsync(id, user.Id))
             {
-                return Json(new { success = false, message = "Item could not be deleted." });
+                return Json(new { success = false, message = _localizer.WarningMessages["ItemCouldNotBeDeleted"] });
             }
 
             return Json(new { success = true });
@@ -154,7 +161,7 @@ namespace Karakatsiya.Controllers
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return RedirectToAction(ProjectConstants.REDIRECT_LOGIN);
+                return RedirectToAction(ProjectConstants.CONTROLLER_ACCOUNT, ProjectConstants.PAGE_LOGIN);
             }
 
             var item = await _itemService.EditItemAsync(id, model, user.Id);

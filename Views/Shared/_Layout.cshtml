@@ -27,12 +27,12 @@
                 {
                     <span class="auth-block__title">@_localizer.Messages["Main.Hello"] @User.Identity.Name</span>
                     <form method="post" asp-area="" asp-controller="Account" asp-action="Logout">
-                        <button type="submit" class="btn btn-outline-dark">@_localizer.Buttons["Main.Logout"]</button>
+                        <button type="submit" class="btn btn-outline-dark">@_localizer.Generals["Button.Logout"]</button>
                     </form>
                 }
                 else
                 {
-                    <a asp-area="" asp-controller="Account" asp-action="Login" class="btn btn-outline-dark">@_localizer.Buttons["Main.Login"]</a>
+                    <a asp-area="" asp-controller="Account" asp-action="Login" class="btn btn-outline-dark">@_localizer.Generals["Button.Login"]</a>
                 }
             </div>
         </div>
@@ -45,7 +45,7 @@
             <div class="custom-navbar__language">
                 <div class="language-selector">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                        @_localizer.Buttons["Main.Language"]
+                        @_localizer.Generals["Button.Language"]
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <li>
@@ -73,24 +73,24 @@
         <nav class="block-sidebar">
             <ul class="block-sidebar__container-main">
                 <li class="block-sidebar__container-button">
-                    <a class="block-sidebar__button" asp-area="" asp-controller="Home" asp-action="Index">@_localizer.Buttons["Main.Home"]</a>
+                    <a class="block-sidebar__button" asp-area="" asp-controller="Home" asp-action="Index">@_localizer.Generals["Button.Home"]</a>
                 </li>
                 <li class="block-sidebar__container-button">
-                    <a class="block-sidebar__button" asp-area="" asp-controller="Account" asp-action="Register">@_localizer.Buttons["Main.Registration"]</a>
+                    <a class="block-sidebar__button" asp-area="" asp-controller="Account" asp-action="Register">@_localizer.Generals["Button.Registration"]</a>
                 </li>
                 <li class="block-sidebar__container-button">
-                    <a class="block-sidebar__button" asp-area="" asp-controller="Item" asp-action="CreateItem">@_localizer.Buttons["Main.Create"]</a>
+                    <a class="block-sidebar__button" asp-area="" asp-controller="Item" asp-action="CreateItem">@_localizer.Generals["Button.Create"]</a>
                 </li>
                 <li class="block-sidebar__container-button">
-                    <a class="block-sidebar__button" asp-area="" asp-controller="Category" asp-action="ShowCategories">@_localizer.Buttons["Category"]</a>
+                    <a class="block-sidebar__button" asp-area="" asp-controller="Category" asp-action="ShowCategories">@_localizer.Generals["Button.MyItems"]</a>
                 </li>
                 <li class="block-sidebar__container-button">
-                    <a class="block-sidebar__button" asp-area="" asp-controller="Sale" asp-action="Sales">@_localizer.Buttons["Main.MenuSales"]</a>
+                    <a class="block-sidebar__button" asp-area="" asp-controller="Sale" asp-action="Sales">@_localizer.Generals["Button.MySales"]</a>
                 </li>
                 <li class="block-sidebar__container-button">
                     @if (User.IsInRole(ProjectConstants.ROLE_ADMIN))
                     {
-                        <a class="block-sidebar__button" asp-area="" asp-controller="Admin" asp-action="AdminPanel">AdminPanel</a>
+                        <a class="block-sidebar__button" asp-area="" asp-controller="Admin" asp-action="AdminPanel">@_localizer.Generals["Button.AdminPage"]</a>
                     }
                 </li>
             </ul>

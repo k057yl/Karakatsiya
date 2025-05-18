@@ -195,4 +195,7 @@
   <data name="Create.Modal.SetAsMain" xml:space="preserve">
     <value>Set as main</value>
   </data>
+  <data name="ResendCode" xml:space="preserve">
+    <value>Resend Code</value>
+  </data>
 </root>

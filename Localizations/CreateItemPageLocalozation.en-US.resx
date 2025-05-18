@@ -168,4 +168,74 @@
   <data name="Button.Title.SortBy.Category" xml:space="preserve">
     <value>Category :</value>
   </data>
+  <data name="Field.Category" xml:space="preserve">
+    <value>Enter category</value>
+  </data>
+  <data name="Field.Description" xml:space="preserve">
+    <value>Enter descripion</value>
+  </data>
+  <data name="Field.ExpirationDate" xml:space="preserve">
+    <value>Enter expiration date</value>
+  </data>
+  <data name="Field.Name" xml:space="preserve">
+    <value>Enter Name</value>
+  </data>
+  <data name="Field.Price" xml:space="preserve">
+    <value>Enter price</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Here you can create your item</value>
+  </data>
+  <data name="Label.Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Label.Price" xml:space="preserve">
+    <value>Price</value>
+  </data>
+  <data name="Label.Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Label.ExperationDate" xml:space="preserve">
+    <value>Experation Date</value>
+  </data>
+  <data name="Label.Category" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="Button.SetExperationDate" xml:space="preserve">
+    <value>Set experation date</value>
+  </data>
+  <data name="Label.Currency" xml:space="preserve">
+    <value>Currency</value>
+  </data>
+  <data name="Modal.Button.SelectMainImage" xml:space="preserve">
+    <value>Make it the main thing</value>
+  </data>
+  <data name="Modal.Icon.MainImage" xml:space="preserve">
+    <value>Main image</value>
+  </data>
+  <data name="Button.CreateItem" xml:space="preserve">
+    <value>Create item</value>
+  </data>
+  <data name="Modal.Button.UploadImage" xml:space="preserve">
+    <value>Upload images</value>
+  </data>
+  <data name="Modal.Button.SelectImages" xml:space="preserve">
+    <value>Select images</value>
+  </data>
+  <data name="Modal.Button.SetToMain" xml:space="preserve">
+    <value>Click “Set as main” to select the main image</value>
+  </data>
+  <data name="Modal.Button.SaveImage" xml:space="preserve">
+    <value>Save image</value>
+  </data>
+  <data name="Modal.Button.Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Modal.MessageWarningDelete" xml:space="preserve">
+    <value>Are you sure you want to delete this Item?
+Item data will be permanently deleted!</value>
+  </data>
+  <data name="Modal.TitleDelete" xml:space="preserve">
+    <value>Delete item</value>
+  </data>
 </root>

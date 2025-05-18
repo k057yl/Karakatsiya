@@ -117,19 +117,74 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Category" xml:space="preserve">
-    <value>Оберіть категорію</value>
+  <data name="LoginPage.Button.SignIn" xml:space="preserve">
+    <value>Sign in</value>
   </data>
-  <data name="Description" xml:space="preserve">
-    <value>Введіть опис</value>
+  <data name="LoginPage.Email" xml:space="preserve">
+    <value>Email</value>
   </data>
-  <data name="ExpirationDate" xml:space="preserve">
-    <value>Введіть термін придатності</value>
+  <data name="LoginPage.Password" xml:space="preserve">
+    <value>Password</value>
   </data>
-  <data name="Name" xml:space="preserve">
-    <value>Введіть назву</value>
+  <data name="LoginPage.Title" xml:space="preserve">
+    <value>Login</value>
   </data>
-  <data name="Price" xml:space="preserve">
-    <value>Введіть ціну</value>
+  <data name="Modal.Button.No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="Modal.Button.Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="Modal.TitleDelete" xml:space="preserve">
+    <value>Delete Sale</value>
+  </data>
+  <data name="SalePage.Modal.MessageWarningDelete" xml:space="preserve">
+    <value>Are you sure you want to delete this sale?
+Sale data will be permanently deleted!</value>
+  </data>
+  <data name="Modal.UploadImage" xml:space="preserve">
+    <value>Upload image</value>
+  </data>
+  <data name="RegistrationPage.Button.Register" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="RegistrationPage.Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="RegistrationPage.Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="RegistrationPage.Title" xml:space="preserve">
+    <value>Registration</value>
+  </data>
+  <data name="Button.ResendCode" xml:space="preserve">
+    <value>Resend code</value>
+  </data>
+  <data name="Button.Logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="Button.Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="Button.Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Button.Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="Button.Registration" xml:space="preserve">
+    <value>Registration</value>
+  </data>
+  <data name="Button.Create" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="Button.MyItems" xml:space="preserve">
+    <value>My Items</value>
+  </data>
+  <data name="Button.MySales" xml:space="preserve">
+    <value>My sales</value>
+  </data>
+  <data name="Button.AdminPage" xml:space="preserve">
+    <value>Admin Page</value>
   </data>
 </root>

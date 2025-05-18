@@ -1,22 +1,23 @@
 ﻿@using Karakatsiya.Models.DTOs
+@inject Karakatsiya.Localizations.SharedLocalizationService localization
 @model LoginDto
 
-<h2>Login</h2>
+<h2>@localization.Generals["LoginPage.Title"]</h2>
 
 <form asp-action="Login" method="post">
     <div class="form-group">
-        <label asp-for="Email">Email</label>
+        <label asp-for="Email">@localization.Generals["LoginPage.Email"]</label>
         <input asp-for="Email" class="form-control" type="email" required />
         <span asp-validation-for="Email" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="Password">Password</label>
+        <label asp-for="Password">@localization.Generals["LoginPage.Password"]</label>
         <input asp-for="Password" class="form-control" type="password" required />
         <span asp-validation-for="Password" class="text-danger"></span>
     </div>
 
-    <button type="submit" class="btn btn-primary">Login</button>
+    <button type="submit" class="btn btn-primary">@localization.Generals["LoginPage.Button.SignIn"]</button>
 </form>
 
 @section Scripts {

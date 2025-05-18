@@ -129,7 +129,19 @@
   <data name="PriceCannotBeZero" xml:space="preserve">
     <value>Ціна має бути більше нуля</value>
   </data>
-  <data name="WarningMessage.NeedToSelectImage" xml:space="preserve">
+  <data name="NeedToSelectImage" xml:space="preserve">
     <value>Необхідно завантажити хоча б одне зображення</value>
+  </data>
+  <data name="ItemCouldNotBeDeleted" xml:space="preserve">
+    <value>Не вдалося видалити елемент</value>
+  </data>
+  <data name="IncorrectLoginOrPassword" xml:space="preserve">
+    <value>Неправильний логін чи пароль</value>
+  </data>
+  <data name="InvalidVerificationCode" xml:space="preserve">
+    <value>Невірний код підтвердження</value>
+  </data>
+  <data name="EndingSession" xml:space="preserve">
+    <value>До закінчення сесії залишилось:</value>
   </data>
 </root>

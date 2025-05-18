@@ -129,6 +129,9 @@
   <data name="RegistrationConfirmationCode" xml:space="preserve">
     <value>Код підтвердження реєстрації</value>
   </data>
+  <data name="SendingAnEmail" xml:space="preserve">
+    <value>На вашу електронну адресу надіслано лист із кодом підтвердження</value>
+  </data>
   <data name="Table.Field.NoExperationDate" xml:space="preserve">
     <value>Без терміну придатності</value>
   </data>

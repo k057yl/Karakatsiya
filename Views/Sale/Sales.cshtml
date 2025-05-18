@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<Karakatsiya.Models.Entities.Sale>
 @inject Karakatsiya.Localizations.SharedLocalizationService sharedLocalizer
 
-<h2>@sharedLocalizer.SaleItems["Sale.MainTitle"]</h2>
+<h2>@sharedLocalizer.SaleItems["Title"]</h2>
 
 <div class="filter-header d-flex align-items-center gap-2 mb-3">
     <button class="filter-toggle-btn btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#saleFilterCollapse">
-        🔍 @sharedLocalizer.Buttons["Filter.Title"]
+        🔍 @sharedLocalizer.SaleItems["Button.Filter"]
     </button>
 
     <div class="collapse" id="saleFilterCollapse">
@@ -14,40 +14,40 @@
                 <input type="hidden" name="sortOrder" value="@ViewData["SortOrder"]" />
                 <div class="filter-form">
                     <div class="filter-group">
-                        <label for="startDate">@sharedLocalizer.Buttons["Filter.StartDate"]</label>
-                        <input type="date" id="startDate" name="startDate" value="@ViewData["StartDate"]" />
+                        <label for="startDate">@sharedLocalizer.SaleItems["Filter.NewestFirst"]</label>
+                        <input type="date" id="startDate" name="startDate" value="@ViewData["NewestFirst"]" />
                     </div>
 
                     <div class="filter-group">
-                        <label for="endDate">@sharedLocalizer.Buttons["Filter.EndDate"]</label>
-                        <input type="date" id="endDate" name="endDate" value="@ViewData["EndDate"]" />
+                        <label for="endDate">@sharedLocalizer.SaleItems["Filter.OldestFirst"]</label>
+                        <input type="date" id="endDate" name="endDate" value="@ViewData["OldestFirst"]" />
                     </div>
 
                     <div class="filter-group">
-                        <label for="minPrice">@sharedLocalizer.Buttons["Filter.MinPrice"]</label>
+                        <label for="minPrice">@sharedLocalizer.SaleItems["Filter.MinPrice"]</label>
                         <input type="number" step="0.01" name="minPrice" value="@ViewData["MinPrice"]" />
                     </div>
 
                     <div class="filter-group">
-                        <label for="maxPrice">@sharedLocalizer.Buttons["Filter.MaxPrice"]</label>
+                        <label for="maxPrice">@sharedLocalizer.SaleItems["Filter.MaxPrice"]</label>
                         <input type="number" step="0.01" name="maxPrice" value="@ViewData["MaxPrice"]" />
                     </div>
 
                     <div class="filter-group">
-                        <label for="minProfit">@sharedLocalizer.Buttons["Filter.MinProfit"]</label>
+                        <label for="minProfit">@sharedLocalizer.SaleItems["Filter.MinProfit"]</label>
                         <input type="number" step="0.01" name="minProfit" value="@ViewData["MinProfit"]" />
                     </div>
 
                     <div class="filter-group">
-                        <label for="maxProfit">@sharedLocalizer.Buttons["Filter.MaxProfit"]</label>
+                        <label for="maxProfit">@sharedLocalizer.SaleItems["Filter.MaxProfit"]</label>
                         <input type="number" step="0.01" name="maxProfit" value="@ViewData["MaxProfit"]" />
                     </div>
                 </div>
 
                 <div class="filter-buttons">
-                    <button type="submit" class="apply-btn">@sharedLocalizer.Buttons["ApplyFilter"]</button>
+                    <button type="submit" class="apply-btn">@sharedLocalizer.SaleItems["Button.ApplyFilter"]</button>
                     <a href="@Url.Action("Sales", "Sale", new { sortOrder = ViewData["SortOrder"] })" class="reset-btn">
-                        @sharedLocalizer.Buttons["Filter.ResetFilter"]
+                        @sharedLocalizer.SaleItems["Filter.ResetFilter"]
                     </a>
                 </div>
             </form>
@@ -55,14 +55,14 @@
     </div>
 
     <form method="get" asp-action="Sales" asp-controller="Sale" class="d-inline">
-        <label for="sortOrder" class="me-1">@sharedLocalizer.Buttons["Filter.SortBy"]</label>
+        <label for="sortOrder" class="me-1">@sharedLocalizer.SaleItems["Button.SortBy"]</label>
         @{
             var sortOrder = ViewData["SortOrder"] as string;
         }
 
         <!-- We pass the current filter values -->
-        <input type="hidden" name="startDate" value="@ViewData["StartDate"]" />
-        <input type="hidden" name="endDate" value="@ViewData["EndDate"]" />
+        <input type="hidden" name="startDate" value="@ViewData["NewestFirst"]" />
+        <input type="hidden" name="endDate" value="@ViewData["OldestFirst"]" />
         <input type="hidden" name="minPrice" value="@ViewData["MinPrice"]" />
         <input type="hidden" name="maxPrice" value="@ViewData["MaxPrice"]" />
         <input type="hidden" name="minProfit" value="@ViewData["MinProfit"]" />
@@ -71,8 +71,8 @@
         <select id="sortOrder" name="sortOrder" onchange="this.form.submit()" class="form-select d-inline w-auto">
             <option value="name_asc" selected="@(sortOrder == "name_asc")">A-Z</option>
             <option value="name_desc" selected="@(sortOrder == "name_desc")">Z-A</option>
-            <option value="profit_asc" selected="@(sortOrder == "profit_asc")">@sharedLocalizer.Buttons["ProfitAsc"]</option>
-            <option value="profit_desc" selected="@(sortOrder == "profit_desc")">@sharedLocalizer.Buttons["ProfitDesc"]</option>
+            <option value="profit_asc" selected="@(sortOrder == "profit_asc")">@sharedLocalizer.SaleItems["SortBy.ProfitAsc"]</option>
+            <option value="profit_desc" selected="@(sortOrder == "profit_desc")">@sharedLocalizer.SaleItems["SortBy.ProfitDesc"]</option>
         </select>
     </form>
 </div>
@@ -114,9 +114,9 @@
                         <button type="button" class="btn btn-danger open-modal-btn"
                                 data-action="/Sale/DeleteSale"
                                 data-id="@sale.SaleId"
-                                data-title="@sharedLocalizer.Buttons["DeleteTitle"]"
-                                data-message="@sharedLocalizer.Buttons["DeletionConfirmation"]">
-                            @sharedLocalizer.Buttons["Delete"]
+                                data-title="@sharedLocalizer.SaleItems["Modal.TitltDelete"]"
+                                data-message="@sharedLocalizer.SaleItems["Modal.MessageWarningDelete"]">
+                            @sharedLocalizer.Generals["Delete"]
                         </button>
                     </td>
                 </tr>

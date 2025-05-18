@@ -1,4 +1,5 @@
 ﻿using Karakatsiya.Interfaces;
+using Karakatsiya.Localizations;
 using Karakatsiya.Models.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,10 +8,12 @@ namespace Karakatsiya.Controllers
     public class AccountController : BaseController
     {
         private readonly IAccountService _accountService;
+        private readonly SharedLocalizationService _localizationService;
 
-        public AccountController(IAccountService accountService)
+        public AccountController(IAccountService accountService, SharedLocalizationService sharedLocalizationService)
         {
             _accountService = accountService;
+            _localizationService = sharedLocalizationService;
         }
 
         public IActionResult Register() => View();
@@ -23,8 +26,8 @@ namespace Karakatsiya.Controllers
                 try
                 {
                     await _accountService.RegisterUserAsync(model);
-                    TempData["Message"] = "Письмо с кодом подтверждения отправлено на ваш Email.";
-                    return RedirectToAction("ConfirmEmail", new { email = model.Email });
+                    TempData["Message"] = _localizationService.Messages["SendingAnEmail"].Value;
+                    return RedirectToAction(ProjectConstants.PAGE_CONFIRM_EMAIL, new { email = model.Email });
                 }
                 catch (ArgumentException ex)
                 {
@@ -48,10 +51,10 @@ namespace Karakatsiya.Controllers
                 var result = await _accountService.LoginUserAsync(model);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction(ProjectConstants.PAGE_INDEX, ProjectConstants.CONTROLLER_HOME);
                 }
 
-                ModelState.AddModelError(string.Empty, "Неправильный логин или пароль.");
+                ModelState.AddModelError(string.Empty, _localizationService.WarningMessages["IncorrectLoginOrPassword"].Value);
             }
             return View(model);
         }
@@ -64,22 +67,34 @@ namespace Karakatsiya.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> ConfirmEmail(ConfirmEmailDto model)
+        {
+            if (await _accountService.ConfirmEmailAsync(model.Email, model.ConfirmationCode))
+            {
+                return RedirectToAction(ProjectConstants.PAGE_LOGIN);
+            }
+
+            ModelState.AddModelError(string.Empty, _localizationService.WarningMessages["InvalidVerificationCode"].Value);
+            return View(model);
+        }
+        /*
+        [HttpPost]
         public async Task<IActionResult> ConfirmEmail(string email, string confirmationCode)
         {
             if (await _accountService.ConfirmEmailAsync(email, confirmationCode))
             {
-                return RedirectToAction("Login");
+                return RedirectToAction(ProjectConstants.PAGE_LOGIN);
             }
 
-            ModelState.AddModelError(string.Empty, "Неверный код подтверждения.");
+            ModelState.AddModelError(string.Empty, _localizationService.WarningMessages["InvalidVerificationCode"].Value);
             return View();
         }
-
+        */
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
             await _accountService.LogoutUserAsync();
-            return RedirectToAction("Login", "Account");
+            return RedirectToAction(ProjectConstants.PAGE_LOGIN, ProjectConstants.CONTROLLER_ACCOUNT);
         }
 
         public IActionResult NotAccess() => View();
@@ -90,15 +105,15 @@ namespace Karakatsiya.Controllers
             try
             {
                 await _accountService.ResendConfirmationCodeAsync(User.Identity.Name);
-                TempData["Message"] = "CodeSentAgain";
-                TempData["ResendTimer"] = 60;
+                TempData["Message"] = _localizationService.Messages["SendingAnEmail"].Value;
+                TempData["ResendTimer"] = ProjectConstants.RESEND_CODE_TIMER_SECONDS;
             }
             catch (Exception ex)
             {
                 TempData["Warning"] = ex.Message;
-                TempData["ResendTimer"] = 60;
+                TempData["ResendTimer"] = ProjectConstants.RESEND_CODE_TIMER_SECONDS;
             }
-            return RedirectToAction("ConfirmEmail");
+            return RedirectToAction(ProjectConstants.PAGE_CONFIRM_EMAIL);
         }
     }
 }

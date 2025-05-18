@@ -34,10 +34,11 @@
 /* Заголовок */
 .custom-modal-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding: 10px 15px;
     border-bottom: 1px solid #ddd;
+    color: #ff0000;
 }
 
 .custom-modal-title {
@@ -61,13 +62,14 @@
 /* Футер (кнопки) */
 .custom-modal-footer {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     padding: 10px 15px;
     border-top: 1px solid #ddd;
 }
 
 .custom-modal-footer button {
     margin-left: 10px;
+    min-width: 100px;
 }
 
 .hidden {

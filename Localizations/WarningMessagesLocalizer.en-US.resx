@@ -129,7 +129,19 @@
   <data name="PriceCannotBeZero" xml:space="preserve">
     <value>The price must be greater than zero</value>
   </data>
-  <data name="WarningMessage.NeedToSelectImage" xml:space="preserve">
+  <data name="NeedToSelectImage" xml:space="preserve">
     <value>You must upload at least one image</value>
+  </data>
+  <data name="ItemCouldNotBeDeleted" xml:space="preserve">
+    <value>Item could not be deleted</value>
+  </data>
+  <data name="IncorrectLoginOrPassword" xml:space="preserve">
+    <value>Incorrect login or password</value>
+  </data>
+  <data name="InvalidVerificationCode" xml:space="preserve">
+    <value>Invalid verification code</value>
+  </data>
+  <data name="EndingSession" xml:space="preserve">
+    <value>Time left until the end of the session:</value>
   </data>
 </root>

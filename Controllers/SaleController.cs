@@ -24,8 +24,8 @@ namespace Karakatsiya.Controllers
 
             var sales = await _saleService.GetFilteredSalesAsync(filter);
 
-            ViewData["StartDate"] = filter.StartDate?.ToString("yyyy-MM-dd");
-            ViewData["EndDate"] = filter.EndDate?.ToString("yyyy-MM-dd");
+            ViewData["NewestFirst"] = filter.StartDate?.ToString("yyyy-MM-dd");
+            ViewData["OldestFirst"] = filter.EndDate?.ToString("yyyy-MM-dd");
             ViewData["MinPrice"] = filter.MinPrice;
             ViewData["MaxPrice"] = filter.MaxPrice;
             ViewData["MinProfit"] = filter.MinProfit;

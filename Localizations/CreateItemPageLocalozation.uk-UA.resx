@@ -168,4 +168,74 @@
   <data name="Button.Title.SortBy.Category" xml:space="preserve">
     <value>Категорії :</value>
   </data>
+  <data name="Field.Category" xml:space="preserve">
+    <value>Оберіть категорію</value>
+  </data>
+  <data name="Field.Description" xml:space="preserve">
+    <value>Введіть опис</value>
+  </data>
+  <data name="Field.ExpirationDate" xml:space="preserve">
+    <value>Введіть термін придатності</value>
+  </data>
+  <data name="Field.Name" xml:space="preserve">
+    <value>Введіть назву</value>
+  </data>
+  <data name="Field.Price" xml:space="preserve">
+    <value>Введіть ціну</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Тут ви можете створити свій предмет</value>
+  </data>
+  <data name="Label.Name" xml:space="preserve">
+    <value>Назва</value>
+  </data>
+  <data name="Label.Price" xml:space="preserve">
+    <value>Ціна</value>
+  </data>
+  <data name="Label.Description" xml:space="preserve">
+    <value>Опис</value>
+  </data>
+  <data name="Label.ExperationDate" xml:space="preserve">
+    <value>Термін придатності</value>
+  </data>
+  <data name="Label.Category" xml:space="preserve">
+    <value>Категорія</value>
+  </data>
+  <data name="Button.SetExperationDate" xml:space="preserve">
+    <value>Встановити кінцевий термін придатності</value>
+  </data>
+  <data name="Label.Currency" xml:space="preserve">
+    <value>Валюта</value>
+  </data>
+  <data name="Modal.Button.SelectMainImage" xml:space="preserve">
+    <value>Зробити головним</value>
+  </data>
+  <data name="Modal.Icon.MainImage" xml:space="preserve">
+    <value>Головне</value>
+  </data>
+  <data name="Button.CreateItem" xml:space="preserve">
+    <value>Створити предмет</value>
+  </data>
+  <data name="Modal.Button.UploadImage" xml:space="preserve">
+    <value>Завантажити зображення</value>
+  </data>
+  <data name="Modal.Button.SelectImages" xml:space="preserve">
+    <value>Оберіть зображення</value>
+  </data>
+  <data name="Modal.Button.SetToMain" xml:space="preserve">
+    <value>натисніть «Зробити головним», щоб обрати головне зображення</value>
+  </data>
+  <data name="Modal.Button.SaveImage" xml:space="preserve">
+    <value>Зберегти зображення</value>
+  </data>
+  <data name="Modal.Button.Close" xml:space="preserve">
+    <value>Закрити</value>
+  </data>
+  <data name="Modal.MessageWarningDelete" xml:space="preserve">
+    <value>Ви впевнені, що хочете видалити цей товар?
+Дані про товар буде видалено назавжди!</value>
+  </data>
+  <data name="Modal.TitleDelete" xml:space="preserve">
+    <value>Видалити предмет</value>
+  </data>
 </root>

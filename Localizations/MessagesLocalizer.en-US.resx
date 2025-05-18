@@ -129,6 +129,9 @@
   <data name="RegistrationConfirmationCode" xml:space="preserve">
     <value>Registration confirmation code</value>
   </data>
+  <data name="SendingAnEmail" xml:space="preserve">
+    <value>A letter with a confirmation code has been sent to your email</value>
+  </data>
   <data name="Table.Field.NoExperationDate" xml:space="preserve">
     <value>No experation date</value>
   </data>

@@ -1,7 +1,10 @@
-﻿@inject Karakatsiya.Localizations.SharedLocalizationService localizer
+﻿@using Karakatsiya.Models.DTOs
+@inject Karakatsiya.Localizations.SharedLocalizationService localizer
+@using System.Text.Json
 
 @{
     ViewData["Title"] = "Confirm Email";
+    var endingSessionText = localizer.WarningMessages["EndingSession"].Value;
 }
 
 <h2>Confirm Email</h2>
@@ -19,7 +22,7 @@
 
 <form method="post" action="/Account/ResendCode" id="resendForm">
     <button type="submit" id="resendBtn" class="btn btn-secondary" disabled>
-        @localizer.Buttons["ResendCode"]
+        @localizer.Generals["Button.ResendCode"]
     </button>
 </form>
 
@@ -29,8 +32,10 @@
         const timerElement = document.getElementById("timer-warning");
         const resendButton = document.getElementById("resendBtn");
 
+        const endingSessionText = @Html.Raw(JsonSerializer.Serialize(endingSessionText));
+
         const timerInterval = setInterval(function () {
-            timerElement.innerText = `До окончания сессии осталось: ${timerSeconds} секунд`;
+            timerElement.innerText = `${endingSessionText} ${timerSeconds}`;
             timerSeconds--;
 
             if (timerSeconds < 0) {

@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Karakatsiya.Data;
 using Karakatsiya.Interfaces;
-using Karakatsiya.Localizations;
 using Karakatsiya.Models.DTOs;
 using Karakatsiya.Models.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -13,15 +12,13 @@ namespace Karakatsiya.Services
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
         private readonly CategoryLocalizationService _categoryLocalizationService;
-        private readonly SharedLocalizationService _localizer;
+        
 
-        public ItemService(ApplicationDbContext context, IMapper mapper, CategoryLocalizationService categoryLocalizationService,
-            SharedLocalizationService localizationService)
+        public ItemService(ApplicationDbContext context, IMapper mapper, CategoryLocalizationService categoryLocalizationService)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _categoryLocalizationService = categoryLocalizationService ?? throw new ArgumentNullException(nameof(categoryLocalizationService));
-            _localizer = localizationService ?? throw new ArgumentNullException(nameof(localizationService));
         }
 
         public async Task<Dictionary<int, string>> GetLocalizedCategoriesAsync()
@@ -32,8 +29,6 @@ namespace Karakatsiya.Services
         public async Task<Item> CreateItemAsync(CreateItemDto model, string userId)
         {
             if (model == null) throw new ArgumentNullException(nameof(model));
-            if (model.ImageFiles == null || model.ImageFiles.Count == 0)
-                throw new ArgumentException(_localizer.WarningMessages["WarningMessage.NeedToSelectImage"]);
 
             var uploads = Path.Combine(Directory.GetCurrentDirectory(), ProjectConstants.UPLOADS_PATH);
             if (!Directory.Exists(uploads))

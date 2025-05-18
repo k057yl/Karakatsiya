@@ -1,20 +1,22 @@
-﻿<div class="register-page__wrapper">
+﻿@inject Karakatsiya.Localizations.SharedLocalizationService localizer
+
+<div class="register-page__wrapper">
     <div class="register-page__inner-container">
         <form asp-action="Register" method="post" class="register-page__form">
-            <h2 class="register-page__title">Register</h2>
+            <h2 class="register-page__title">@localizer.Generals["RegistrationPage.Title"]</h2>
 
             <div class="register-page__form-group">
-                <label for="Email" class="register-page__form-label">Email</label>
+                <label for="Email" class="register-page__form-label">@localizer.Generals["RegistrationPage.Email"]</label>
                 <input type="email" name="Email" required class="register-page__form-input" />
             </div>
 
             <div class="register-page__form-group">
-                <label for="Password" class="register-page__form-label">Password</label>
+                <label for="Password" class="register-page__form-label">@localizer.Generals["RegistrationPage.Password"]</label>
                 <input type="password" name="Password" required class="register-page__form-input" />
             </div>
 
             <div class="register-page__form-group">
-                <button type="submit" class="register-page__submit-button">Register</button>
+                <button type="submit" class="register-page__submit-button">@localizer.Generals["RegistrationPage.Button.Register"]</button>
             </div>
         </form>
     </div>

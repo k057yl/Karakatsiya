@@ -117,7 +117,50 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Sale.MainTitle" xml:space="preserve">
+  <data name="Button.ApplyFilter" xml:space="preserve">
+    <value>Застосувати фільтр</value>
+  </data>
+  <data name="Button.Filter" xml:space="preserve">
+    <value>Фільтр</value>
+  </data>
+  <data name="Filter.MaxPrice" xml:space="preserve">
+    <value>Макс ціна</value>
+  </data>
+  <data name="Filter.MaxProfit" xml:space="preserve">
+    <value>Макс прибуток</value>
+  </data>
+  <data name="Filter.MinPrice" xml:space="preserve">
+    <value>Мін ціна</value>
+  </data>
+  <data name="Filter.MinProfit" xml:space="preserve">
+    <value>Мін прибуток</value>
+  </data>
+  <data name="Filter.NewestFirst" xml:space="preserve">
+    <value>Спочатку найновіші</value>
+  </data>
+  <data name="Filter.OldestFirst" xml:space="preserve">
+    <value>Спочатку найстаріші</value>
+  </data>
+  <data name="Filter.ResetFilter" xml:space="preserve">
+    <value>Скинути всі фільтри</value>
+  </data>
+  <data name="Button.SortBy" xml:space="preserve">
+    <value>Сортувати за :</value>
+  </data>
+  <data name="SortBy.ProfitAsc" xml:space="preserve">
+    <value>Спочатку меньш прибильні</value>
+  </data>
+  <data name="Title" xml:space="preserve">
     <value>Ваші продажі</value>
+  </data>
+  <data name="SortBy.ProfitDesc" xml:space="preserve">
+    <value>Спочатку більш прибильні</value>
+  </data>
+  <data name="Modal.MessageWarningDelete" xml:space="preserve">
+    <value>Ви впевнені, що хочете видалити продаж?
+Дані про продаж буде безповоротно видалено!</value>
+  </data>
+  <data name="Modal.TitltDelete" xml:space="preserve">
+    <value>Видалити продаж</value>
   </data>
 </root>

@@ -16,7 +16,7 @@
     <div class="collapse" id="filterCollapse">
         <div class="filter-block">
             <form method="get" asp-action="ByCategory" asp-controller="Item">
-                <input type="hidden" name="categoryId" value="@ViewData["Category"]" />@********************@
+                <input type="hidden" name="categoryId" value="@ViewData["Category"]" />
                 <input type="hidden" name="sortOrder" value="@ViewData["SortOrder"]" />
                 <div class="filter-form">
                     <div class="filter-group">
@@ -159,8 +159,8 @@
                         <button type="button" class="btn btn-danger open-modal-btn"
                                 data-action="/Item/Delete"
                                 data-id="@item.ItemId"
-                                data-title="@sharedLocalizer.Buttons["DeleteTitle"]"
-                                data-message="@sharedLocalizer.Buttons["DeletionConfirmation"]">
+                                data-title="@sharedLocalizer.CreateItems["Modal.TitleDelete"]"
+                                data-message="@sharedLocalizer.CreateItems["Modal.MessageWarningDelete"]">
                             @sharedLocalizer.CreateItems["Button.Delete"]
                         </button>
                     </td>
@@ -173,7 +173,7 @@
                         {
                             <form asp-action="SellItem" asp-controller="Sale" method="post">
                                 <input type="hidden" name="itemId" value="@item.ItemId" />
-                                <input type="number" name="salePrice" placeholder=@sharedLocalizer.Buttons["SoldPrice"] required />
+                                <input type="number" name="salePrice" placeholder=@sharedLocalizer.Generals["SoldPrice"] required />
                                 <button type="submit" class="btn btn-success">@sharedLocalizer.CreateItems["Button.Sell"]</button>
                             </form>
                         }

@@ -117,7 +117,49 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Sale.MainTitle" xml:space="preserve">
+  <data name="Button.ApplyFilter" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Button.Filter" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Filter.MaxPrice" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Filter.MaxProfit" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Filter.MinPrice" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Filter.MinProfit" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Filter.NewestFirst" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Filter.OldestFirst" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Filter.ResetFilter" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Button.SortBy" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SortBy.ProfitAsc" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Title" xml:space="preserve">
     <value>Your sales</value>
+  </data>
+  <data name="SortBy.ProfitDesc" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Modal.MessageWarningDelete" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Modal.TitltDelete" xml:space="preserve">
+    <value />
   </data>
 </root>

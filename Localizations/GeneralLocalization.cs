@@ -1,6 +1,6 @@
 ﻿namespace Karakatsiya.Localizations
 {
-    public class FieldLocalizer
+    public class GeneralLocalization
     {
     }
 }

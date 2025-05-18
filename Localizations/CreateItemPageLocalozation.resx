@@ -168,4 +168,73 @@
   <data name="Button.Title.SortBy.Category" xml:space="preserve">
     <value>Category</value>
   </data>
+  <data name="Field.Category" xml:space="preserve">
+    <value>Enter category</value>
+  </data>
+  <data name="Field.Description" xml:space="preserve">
+    <value>Enter descripion</value>
+  </data>
+  <data name="Field.ExpirationDate" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Field.Name" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Field.Price" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Label.Name" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Label.Price" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Label.Description" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Label.ExperationDate" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Label.Category" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Button.SetExperationDate" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Label.Currency" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Modal.Button.SelectMainImage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Modal.Icon.MainImage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Button.CreateItem" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Modal.Button.UploadImage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Modal.Button.SelectImages" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Modal.Button.SetToMain" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Modal.Button.SaveImage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Modal.Button.Close" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Modal.MessageWarningDelete" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Modal.TitleDelete" xml:space="preserve">
+    <value />
+  </data>
 </root>

@@ -19,15 +19,15 @@ namespace Karakatsiya.Localizations
             return _factory.Create(type.Name, assemblyName.Name);
         }
 
-        public IStringLocalizer Buttons => GetLocalizer<ButtonsLocalizer>();
         public IStringLocalizer Messages => GetLocalizer<MessagesLocalizer>();
         public IStringLocalizer WarningMessages => GetLocalizer<WarningMessagesLocalizer>();
         public IStringLocalizer Categories => GetLocalizer<CategoriesLocalizer>();
         public IStringLocalizer Tables => GetLocalizer<TablesLocalizer>();
-        public IStringLocalizer Fields => GetLocalizer<FieldLocalizer>();
         public IStringLocalizer Currencies => GetLocalizer<CurrensiesLocalizer>();
         public IStringLocalizer Pages => GetLocalizer<PagesTextLocalizer>();
         public IStringLocalizer CreateItems => GetLocalizer<CreateItemPageLocalozation>();
         public IStringLocalizer SaleItems => GetLocalizer<SaleIPageLocalization>();
+        //here is everything that relates to buttons/tables/messages/modals/greatings
+        public IStringLocalizer Generals => GetLocalizer<GeneralLocalization>();
     }
 }
