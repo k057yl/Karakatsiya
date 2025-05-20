@@ -1,0 +1,73 @@
+﻿.custom-table-item-page {
+    width: 90%;
+    table-layout: fixed; /* Важно: фиксированная ширина столбцов */
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    background-color: #f2f2f2;
+    text-align: center;
+    word-wrap: break-word;
+}
+
+.custom-table-item-page th,
+.custom-table-item-page td {
+    padding: 12px 16px;
+    border: solid 1px #000000;
+    word-wrap: break-word;
+    white-space: normal;
+    overflow-wrap: break-word;
+    vertical-align: middle;
+}
+
+/* Устанавливаем индивидуальные ширины */
+.custom-table-item-page th:nth-child(1),
+.custom-table-item-page td:nth-child(1) {
+    width: 110px; /* Image */
+}
+
+.custom-table-item-page th:nth-child(2),
+.custom-table-item-page td:nth-child(2) {
+    width: 100px; /* Name */
+}
+
+.custom-table-item-page th:nth-child(3),
+.custom-table-item-page td:nth-child(3) {
+    width: 250px; /* Description */
+}
+
+.custom-table-item-page th:nth-child(4),
+.custom-table-item-page td:nth-child(4),
+.custom-table-item-page th:nth-child(5),
+.custom-table-item-page td:nth-child(5) {
+    width: 100px; /* Dates */
+}
+
+.custom-table-item-page th:nth-child(6),
+.custom-table-item-page td:nth-child(6) {
+    width: 80px; /* Price */
+}
+
+.custom-table-item-page th:nth-child(7),
+.custom-table-item-page td:nth-child(7),
+.custom-table-item-page th:nth-child(8),
+.custom-table-item-page td:nth-child(8) {
+    width: 140px; /* Actions */
+}
+
+.custom-table-item-page thead {
+    background-color: #ace4fa !important;
+    font-weight: bold;
+    border: solid 1px #000000;
+}
+
+.custom-table-item-page tr:last-child td {
+    border-bottom: none;
+}
+
+.expired {
+    background-color: #ff6666 !important;
+    color: white !important;
+}
+
+.expiring-soon {
+    background-color: #ffff66 !important;
+}

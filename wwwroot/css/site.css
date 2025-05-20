@@ -15,7 +15,8 @@
 /*pages*/
 @import url("create-page/create.css");
 @import url("sale-page/sale.css");
-@import url("register-page/register.css");
+@import url("auth-page/auth-page.css");
+@import url("item-page/item-page.css");
 
 
 .image-thumb {

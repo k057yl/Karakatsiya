@@ -1,51 +1,110 @@
-﻿.create-item-form__container {
-    width: 50vw;
-    height: 80vh;
-    margin-left: 20px;
+﻿.centered-form-container {
     display: flex;
-    flex-direction: column;
     justify-content: center;
-    padding: 20px;
-    box-sizing: border-box;
-    border-radius: 10px;
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
-    background-color: #6699ff;
-    border: 1px solid #ff0000;
+    align-items: start;
+    min-height: 100vh;
 }
 
-/* Группы элементов формы */
-.create-item-form__group {
+.create-item-form__wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    padding-top: 30px;
+    height: 100vh;
+    width: 100vw;
+    background-color: #f0f0f0;
+}
+
+.create-item-form__container {
+    width: 100%;
+    max-width: 500px;
+    padding: 50px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 1px solid #6699ff;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    box-sizing: border-box;
+}
+
+.create-item-form__title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    color: #333;
     margin-bottom: 20px;
 }
 
-/* Метки формы */
-.create-item-form__label {
-    font-weight: bold;
+.create-item-form__form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
-/* Ввод текста */
+/* Группа каждого поля */
+.create-item-form__group {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Метка */
+.create-item-form__label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Поля ввода */
 .create-item-form__input,
 .create-item-form__textarea,
 .create-item-form__select {
     width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
 }
 
-/* Кнопки */
-.create-item-form__button,
+/* Убираем ручное изменение размера и делаем автоувеличение */
+.create-item-form__textarea {
+    resize: none;
+    overflow: hidden;
+}
+
+/* Кнопка */
 .create-item-form__submit {
-    width: 50%;
-    margin: 0 auto;
+    width: 100%;
+    padding: 10px;
+    background-color: #007BFF;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.create-item-form__submit:hover {
+    background-color: #0056b3;
+}
+
+.create-item-form__button {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.create-greeting-text {
+    background-color: #f0f0f0;
     display: flex;
     flex-direction: column;
     justify-content: center;
-}
-
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-    color: var(--bs-secondary-color);
-    text-align: end;
-}
-
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-    text-align: start;
+    align-items: center;
+    text-align: center;
+    font-size: 16px;
 }
 

@@ -1,15 +1,67 @@
-﻿.register-page__title {
+﻿.auth-page__title {
     text-align: center;
     margin-bottom: 20px;
 }
 
-.register-page__wrapper {
+.auth-page__wrapper {
     display: flex;
     justify-content: center;
     margin-top: 50px;
     min-height: 50vh;
     opacity: 0;
     animation: fadeIn 1s ease-out forwards;
+}
+
+.auth-page__form-group {
+    margin-bottom: 15px;
+}
+
+.auth-page__form-label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.auth-page__form-input {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.auth-page__submit-button {
+    width: 100%;
+    padding: 8px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.auth-page__submit-button:hover {
+    background-color: #45a049;
+}
+
+.auth-page__inner-container {
+    width: 300px;
+    height: 460px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.auth-page__form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 @keyframes fadeIn {
@@ -29,54 +81,10 @@
     }
 }
 
-.register-page__form-group {
-    margin-bottom: 15px;
+.auth-page__submit-button--login {
+    background-color: #007BFF;
 }
 
-.register-page__form-label {
-    display: block;
-    font-size: 14px;
-    margin-bottom: 5px;
-}
-
-.register-page__form-input {
-    width: 100%;
-    padding: 8px;
-    font-size: 14px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-}
-
-.register-page__submit-button:hover {
-    background-color: #45a049;
-}
-
-.register-page__inner-container {
-    width: 300px;
-    height: 460px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-}
-
-.register-page__form {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.register-page__submit-button {
-    width: 100%;
-    padding: 8px;
-    background-color: #4CAF50;
-    color: white;
-    font-size: 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+.auth-page__submit-button--login:hover {
+    background-color: #0056b3;
 }

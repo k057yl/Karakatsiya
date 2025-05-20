@@ -84,8 +84,8 @@
 </div>
 
 
-<div class="item-container">
-    <table class="table">
+<div class="custom-table-wrapper">
+    <table class="custom-table-item-page">
         <thead>
             <tr>
                 <th>@sharedLocalizer.Tables["Image"]</th>
@@ -173,7 +173,7 @@
                         {
                             <form asp-action="SellItem" asp-controller="Sale" method="post">
                                 <input type="hidden" name="itemId" value="@item.ItemId" />
-                                <input type="number" name="salePrice" placeholder=@sharedLocalizer.Generals["SoldPrice"] required />
+                                <input type="number" name="salePrice" placeholder="@sharedLocalizer.Generals["SoldPrice"]" required style="width: 120px; margin-right: 10px;" />
                                 <button type="submit" class="btn btn-success">@sharedLocalizer.CreateItems["Button.Sell"]</button>
                             </form>
                         }
