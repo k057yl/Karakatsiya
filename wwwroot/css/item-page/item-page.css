@@ -1,5 +1,6 @@
 ﻿.custom-table-item-page {
     width: 90%;
+    margin-left: 5%;
     table-layout: fixed; /* Важно: фиксированная ширина столбцов */
     overflow: hidden;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);

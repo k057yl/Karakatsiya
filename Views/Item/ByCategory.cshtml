@@ -8,81 +8,82 @@
 
 <h2>@ViewData["Title"]</h2>
 
-<div class="filter-header d-flex align-items-center gap-2 mb-3">
-    <button class="filter-toggle-btn btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#filterCollapse">
-        🔍 @sharedLocalizer.CreateItems["Button.Filter"]
-    </button>
+<div class="filter-wrapper">
+    <div class="filter-header d-flex align-items-center gap-2 mb-3">
+        <button class="filter-toggle-btn btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#filterCollapse">
+            🔍 @sharedLocalizer.CreateItems["Button.Filter"]
+        </button>
 
-    <div class="collapse" id="filterCollapse">
-        <div class="filter-block">
-            <form method="get" asp-action="ByCategory" asp-controller="Item">
-                <input type="hidden" name="categoryId" value="@ViewData["Category"]" />
-                <input type="hidden" name="sortOrder" value="@ViewData["SortOrder"]" />
-                <div class="filter-form">
-                    <div class="filter-group">
-                        <label for="name">@sharedLocalizer.CreateItems["Filter.Title.Name"]</label>
-                        <input type="text" id="name" name="name" value="@ViewData["Name"]" />
+        <div class="collapse" id="filterCollapse">
+            <div class="filter-block">
+                <form method="get" asp-action="ByCategory" asp-controller="Item">
+                    <input type="hidden" name="categoryId" value="@ViewData["Category"]" />
+                    <input type="hidden" name="sortOrder" value="@ViewData["SortOrder"]" />
+                    <div class="filter-form">
+                        <div class="filter-group">
+                            <label for="name">@sharedLocalizer.CreateItems["Filter.Title.Name"]</label>
+                            <input type="text" id="name" name="name" value="@ViewData["Name"]" />
+                        </div>
+
+                        <div class="filter-group">
+                            <label for="minPrice">@sharedLocalizer.CreateItems["Filter.Title.MinPrice"]</label>
+                            <input type="number" id="minPrice" name="minPrice" value="@ViewData["MinPrice"]" />
+                        </div>
+
+                        <div class="filter-group">
+                            <label for="maxPrice">@sharedLocalizer.CreateItems["Filter.Title.MaxPrice"]</label>
+                            <input type="number" id="maxPrice" name="maxPrice" value="@ViewData["MaxPrice"]" />
+                        </div>
+
+                        <div class="filter-group">
+                            <label for="createdAfter">@sharedLocalizer.CreateItems["Filter.Title.CreatedAfter"]</label>
+                            <input type="date" id="createdAfter" name="createdAfter" value="@ViewData["CreatedAfter"]" />
+                        </div>
+
+                        <div class="filter-group">
+                            <label for="createdBefore">@sharedLocalizer.CreateItems["Filter.Title.CreatedBefore"]</label>
+                            <input type="date" id="createdBefore" name="createdBefore" value="@ViewData["CreatedBefore"]" />
+                        </div>
                     </div>
 
-                    <div class="filter-group">
-                        <label for="minPrice">@sharedLocalizer.CreateItems["Filter.Title.MinPrice"]</label>
-                        <input type="number" id="minPrice" name="minPrice" value="@ViewData["MinPrice"]" />
-                    </div>
+                    <div class="filter-buttons">
+                        <div class="sold-checkbox">
+                            <input type="checkbox" id="includeSold" name="IncludeSold" value="true" @(ViewData["IncludeSold"] as bool? == true ? "checked" : "") />
+                            <label for="includeSold">@sharedLocalizer.CreateItems["Filter.Title.Sold"]</label>
+                        </div>
 
-                    <div class="filter-group">
-                        <label for="maxPrice">@sharedLocalizer.CreateItems["Filter.Title.MaxPrice"]</label>
-                        <input type="number" id="maxPrice" name="maxPrice" value="@ViewData["MaxPrice"]" />
+                        <button type="submit" class="apply-btn">@sharedLocalizer.CreateItems["Filter.Title.Apply"]</button>
+                        <a href="@Url.Action("ByCategory", "Item", new { categoryId = ViewData["Category"] })" class="reset-btn">@sharedLocalizer.CreateItems["Filter.Title.ResetAllFilters"]</a>
                     </div>
-
-                    <div class="filter-group">
-                        <label for="createdAfter">@sharedLocalizer.CreateItems["Filter.Title.CreatedAfter"]</label>
-                        <input type="date" id="createdAfter" name="createdAfter" value="@ViewData["CreatedAfter"]" />
-                    </div>
-
-                    <div class="filter-group">
-                        <label for="createdBefore">@sharedLocalizer.CreateItems["Filter.Title.CreatedBefore"]</label>
-                        <input type="date" id="createdBefore" name="createdBefore" value="@ViewData["CreatedBefore"]" />
-                    </div>
-                </div>
-
-                <div class="filter-buttons">
-                    <div class="sold-checkbox">
-                        <input type="checkbox" id="includeSold" name="IncludeSold" value="true" @(ViewData["IncludeSold"] as bool? == true ? "checked" : "") />
-                        <label for="includeSold">@sharedLocalizer.CreateItems["Filter.Title.Sold"]</label>
-                    </div>
-
-                    <button type="submit" class="apply-btn">@sharedLocalizer.CreateItems["Filter.Title.Apply"]</button>
-                    <a href="@Url.Action("ByCategory", "Item", new { categoryId = ViewData["Category"] })" class="reset-btn">@sharedLocalizer.CreateItems["Filter.Title.ResetAllFilters"]</a>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
+
+        <form method="get" asp-action="ByCategory" asp-controller="Item" id="filterForm" class="d-inline">
+            @{
+                var sortOrder = ViewData["SortOrder"] as string;
+            }
+
+            <!-- Передаем текущие фильтры -->
+            <input type="hidden" name="name" value="@ViewData["Name"]" />
+            <input type="hidden" name="minPrice" value="@ViewData["MinPrice"]" />
+            <input type="hidden" name="maxPrice" value="@ViewData["MaxPrice"]" />
+            <input type="hidden" name="createdAfter" value="@ViewData["CreatedAfter"]" />
+            <input type="hidden" name="createdBefore" value="@ViewData["CreatedBefore"]" />
+            <input type="hidden" name="IncludeSold" value="@(ViewData["IncludeSold"] as bool? == true ? "true" : "false")" />
+            <input type="hidden" name="CategoryId" value="@ViewData["Category"]" />
+
+            <!-- Сортировка -->
+            <label for="sortOrder" class="me-1">@sharedLocalizer.CreateItems["Button.Title.SortBy"]</label>
+            <select id="sortOrder" name="sortOrder" class="form-select d-inline w-auto" onchange="document.getElementById('filterForm').submit();">
+                <option value="az" selected="@(sortOrder == "az")">@sharedLocalizer.CreateItems["Button.SortBy.A-Z"]</option>
+                <option value="za" selected="@(sortOrder == "za")">@sharedLocalizer.CreateItems["Button.SortBy.Z-A"]</option>
+                <option value="price_asc" selected="@(sortOrder == "price_asc")">@sharedLocalizer.CreateItems["Button.SortBy.Price"] ↑</option>
+                <option value="price_desc" selected="@(sortOrder == "price_desc")">@sharedLocalizer.CreateItems["Button.SortBy.Price"] ↓</option>
+            </select>
+        </form>
     </div>
-
-    <form method="get" asp-action="ByCategory" asp-controller="Item" id="filterForm" class="d-inline">
-        @{
-            var sortOrder = ViewData["SortOrder"] as string;
-        }
-
-        <!-- Передаем текущие фильтры -->
-        <input type="hidden" name="name" value="@ViewData["Name"]" />
-        <input type="hidden" name="minPrice" value="@ViewData["MinPrice"]" />
-        <input type="hidden" name="maxPrice" value="@ViewData["MaxPrice"]" />
-        <input type="hidden" name="createdAfter" value="@ViewData["CreatedAfter"]" />
-        <input type="hidden" name="createdBefore" value="@ViewData["CreatedBefore"]" />
-        <input type="hidden" name="IncludeSold" value="@(ViewData["IncludeSold"] as bool? == true ? "true" : "false")" />
-        <input type="hidden" name="CategoryId" value="@ViewData["Category"]" />
-
-        <!-- Сортировка -->
-        <label for="sortOrder" class="me-1">@sharedLocalizer.CreateItems["Button.Title.SortBy"]</label>
-        <select id="sortOrder" name="sortOrder" class="form-select d-inline w-auto" onchange="document.getElementById('filterForm').submit();">
-            <option value="az" selected="@(sortOrder == "az")">@sharedLocalizer.CreateItems["Button.SortBy.A-Z"]</option>
-            <option value="za" selected="@(sortOrder == "za")">@sharedLocalizer.CreateItems["Button.SortBy.Z-A"]</option>
-            <option value="price_asc" selected="@(sortOrder == "price_asc")">@sharedLocalizer.CreateItems["Button.SortBy.Price"] ↑</option>
-            <option value="price_desc" selected="@(sortOrder == "price_desc")">@sharedLocalizer.CreateItems["Button.SortBy.Price"] ↓</option>
-        </select>
-    </form>
 </div>
-
 
 <div class="custom-table-wrapper">
     <table class="custom-table-item-page">
